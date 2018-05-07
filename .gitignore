@@ -1,3 +1,4 @@
+
 # Prerequisites
 *.d
 
@@ -30,3 +31,7 @@
 *.exe
 *.out
 *.app
+/.vs
+/include/boost/astronomy/coordinate/Source.cpp
+/testing
+/Debug

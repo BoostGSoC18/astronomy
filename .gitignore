@@ -35,3 +35,7 @@
 /include/boost/astronomy/coordinate/Source.cpp
 /testing
 /Debug
+/astronomy.vcxproj.user
+/astronomy.vcxproj.filters
+/astronomy.vcxproj
+/astronomy.sln

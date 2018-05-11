@@ -28,16 +28,16 @@ namespace boost
                 std::string differential;
 
             public:
+
                 template<class OtherRepresentation>
                 degree separation(base_coordinate_system<OtherRepresenation> other);
 
                 template<class System>
-                virtual bool is_transformable_to() = 0;
+                virtual bool is_transformable_to() const = 0;
 
-                degree_per_sec motion();
+                degree_per_sec motion() const = 0;
 
-                degree_per_sec radial_velocity();
-
+                degree_per_sec radial_velocity() = 0;
 
             };
         }

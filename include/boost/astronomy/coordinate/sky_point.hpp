@@ -39,10 +39,10 @@ namespace boost
                 sky_point(double latitude, double longitude);
 
                 //constructing from string
-                sky_point(const char* latitude, const char* longitude);
+                sky_point(std::string latitude, std::string longitude);
 
                 //constructing from name of object if available in the calatoge
-                sky_point(const char* name);
+                sky_point(std::string name);
 
                 // destructor 
                 ~sky_point();
@@ -55,7 +55,7 @@ namespace boost
                 template<class OtherSystem, typename OtherUnit, typename OtherUnit2 = void>
                 bool is_equivalant_system(const sky_point<OtherSystem, OtherUnit, OtherUnit2> object);
 
-                sky_point<System, Unit, Unit2> from_name(const char* name);
+                sky_point<System, Unit, Unit2> from_name(std::string name);
 
                 template<class OtherSystem, typename OtherUnit, typename OtherUnit2 = void>
                 degree positional_angle(const sky_point<OtherSystem, OtherUnit, OtherUnit2> object);

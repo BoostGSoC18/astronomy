@@ -8,7 +8,6 @@
 #include <boost/geometry/arithmetic/cross_product.hpp>
 #include <boost/geometry/arithmetic/dot_product.hpp>
 #include <boost/geometry/core/cs.hpp>
-#include <boost/type_traits/is_base_of.hpp>
 #include <boost/static_assert.hpp>
 
 namespace boost
@@ -152,7 +151,7 @@ namespace boost
 
                     return ReturnType(result);
                 }
-
+                
                 // mean of current vector with specified vector
                 template <typename ReturnType, typename Representation>
                 virtual ReturnType mean(Representation const& other) const

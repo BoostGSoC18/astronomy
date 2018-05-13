@@ -2,12 +2,10 @@
 #define BOOST_ASTRONOMY_COORDINATE_CARTESIAN_REPRESENTATION_HPP
 
 
+#include <tuple>
 #include <boost/geometry/core/cs.hpp>
-#include <boost/geometry/arithmetic/cross_product.hpp>
-#include <boost/geometry/arithmetic/dot_product.hpp>
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/algorithms/transform.hpp>
-#include <boost/type_traits/is_base_of.hpp>
 #include <boost/static_assert.hpp>
 
 #include <boost/astronomy/coordinate/base_representation.hpp>
@@ -49,6 +47,58 @@ namespace boost
 
                     boost::geometry::transform(other.get_point(), this->point);
                 }
+
+                // returns the (x, y, z) in the form of tuple
+                std::tuple<double, double, double> get_xyz() const
+                {
+                    return std::make_tuple(boost::geometry::get<0>(this->point),
+                        boost::geometry::get<0>(this->point), boost::geometry::get<0>(this->point));
+                }
+
+                //returns the x component of point
+                double get_x() const
+                {
+                    return boost::geometry::get<0>(this->point);
+                }
+
+                //returns the z component of point
+                double get_y() const
+                {
+                    return boost::geometry::get<1>(this->point);
+                }
+
+                //returns the y component of point
+                double get_z() const
+                {
+                    return boost::geometry::get<2>(this->point);
+                }
+
+                //set value of (x, y, z) in current object
+                void set_xyz(double x, double y, double z)
+                {
+                    boost::geometry::set<0>(this->point, x);
+                    boost::geometry::set<1>(this->point, y);
+                    boost::geometry::set<2>(this->point, z);
+                }
+
+                //set value of x component of point
+                void set_x(double x)
+                {
+                    boost::geometry::set<0>(this->point, x);
+                }
+
+                //set value of x component of point
+                void set_y(double y)
+                {
+                    boost::geometry::set<1>(this->point, y);
+                }
+
+                //set value of z component of point
+                void set_z(double z)
+                {
+                    boost::geometry::set<2>(this->point, z);
+                }
+
             }; //cartesian_representation
         } //namespace coordinate
     } //namespace astronomy

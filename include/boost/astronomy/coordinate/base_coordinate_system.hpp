@@ -1,5 +1,5 @@
-#ifndef BOOOST_BASE_COORDINATE_SYSTEM_HPP
-#define BOOOST_BASE_COORDINATE_SYSTEM_HPP
+#ifndef BOOOST_ASTRONOMY_COORDINATE_BASE_COORDINATE_SYSTEM_HPP
+#define BOOOST_ASTRONOMY_COORDINATE_BASE_COORDINATE_SYSTEM_HPP
 
 #include <string>
 
@@ -39,8 +39,8 @@ namespace boost
 
                 degree_per_sec radial_velocity() = 0;
 
-            };
-        }
-    }
-}
-#endif  // !BOOOST_BASE_COORDINATE_SYSTEM_HPP
+            }; //base_coordinate_system
+        } //namespace coordinate
+    } //namespace astronomy
+} //namespace boost
+#endif  // !BOOOST_ASTRONOMY_COORDINATE_BASE_COORDINATE_SYSTEM_HPP

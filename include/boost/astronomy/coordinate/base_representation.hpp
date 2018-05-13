@@ -1,7 +1,8 @@
-#ifndef BOOST_BASE_REPRESENTATION_HPP
-#define BOOST_BASE_REPRESENTATION_HPP
+#ifndef BOOST_ASTRONOMY_COORDINATE_BASE_REPRESENTATION_HPP
+#define BOOST_ASTRONOMY_COORDINATE_BASE_REPRESENTATION_HPP
 
 
+#include <cmath>
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/algorithms/transform.hpp>
 #include <boost/geometry/arithmetic/cross_product.hpp>
@@ -84,7 +85,7 @@ namespace boost
 
                     /*converting both coordinates/vector into cartesian system*/
                     boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint1;
-                    boost::geometry::transform(point, tempPoint1);
+                    boost::geometry::transform(this->point, tempPoint1);
 
                     boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint2;
                     boost::geometry::transform(other.get_point(), tempPoint2);
@@ -95,7 +96,21 @@ namespace boost
 
                 // returns the unit vector of current vector
                 template <typename ReturnType>
-                virtual ReturnType unit_vector() const = 0;
+                virtual ReturnType unit_vector() const
+                {
+                    BOOST_STATIC_ASSERT_MSG((boost::is_template_base_of(boost::astronomy::coordinate::base_representation, ReturnType)),
+                        "Expected return type to be an astronomy representaion");
+                    
+                    boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint;
+                    double magnitude = this->norm();
+                    boost::geometry::transform(this->point, tempPoint);
+
+                    boost::geometry::set<0>(tempPoint, (boost::geometry::get<0>() / magnitude));
+                    boost::geometry::set<1>(tempPoint, (boost::geometry::get<1>() / magnitude));
+                    boost::geometry::set<2>(tempPoint, (boost::geometry::get<2>() / magnitude));
+
+                    return ReturnType(tempPoint);
+                }
 
                 // converts current representation into specified representation
                 template <typename ReturnType>
@@ -110,15 +125,27 @@ namespace boost
                 virtual ReturnType mean(representation const& other) const = 0;
 
                 // norm of the current class is returned
-                virtual double norm() const = 0;
+                virtual double norm() const
+                {
+                    double result = 0.0;
+                    boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint;
+                    boost::geometry::transform(this->point, tempPoint);
+
+                    for (int i = 0; i < DimensionCount; i++)
+                    {
+                        result += std::pow(boost::geometry::get<i>(this->point), 2);
+                    }
+
+                    return std::sqrt(result);
+                }
 
                 boost::geometry::model::point<double, DimensionCount, Type> get_point() const
                 {
                     return this->point;
                 }
-            };
-        }
-    }
-}
-#endif // !BOOST_BASE_REPRESENTATION_HPP
+            }; //base_representation
+        } //namespace coordinate
+    } //namespace astronomy
+} //namespace boost
+#endif // !BOOST_ASTRONOMY_COORDINATE_BASE_REPRESENTATION_HPP
 

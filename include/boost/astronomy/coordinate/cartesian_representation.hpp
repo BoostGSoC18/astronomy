@@ -1,5 +1,5 @@
-#ifndef CARTESIAN_REPRESENTATION_HPP
-#define CARTESIAN_REPRESENTATION_HPP
+#ifndef BOOST_ASTRONOMY_COORDINATE_CARTESIAN_REPRESENTATION_HPP
+#define BOOST_ASTRONOMY_COORDINATE_CARTESIAN_REPRESENTATION_HPP
 
 
 #include <boost/geometry/core/cs.hpp>
@@ -49,9 +49,9 @@ namespace boost
 
                     boost::geometry::transform(other.get_point(), this->point);
                 }
-            };
-        }
-    }
-}
+            }; //cartesian_representation
+        } //namespace coordinate
+    } //namespace astronomy
+} //namespace boost
 
-#endif // !CARTESIAN_REPRESENTATION_HPP
+#endif // !BOOST_ASTRONOMY_COORDINATE_CARTESIAN_REPRESENTATION_HPP

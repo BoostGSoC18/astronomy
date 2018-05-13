@@ -1,5 +1,5 @@
-#ifndef BOOST_SKY_POINT_HPP
-#define BOOST_SKY_POINT_HPP
+#ifndef BOOST_ASTRONOMY_COORDINATE_SKY_POINT_HPP
+#define BOOST_ASTRONOMY_COORDINATE_SKY_POINT_HPP
 
 
 #include <string>
@@ -69,4 +69,4 @@ namespace boost
     } // namespace astronomy
 } // namespace boost
 
-#endif // !BOOST_SKY_POINT_HPP
+#endif // !BOOST_ASTRONOMY_COORDINATE_SKY_POINT_HPP

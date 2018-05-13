@@ -49,20 +49,19 @@ namespace boost
                     /*both the coordinates/vector are first converted into cartesian coordinate system then
                     cross product of both cartesian vectors is converted into requested type and returned*/
 
-                    /*checking types of argument and return type*/
+                    /*checking types of argument and return type if they both are not
+                    subclass of base_representaion then compile time erorr is generated*/
                     BOOST_STATIC_ASSERT_MSG((boost::is_template_base_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
-                        "function argument type is expected to be a representation class");
-
+                        "function argument type is expected to be a representation type");
+                    
                     BOOST_STATIC_ASSERT_MSG((boost::is_template_base_of
                         <boost::astronomy::coordinate::base_representation, ReturnType>::value), 
                         "return type is expected to be a representation class");
 
                     /*converting both coordinates/vector into cartesian system*/
-                    boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint1;
+                    boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint1, tempPoint2;
                     boost::geometry::transform(this->point, tempPoint1);
-
-                    boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint2;
                     boost::geometry::transform(other.get_point(), tempPoint2);
 
                     /*creating object of the specified return type and returning it */
@@ -78,16 +77,15 @@ namespace boost
                     /*both the coordinates/vector are first converted into cartesian coordinate system then
                     dot product of both cartesian product is converted into requested type and returned*/
 
-                    /*checking types of argument type*/
+                    /*checking types of argument if they both are not subclass 
+                    of base_representaion then compile time erorr is generated*/
                     BOOST_STATIC_ASSERT_MSG((boost::is_template_base_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
-                        "function argument type is expected to be a representation class");
+                        "function argument type is expected to be a representation type");
 
                     /*converting both coordinates/vector into cartesian system*/
-                    boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint1;
+                    boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint1, tempPoint2;
                     boost::geometry::transform(this->point, tempPoint1);
-
-                    boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint2;
                     boost::geometry::transform(other.get_point(), tempPoint2);
 
                     return boost::geometry::dot_product(tempPoint1, tempPoint2);
@@ -98,13 +96,19 @@ namespace boost
                 template <typename ReturnType>
                 virtual ReturnType unit_vector() const
                 {
-                    BOOST_STATIC_ASSERT_MSG((boost::is_template_base_of(boost::astronomy::coordinate::base_representation, ReturnType)),
-                        "Expected return type to be an astronomy representaion");
+                    /*given coordinates/vectors are converted into cartesian and 
+                    unit vector of it is returned by converting it into requested type*/
+
+                    /*checking return type if they both are not subclass of
+                    base_representaion then compile time erorr is generated*/
+                    BOOST_STATIC_ASSERT_MSG((boost::is_template_base_of<boost::astronomy::coordinate::base_representation, ReturnType>),
+                        "return type is expected to be a representation class");
                     
                     boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint;
-                    double magnitude = this->norm();
-                    boost::geometry::transform(this->point, tempPoint);
+                    double magnitude = this->norm();    //magnitude of vector stored in current object
+                    boost::geometry::transform(this->point, tempPoint); //converting coordinate/vector into cartesian
 
+                    //performing calculations to find unit vector
                     boost::geometry::set<0>(tempPoint, (boost::geometry::get<0>() / magnitude));
                     boost::geometry::set<1>(tempPoint, (boost::geometry::get<1>() / magnitude));
                     boost::geometry::set<2>(tempPoint, (boost::geometry::get<2>() / magnitude));
@@ -114,15 +118,65 @@ namespace boost
 
                 // converts current representation into specified representation
                 template <typename ReturnType>
-                virtual ReturnType to_representation() const = 0;
+                virtual ReturnType to_representation() const
+                {
+                    /*checking return type if they both are not subclass of
+                    base_representaion then compile time erorr is generated*/
+                    BOOST_STATIC_ASSERT((boost::is_template_base_of<boost::astronomy::coordinate::base_representation, ReturnType>),
+                        "return type is expected to be a representation class")
+
+                    return ReturnType(this->point);
+                }
 
                 // sum of current vector and specified vector
-                template <typename ReturnType>
-                virtual ReturnType sum(representation const& other) const = 0;
+                template <typename ReturnType, typename Representation>
+                virtual ReturnType sum(Representation const& other) const
+                { 
+                    /*checking types of argument and return type if they both are not
+                    subclass of base_representaion then compile time erorr is generated*/
+                    BOOST_STATIC_ASSERT((boost::is_template_base_of<boost::astronomy::coordinate::base_representation, Representation>),
+                        "function argument is expected to be of representation type");
+
+                    BOOST_STATIC_ASSERT((boost::is_template_base_of<boost::astronomy::coordinate::base_representation, ReturnType>),
+                        "return type is expected to be a representation class");
+
+                    /*converting both coordinates/vector into cartesian system*/
+                    boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint1, tempPoint2, result;
+                    boost::geometry::transform(this->point, tempPoint1);
+                    boost::geometry::transform(other.get_point(), tempPoint2);
+
+                    //performing calculation to find the sum
+                    boost::geometry::set<0>(result, (boost::geometry::get<0>(tempPoint1) + boost::geometry::get<0>(tempPoint2)));
+                    boost::geometry::set<1>(result, (boost::geometry::get<1>(tempPoint1) + boost::geometry::get<1>(tempPoint2)));
+                    boost::geometry::set<2>(result, (boost::geometry::get<2>(tempPoint1) + boost::geometry::get<2>(tempPoint2)));
+
+                    return ReturnType(result);
+                }
 
                 // mean of current vector with specified vector
-                template <typename ReturnType>
-                virtual ReturnType mean(representation const& other) const = 0;
+                template <typename ReturnType, typename Representation>
+                virtual ReturnType mean(Representation const& other) const
+                {
+                    /*checking types of argument and return type if they both are not
+                    subclass of base_representaion then compile time erorr is generated*/
+                    BOOST_STATIC_ASSERT((boost::is_template_base_of<boost::astronomy::coordinate::base_representation, Representation>),
+                        "function argument is expected to be of representation type");
+
+                    BOOST_STATIC_ASSERT((boost::is_template_base_of<boost::astronomy::coordinate::base_representation, ReturnType>),
+                        "return type is expected to be a representation class");
+
+                    /*converting both coordinates/vector into cartesian system*/
+                    boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint1, tempPoint2, result;
+                    boost::geometry::transform(this->point, tempPoint1);
+                    boost::geometry::transform(other.get_point(), tempPoint2);
+
+                    //performing calculation to find the mean
+                    boost::geometry::set<0>(result, ((boost::geometry::get<0>(tempPoint1) + boost::geometry::get<0>(tempPoint2))/2));
+                    boost::geometry::set<1>(result, ((boost::geometry::get<1>(tempPoint1) + boost::geometry::get<1>(tempPoint2))/2));
+                    boost::geometry::set<2>(result, ((boost::geometry::get<2>(tempPoint1) + boost::geometry::get<2>(tempPoint2))/2));
+
+                    return ReturnType(result);
+                }
 
                 // norm of the current class is returned
                 virtual double norm() const

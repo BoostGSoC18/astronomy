@@ -3,10 +3,13 @@
 
 
 #include <tuple>
+
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/algorithms/transform.hpp>
+#include <boost/geometry/algorithms/equals.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/type_traits.hpp>
 
 #include <boost/astronomy/coordinate/base_representation.hpp>
 
@@ -17,9 +20,12 @@ namespace boost
     {
         namespace coordinate
         {
+            //Represents the coordinate in cartesian representation
             struct cartesian_representation : public base_representation<3, boost::geometry::cs::cartesian>
             {
             public:
+                cartesian_representation(){}
+
                 cartesian_representation(double x, double y, double z=0.0)
                 {
                     boost::geometry::set<0>(this->point, x);
@@ -41,7 +47,7 @@ namespace boost
                 template <typename Representation>
                 cartesian_representation(Representation const& other)
                 {
-                    BOOST_STATIC_ASSERT_MSG((boost::is_template_base_of
+                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
                         "No constructor found with given argument type");
 

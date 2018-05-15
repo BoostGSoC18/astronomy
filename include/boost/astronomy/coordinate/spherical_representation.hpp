@@ -6,7 +6,9 @@
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/algorithms/transform.hpp>
+#include <boost/geometry/algorithms/equals.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/type_traits.hpp>
 
 #include <boost/astronomy/coordinate/base_representation.hpp>
 
@@ -17,11 +19,14 @@ namespace boost
     {
         namespace coordinate
         {
+            //Represents the coordinate in spherical representation on unit sphere
             template <typename DegreeOrRadian>
             struct spherical_representation : public boost::astronomy::coordinate::base_representation
                 <2, boost::geometry::cs::spherical_equatorial<DegreeOrRadian>>
             {
             public:
+                spherical_representation(){}
+
                 spherical_representation(double lat, double lon)
                 {
                     boost::geometry::set<0>(this->point, lat);
@@ -42,7 +47,7 @@ namespace boost
                 template <typename Representation>
                 spherical_representation(Representation const& other)
                 {
-                    BOOST_STATIC_ASSERT_MSG((boost::is_template_base_of
+                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
                         "No constructor found with given argument type");
 

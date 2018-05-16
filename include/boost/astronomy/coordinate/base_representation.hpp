@@ -15,6 +15,8 @@
 #include <boost/type_traits.hpp>
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/range_c.hpp>
+#include <boost/preprocessor/seq/for_each.hpp>
+#include <boost/preprocessor/seq/first_n.hpp>
 
 namespace boost
 {
@@ -195,22 +197,11 @@ namespace boost
                     double result = 0.0;
                     boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint;
                     boost::geometry::transform(this->point, tempPoint);
-                    
-                    /*for (int i = 0; i < DimensionCount; i++)
-                    {
-                        result += std::pow(boost::geometry::get<staticReturn(i)>(this->point), 2);
-                    }*/
 
-                    /*struct squaredsum
-                    {
-                        template <typename T>
-                        int operator()(T)
-                        {
-                            return std::pow(boost::geometry::get<T::value>(point), 2);
-                        }
-                    };
-                    
-                    boost::mpl::for_each< boost::mpl::range_c<int, 0, dimensioncount>>(squaredsum());*/
+                    #define seq (0)(1)(2)(3)
+                    #define MACRO(_, data, elem) {data += std::pow(boost::geometry::get<elem>(tempPoint), 2);}
+
+                    BOOST_PP_SEQ_FOR_EACH(MACRO, result, BOOST_PP_SEQ_FIRST_N(DimensionCount, seq))
 
                     return std::sqrt(result);
                 }

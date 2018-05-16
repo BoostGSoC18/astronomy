@@ -198,10 +198,13 @@ namespace boost
                     boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint;
                     boost::geometry::transform(this->point, tempPoint);
 
-                    #define seq (0)(1)(2)(3)
+                    #define SEQ (0)(1)(2)(3)
                     #define MACRO(_, data, elem) {data += std::pow(boost::geometry::get<elem>(tempPoint), 2);}
 
-                    BOOST_PP_SEQ_FOR_EACH(MACRO, result, BOOST_PP_SEQ_FIRST_N(DimensionCount, seq))
+                    BOOST_PP_SEQ_FOR_EACH(MACRO, result, BOOST_PP_SEQ_FIRST_N(DimensionCount, SEQ))
+                    
+                    #undef MACRO
+                    #undef SEQ
 
                     return std::sqrt(result);
                 }

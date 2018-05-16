@@ -141,10 +141,12 @@ namespace boost
                 { 
                     /*checking types of argument and return type if they both are not
                     subclass of base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of<boost::astronomy::coordinate::base_representation, Representation>),
-                        "function argument is expected to be of representation type");
+                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                        <boost::astronomy::coordinate::base_representation, Representation>::value),
+                        "function argument type is expected to be a representation type");
 
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of<boost::astronomy::coordinate::base_representation, ReturnType>),
+                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                        <boost::astronomy::coordinate::base_representation, ReturnType>::value),
                         "return type is expected to be a representation class");
 
                     /*converting both coordinates/vector into cartesian system*/
@@ -166,10 +168,12 @@ namespace boost
                 {
                     /*checking types of argument and return type if they both are not
                     subclass of base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of<boost::astronomy::coordinate::base_representation, Representation>),
-                        "function argument is expected to be of representation type");
+                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                        <boost::astronomy::coordinate::base_representation, Representation>::value),
+                        "function argument type is expected to be a representation type");
 
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of<boost::astronomy::coordinate::base_representation, ReturnType>),
+                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                        <boost::astronomy::coordinate::base_representation, ReturnType>::value),
                         "return type is expected to be a representation class");
 
                     /*converting both coordinates/vector into cartesian system*/
@@ -196,16 +200,17 @@ namespace boost
                     {
                         result += std::pow(boost::geometry::get<staticReturn(i)>(this->point), 2);
                     }*/
-                    struct squaredsum
+
+                    /*struct squaredsum
                     {
                         template <typename T>
-                        void operator()(T)
+                        int operator()(T)
                         {
-                            result += std::pow(boost::geometry::get<T::value>(point), 2);
+                            return std::pow(boost::geometry::get<T::value>(point), 2);
                         }
                     };
-
-                    boost::mpl::for_each< boost::mpl::range_c<int, 0, dimensioncount>>(squaredsum());
+                    
+                    boost::mpl::for_each< boost::mpl::range_c<int, 0, dimensioncount>>(squaredsum());*/
 
                     return std::sqrt(result);
                 }

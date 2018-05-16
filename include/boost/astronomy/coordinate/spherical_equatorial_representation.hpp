@@ -21,31 +21,31 @@ namespace boost
         {
             //Represents the coordinate in spherical representation on unit sphere
             template <typename DegreeOrRadian>
-            struct spherical_representation : public boost::astronomy::coordinate::base_representation
+            struct spherical_equatorial_representation : public boost::astronomy::coordinate::base_representation
                 <2, boost::geometry::cs::spherical_equatorial<DegreeOrRadian>>
             {
             public:
-                spherical_representation(){}
+                spherical_equatorial_representation(){}
 
-                spherical_representation(double lat, double lon)
+                spherical_equatorial_representation(double lat, double lon)
                 {
                     boost::geometry::set<0>(this->point, lat);
                     boost::geometry::set<1>(this->point, lon);
                 }
 
                 template <int DimensionCount, typename Type>
-                spherical_representation(boost::geometry::model::point<double, DimensionCount, Type> pointObject)
+                spherical_equatorial_representation(boost::geometry::model::point<double, DimensionCount, Type> pointObject)
                 {
                     boost::geometry::transform(pointObject, this->point);
                 }
 
-                spherical_representation(spherical_representation &object)
+                spherical_equatorial_representation(spherical_equatorial_representation &object)
                 {
                     this->point = object.get_point();
                 }
 
                 template <typename Representation>
-                spherical_representation(Representation const& other)
+                spherical_equatorial_representation(Representation const& other)
                 {
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),

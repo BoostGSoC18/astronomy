@@ -134,7 +134,7 @@ namespace boost
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of<boost::astronomy::coordinate::base_representation, ReturnType>),
                         "return type is expected to be a representation class");
 
-                    return ReturnType(tempPoint);
+                    return ReturnType(this->point);
                 }
 
                 // sum of current vector and specified vector

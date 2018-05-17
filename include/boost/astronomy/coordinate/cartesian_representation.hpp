@@ -24,8 +24,10 @@ namespace boost
             struct cartesian_representation : public base_representation<3, boost::geometry::cs::cartesian>
             {
             public:
+                //default constructoer no initialization
                 cartesian_representation(){}
 
+                //constructs object from provided value of coordinates
                 cartesian_representation(double x, double y, double z=0.0)
                 {
                     boost::geometry::set<0>(this->point, x);
@@ -33,17 +35,21 @@ namespace boost
                     boost::geometry::set<2>(this->point, z);
                 }
 
+                //constructs object from boost::geometry::model::point object
                 template <int DimensionCount, typename Type>
                 cartesian_representation(boost::geometry::model::point<double, DimensionCount, Type> pointObject)
                 {
                     boost::geometry::transform(pointObject, this->point);
+
                 }
 
+                //copy constructor
                 cartesian_representation(cartesian_representation &object)
                 {
                     this->point = object.get_point();
                 }
 
+                //constructs object from any type of representation
                 template <typename Representation>
                 cartesian_representation(Representation const& other)
                 {

@@ -134,7 +134,7 @@ namespace boost
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of<boost::astronomy::coordinate::base_representation, ReturnType>),
                         "return type is expected to be a representation class");
 
-                    return ReturnType(this->point);
+                    return ReturnType(tempPoint);
                 }
 
                 // sum of current vector and specified vector
@@ -198,13 +198,38 @@ namespace boost
                     boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint;
                     boost::geometry::transform(this->point, tempPoint);
 
-                    #define SEQ (0)(1)(2)(3)
-                    #define MACRO(_, data, elem) {data += std::pow(boost::geometry::get<elem>(tempPoint), 2);}
+                    //#define SEQ (0)(1)(2)(3)
+                    //#define MACRO(_, data, elem) {data += std::pow(boost::geometry::get<elem>(tempPoint), 2);}
 
-                    BOOST_PP_SEQ_FOR_EACH(MACRO, result, BOOST_PP_SEQ_FIRST_N(DimensionCount, SEQ))
-                    
-                    #undef MACRO
-                    #undef SEQ
+                    //switch(DimensionCount)
+                    //{
+                    //case 2:
+                    //    BOOST_PP_SEQ_FOR_EACH(MACRO, result, BOOST_PP_SEQ_FIRST_N(2, SEQ))
+                    //        break;
+                    //case 3:
+                    //    BOOST_PP_SEQ_FOR_EACH(MACRO, result, BOOST_PP_SEQ_FIRST_N(3, SEQ))
+                    //        break;
+                    //default:
+                    //    return -1;
+                    //}
+                    //
+                    //#undef MACRO
+                    //#undef SEQ
+
+                    switch (DimensionCount)
+                    {
+                    case 2:
+                        result += std::pow(boost::geometry::get<0>(tempPoint), 2);
+                        result += std::pow(boost::geometry::get<1>(tempPoint), 2);
+                        break;
+                    case 3:
+                        result += std::pow(boost::geometry::get<0>(tempPoint), 2);
+                        result += std::pow(boost::geometry::get<1>(tempPoint), 2);
+                        result += std::pow(boost::geometry::get<2>(tempPoint), 2);
+                        break;
+                    default:
+                        return -1;
+                    }
 
                     return std::sqrt(result);
                 }

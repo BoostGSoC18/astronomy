@@ -11,6 +11,7 @@
 #include <boost/type_traits.hpp>
 
 #include <boost/astronomy/coordinate/base_representation.hpp>
+#include <boost/astronomy/coordinate/cartesian_representation.hpp>
 
 
 namespace boost
@@ -20,11 +21,13 @@ namespace boost
         namespace coordinate
         {
             //Represents the coordinate in spherical representation on unit sphere
+            //Uses two coordinate to represent a point (latitude, longitude)
             template <typename DegreeOrRadian>
             struct spherical_equatorial_representation : public boost::astronomy::coordinate::base_representation
                 <2, boost::geometry::cs::spherical_equatorial<DegreeOrRadian>>
             {
             public:
+                //default constructor no initialization
                 spherical_equatorial_representation(){}
 
                 spherical_equatorial_representation(double lat, double lon)
@@ -33,17 +36,23 @@ namespace boost
                     boost::geometry::set<1>(this->point, lon);
                 }
 
+                //constructs object from boost::geometry::model::point object
                 template <int DimensionCount, typename Type>
                 spherical_equatorial_representation(boost::geometry::model::point<double, DimensionCount, Type> pointObject)
                 {
-                    boost::geometry::transform(pointObject, this->point);
+                    boost::astronomy::coordinate::cartesian_representation temp = pointObject;
+                    boost::geometry::transform(temp.unit_vector
+                        <boost::astronomy::coordinate::cartesian_representation>().get_point(), this->point);
                 }
 
-                spherical_equatorial_representation(spherical_equatorial_representation &object)
+                //copy constructor
+                template <typename ObjectDegreeOrRadian>
+                spherical_equatorial_representation(spherical_equatorial_representation<ObjectDegreeOrRadian> &object)
                 {
-                    this->point = object.get_point();
+                    boost::geometry::transform(object.get_point(), this->point);
                 }
 
+                //constructs object from any type of representation
                 template <typename Representation>
                 spherical_equatorial_representation(Representation const& other)
                 {
@@ -51,7 +60,10 @@ namespace boost
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
                         "No constructor found with given argument type");
 
-                    boost::geometry::transform(other.get_point(), this->point);
+                    boost::astronomy::coordinate::cartesian_representation temp = other;
+                    boost::geometry::transform(temp.unit_vector
+                        <boost::astronomy::coordinate::cartesian_representation>().get_point(), this->point);
+
                 }
                 // returns the (lat, lon) in the form of tuple
                 std::tuple<double, double> get_lat_lon() const

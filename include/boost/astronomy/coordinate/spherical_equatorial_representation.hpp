@@ -1,5 +1,5 @@
-#ifndef BOOST_ASTRONOMY_COORDINATE_SPHERICAL_REPRESENTATION_HPP
-#define BOOST_ASTRONOMY_COORDINATE_SPHERICAL_REPRESENTATION_HPP
+#ifndef BOOST_ASTRONOMY_COORDINATE_SPHERICAL_EQUATORIAL_REPRESENTATION_HPP
+#define BOOST_ASTRONOMY_COORDINATE_SPHERICAL_EQUATORIAL_REPRESENTATION_HPP
 
 
 #include <tuple>
@@ -38,7 +38,7 @@ namespace boost
 
                 //constructs object from boost::geometry::model::point object
                 template <int DimensionCount, typename Type>
-                spherical_equatorial_representation(boost::geometry::model::point<double, DimensionCount, Type> pointObject)
+                spherical_equatorial_representation(boost::geometry::model::point<double, DimensionCount, Type> const& pointObject)
                 {
                     boost::astronomy::coordinate::cartesian_representation temp = pointObject;
                     boost::geometry::transform(temp.unit_vector
@@ -47,7 +47,7 @@ namespace boost
 
                 //copy constructor
                 template <typename ObjectDegreeOrRadian>
-                spherical_equatorial_representation(spherical_equatorial_representation<ObjectDegreeOrRadian> &object)
+                spherical_equatorial_representation(spherical_equatorial_representation<ObjectDegreeOrRadian> const& object)
                 {
                     boost::geometry::transform(object.get_point(), this->point);
                 }
@@ -84,10 +84,10 @@ namespace boost
                 }
 
                 //set value of (lat, lon) in current object
-                void set_lat_lon(double x, double y)
+                void set_lat_lon(double lat, double lon)
                 {
-                    boost::geometry::set<0>(this->point, x);
-                    boost::geometry::set<1>(this->point, y);
+                    boost::geometry::set<0>(this->point, lat);
+                    boost::geometry::set<1>(this->point, lon);
                 }
 
                 //set value of lat component of point
@@ -105,5 +105,5 @@ namespace boost
         }
     }
 }
-#endif // !BOOST_ASTRONOMY_COORDINATE_SPHERICAL_REPRESENTATION_HPP
+#endif // !BOOST_ASTRONOMY_COORDINATE_SPHERICAL_EQUATORIAL__REPRESENTATION_HPP
 

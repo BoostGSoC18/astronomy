@@ -37,14 +37,14 @@ namespace boost
 
                 //constructs object from boost::geometry::model::point object
                 template <int DimensionCount, typename Type>
-                cartesian_representation(boost::geometry::model::point<double, DimensionCount, Type> pointObject)
+                cartesian_representation(boost::geometry::model::point<double, DimensionCount, Type> const& pointObject)
                 {
                     boost::geometry::transform(pointObject, this->point);
 
                 }
 
                 //copy constructor
-                cartesian_representation(cartesian_representation &object)
+                cartesian_representation(cartesian_representation const& object)
                 {
                     this->point = object.get_point();
                 }

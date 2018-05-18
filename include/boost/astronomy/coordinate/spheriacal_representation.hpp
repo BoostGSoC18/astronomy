@@ -43,7 +43,7 @@ namespace boost
                 template <typename OtherDegreeOrRadian>
                 spherical_representation(spherical_representation<OtherDegreeOrRadian> const& other)
                 {
-                    this->point = object.get_point();
+                    boost::geometry::transform(other.get_point(), this->point);
                 }
 
                 template <typename Representation>

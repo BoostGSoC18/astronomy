@@ -1,6 +1,7 @@
 #ifndef BOOST_ASTRONOMY_COORDINATE_SPHERICAL_REPRESENTATION_HPP
 #define BOOST_ASTRONOMY_COORDINATE_SPHERICAL_REPRESENTATION_HPP
 
+
 #include <tuple>
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/geometries/point.hpp>
@@ -12,20 +13,23 @@
 #include <boost/astronomy/coordinate/base_representation.hpp>
 #include <boost/astronomy/coordinate/cartesian_representation.hpp>
 
+
 namespace boost
 {
     namespace astronomy
     {
         namespace coordinate
         {
-            template<typename DegreeOrRadian>
+            //Represents the coordinate in spherical representation
+            //Uses two coordinate to represent a point (latitude, longitude, distance)
+            template <typename DegreeOrRadian>
             struct spherical_representation : public boost::astronomy::coordinate::base_representation
-                <3, boost::geometriy::cs::spherical<DegreeOrRadian>>
+                <3, boost::geometry::cs::spherical<DegreeOrRadian>>
             {
             public:
                 spherical_representation() {}
 
-                spherical_representation(double lat, double, lon, double distance)
+                spherical_representation(double lat, double lon, double distance)
                 {
                     boost::geometry::set<0>(this->point, lat);
                     boost::geometry::set<1>(this->point, lon);
@@ -46,15 +50,16 @@ namespace boost
                     boost::geometry::transform(other.get_point(), this->point);
                 }
 
+                //constructs object from any type of representation
                 template <typename Representation>
-                spherical_representaion(Representation const& other)
+                spherical_representation(Representation const& other)
                 {
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
                         "No constructor found with given argument type");
 
                     boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> temp;
-                    boost::geometry::transform(other, temp);
+                    boost::geometry::transform(other.get_point(), temp);
                     boost::geometry::transform(temp, this->point);
                 }
 
@@ -78,7 +83,7 @@ namespace boost
                 }
 
                 //returns the distance component of point
-                double get_lon() const
+                double get_dist() const
                 {
                     return boost::geometry::get<2>(this->point);
                 }

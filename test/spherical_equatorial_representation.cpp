@@ -28,6 +28,12 @@ int main()
     std::cout << "s5: " << boost::geometry::dsv(s5.get_point()) << std::endl;
     std::cout << "s6: " << boost::geometry::dsv(s6.get_point()) << std::endl;
 
+    std::cout << "c1 X s2 = " << boost::geometry::dsv(s1.cross<boost::astronomy::coordinate::cartesian_representation>(c).get_point()) << std::endl;
+    std::cout << "s1 * s2 = " << s1.dot(s2) << std::endl;
+    std::cout << "unit vector of s3" << boost::geometry::dsv(s1.unit_vector<boost::astronomy::coordinate::cartesian_representation>().get_point()) << std::endl;
+    std::cout << "s1 + s5 = " << boost::geometry::dsv(s1.sum<boost::astronomy::coordinate::cartesian_representation>(s5).get_point()) << std::endl;
+    std::cout << "mean of s1 s4 = " << boost::geometry::dsv(s1.mean<boost::astronomy::coordinate::cartesian_representation>(s4).get_point()) << std::endl;
+
     std::cin.get();
     return 0;
 }

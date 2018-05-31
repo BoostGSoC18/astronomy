@@ -13,10 +13,6 @@
 #include<boost/geometry/io/dsv/write.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/type_traits.hpp>
-#include <boost/mpl/for_each.hpp>
-#include <boost/mpl/range_c.hpp>
-#include <boost/preprocessor/seq/for_each.hpp>
-#include <boost/preprocessor/seq/first_n.hpp>
 
 namespace boost
 {
@@ -197,24 +193,6 @@ namespace boost
                     double result = 0.0;
                     boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint;
                     boost::geometry::transform(this->point, tempPoint);
-
-                    //#define SEQ (0)(1)(2)(3)
-                    //#define MACRO(_, data, elem) {data += std::pow(boost::geometry::get<elem>(tempPoint), 2);}
-
-                    //switch(DimensionCount)
-                    //{
-                    //case 2:
-                    //    BOOST_PP_SEQ_FOR_EACH(MACRO, result, BOOST_PP_SEQ_FIRST_N(2, SEQ))
-                    //        break;
-                    //case 3:
-                    //    BOOST_PP_SEQ_FOR_EACH(MACRO, result, BOOST_PP_SEQ_FIRST_N(3, SEQ))
-                    //        break;
-                    //default:
-                    //    return -1;
-                    //}
-                    //
-                    //#undef MACRO
-                    //#undef SEQ
 
                     switch (DimensionCount)
                     {

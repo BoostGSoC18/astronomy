@@ -9,8 +9,8 @@
 #include <boost/geometry/algorithms/transform.hpp>
 #include <boost/geometry/algorithms/equals.hpp>
 #include <boost/static_assert.hpp>
-#include <boost/type_traits.hpp>
 
+#include <boost/is_base_template_of.hpp>
 #include <boost/astronomy/coordinate/base_representation.hpp>
 
 
@@ -21,7 +21,9 @@ namespace boost
         namespace coordinate
         {
             //Represents the coordinate in cartesian representation
-            struct cartesian_representation : public base_representation<3, boost::geometry::cs::cartesian>
+            //Uses three coordinate to represent a point/vector (x, y, z)
+            struct cartesian_representation : public boost::astronomy::coordinate::base_representation
+                <3, boost::geometry::cs::cartesian>
             {
             public:
                 //default constructoer no initialization
@@ -73,13 +75,13 @@ namespace boost
                     return boost::geometry::get<0>(this->point);
                 }
 
-                //returns the z component of point
+                //returns the y component of point
                 double get_y() const
                 {
                     return boost::geometry::get<1>(this->point);
                 }
 
-                //returns the y component of point
+                //returns the z component of point
                 double get_z() const
                 {
                     return boost::geometry::get<2>(this->point);
@@ -99,7 +101,7 @@ namespace boost
                     boost::geometry::set<0>(this->point, x);
                 }
 
-                //set value of x component of point
+                //set value of y component of point
                 void set_y(double y)
                 {
                     boost::geometry::set<1>(this->point, y);

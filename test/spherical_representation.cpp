@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include <boost/geometry/geometries/point.hpp>
+
 #include <boost/astronomy/coordinate/cartesian_representation.hpp>
 #include <boost/astronomy/coordinate/spherical_equatorial_representation.hpp>
 #include <boost/astronomy/coordinate/spheriacal_representation.hpp>

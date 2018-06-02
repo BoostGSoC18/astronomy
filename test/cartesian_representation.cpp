@@ -1,8 +1,11 @@
-#include<iostream>
+#include <iostream>
 
-#include<boost/astronomy/coordinate/cartesian_representation.hpp>
-#include<boost/astronomy/coordinate/spherical_equatorial_representation.hpp>
-#include<boost/geometry/io/dsv/write.hpp>
+#include <boost/geometry/geometries/point.hpp>
+
+#include <boost/astronomy/coordinate/cartesian_representation.hpp>
+#include <boost/astronomy/coordinate/spherical_equatorial_representation.hpp>
+#include <boost/geometry/io/dsv/write.hpp>
+
 int main()
 {
     boost::geometry::model::point<double, 2, boost::geometry::cs::spherical_equatorial<boost::geometry::degree>> p(30, 60);

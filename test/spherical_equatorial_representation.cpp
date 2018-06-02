@@ -1,8 +1,10 @@
-#include<iostream>
+#include <iostream>
 
-#include<boost/astronomy/coordinate/cartesian_representation.hpp>
-#include<boost/astronomy/coordinate/spherical_equatorial_representation.hpp>
-#include<boost/geometry/io/dsv/write.hpp>
+#include <boost/geometry/geometries/point.hpp>
+
+#include <boost/astronomy/coordinate/cartesian_representation.hpp>
+#include <boost/astronomy/coordinate/spherical_equatorial_representation.hpp>
+#include <boost/geometry/io/dsv/write.hpp>
 
 int main()
 {
@@ -28,7 +30,7 @@ int main()
     std::cout << "s5: " << boost::geometry::dsv(s5.get_point()) << std::endl;
     std::cout << "s6: " << boost::geometry::dsv(s6.get_point()) << std::endl;
 
-    std::cout << "c1 X s2 = " << boost::geometry::dsv(s1.cross<boost::astronomy::coordinate::cartesian_representation>(c).get_point()) << std::endl;
+    std::cout << "s1 X c = " << boost::geometry::dsv(s1.cross<boost::astronomy::coordinate::cartesian_representation>(c).get_point()) << std::endl;
     std::cout << "s1 * s2 = " << s1.dot(s2) << std::endl;
     std::cout << "unit vector of s3" << boost::geometry::dsv(s1.unit_vector<boost::astronomy::coordinate::cartesian_representation>().get_point()) << std::endl;
     std::cout << "s1 + s5 = " << boost::geometry::dsv(s1.sum<boost::astronomy::coordinate::cartesian_representation>(s5).get_point()) << std::endl;

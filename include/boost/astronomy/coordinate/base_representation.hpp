@@ -2,42 +2,22 @@
 #define BOOST_ASTRONOMY_COORDINATE_BASE_REPRESENTATION_HPP
 
 
-#include <cmath>
-#include <ostream>
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/algorithms/transform.hpp>
 #include <boost/geometry/algorithms/equals.hpp>
 #include <boost/geometry/arithmetic/cross_product.hpp>
 #include <boost/geometry/arithmetic/dot_product.hpp>
 #include <boost/geometry/core/cs.hpp>
-#include<boost/geometry/io/dsv/write.hpp>
 #include <boost/static_assert.hpp>
-#include <boost/type_traits.hpp>
+#include <boost/is_base_template_of.hpp>
 
 namespace boost
 {
-    // structure to provide support like std::is_base_of for template base classes
-    template <template <int, typename...> class Base, typename Derived>
-    struct base_template
-    {
-        using U = typename std::remove_cv<Derived>::type;
-
-        template <int T, typename... Args>
-        static std::true_type test(Base<T, Args...>*);
-
-        static std::false_type test(void*);
-
-        using type = decltype(test(std::declval<U*>()));
-    };
-
-    template <template <int, typename...> class Base, typename Derived>
-    using is_base_template_of = typename base_template<Base, Derived>::type;
-
     namespace astronomy
     {
         namespace coordinate
         {
-            // abstract structure which is the base for all the representation 
+            // structure which is the base for all the representation 
             template <int DimensionCount, typename Type>
             struct base_representation
             {
@@ -187,7 +167,7 @@ namespace boost
                     return ReturnType(result);
                 }
 
-                // norm of the current class is returned
+                // magnitude of the current class is returned
                 double magnitude() const
                 {
                     double result = 0.0;
@@ -212,6 +192,7 @@ namespace boost
                     return std::sqrt(result);
                 }
 
+                // returns the point/vector of calling object
                 boost::geometry::model::point<double, DimensionCount, Type> get_point() const
                 {
                     return this->point;

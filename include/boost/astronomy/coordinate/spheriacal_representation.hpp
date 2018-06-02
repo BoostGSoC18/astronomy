@@ -8,8 +8,8 @@
 #include <boost/geometry/algorithms/transform.hpp>
 #include <boost/geometry/algorithms/equals.hpp>
 #include <boost/static_assert.hpp>
-#include <boost/type_traits.hpp>
 
+#include <boost/is_base_template_of.hpp>
 #include <boost/astronomy/coordinate/base_representation.hpp>
 #include <boost/astronomy/coordinate/cartesian_representation.hpp>
 
@@ -21,14 +21,16 @@ namespace boost
         namespace coordinate
         {
             //Represents the coordinate in spherical representation
-            //Uses two coordinate to represent a point (latitude, longitude, distance)
+            //Uses three coordinate to represent a point/vector (latitude, longitude, distance)
             template <typename DegreeOrRadian>
             struct spherical_representation : public boost::astronomy::coordinate::base_representation
                 <3, boost::geometry::cs::spherical<DegreeOrRadian>>
             {
             public:
+                //default constructor no initialization
                 spherical_representation() {}
 
+                //constructs object from provided value of coordinates (latitude, longitude, distance)
                 spherical_representation(double lat, double lon, double distance)
                 {
                     boost::geometry::set<0>(this->point, lat);
@@ -36,6 +38,7 @@ namespace boost
                     boost::geometry::set<2>(this->point, distance);
                 }
 
+                //constructs object from boost::geometry::model::point object
                 template<int DimensionCount, typename Type>
                 spherical_representation(boost::geometry::model::point<double, DimensionCount, Type> const& pointObject)
                 {
@@ -44,10 +47,11 @@ namespace boost
                     boost::geometry::transform(temp, this->point);
                 }
 
+                //copy constructor
                 template <typename OtherDegreeOrRadian>
                 spherical_representation(spherical_representation<OtherDegreeOrRadian> const& other)
                 {
-                    boost::geometry::transform(other.get_point(), this->point);
+                    this->point = other.get_point();
                 }
 
                 //constructs object from any type of representation

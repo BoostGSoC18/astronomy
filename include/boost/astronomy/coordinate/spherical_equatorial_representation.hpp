@@ -22,7 +22,7 @@ namespace boost
         namespace coordinate
         {
             //Represents the coordinate in spherical representation on unit sphere
-            //Uses two coordinate to represent a point/vector (latitude, longitude)
+            //Uses two components to represent a point/vector (latitude, longitude)
             template <typename DegreeOrRadian>
             struct spherical_equatorial_representation : public boost::astronomy::coordinate::base_representation
                 <2, boost::geometry::cs::spherical_equatorial<DegreeOrRadian>>

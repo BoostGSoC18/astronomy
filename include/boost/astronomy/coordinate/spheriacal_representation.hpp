@@ -21,7 +21,7 @@ namespace boost
         namespace coordinate
         {
             //Represents the coordinate in spherical representation
-            //Uses three coordinate to represent a point/vector (latitude, longitude, distance)
+            //Uses three components to represent a point/vector (latitude, longitude, distance)
             template <typename DegreeOrRadian>
             struct spherical_representation : public boost::astronomy::coordinate::base_representation
                 <3, boost::geometry::cs::spherical<DegreeOrRadian>>

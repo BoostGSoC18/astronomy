@@ -21,7 +21,7 @@ namespace boost
         namespace coordinate
         {
             //Represents the coordinate in cartesian representation
-            //Uses three coordinate to represent a point/vector (x, y, z)
+            //Uses three components to represent a point/vector (x, y, z)
             struct cartesian_representation : public boost::astronomy::coordinate::base_representation
                 <3, boost::geometry::cs::cartesian>
             {

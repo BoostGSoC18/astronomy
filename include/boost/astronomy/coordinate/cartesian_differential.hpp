@@ -107,6 +107,18 @@ namespace boost
                 {
                     boost::geometry::set<2>(this->diff, dz);
                 }
+
+                boost::astronomy::coordinate::cartesian_differential
+                    operator +(boost::astronomy::coordinate::cartesian_differential const& diff) const
+                {
+                    boost::astronomy::coordinate::cartesian_differential temp(this->diff);
+
+                    temp.set_dx(temp.get_dx() + diff.get_dx());
+                    temp.set_dy(temp.get_dy() + diff.get_dy());
+                    temp.set_dz(temp.get_dz() + diff.get_dx());
+
+                    return temp;
+                }
             };
 
         }// namespace coordinate

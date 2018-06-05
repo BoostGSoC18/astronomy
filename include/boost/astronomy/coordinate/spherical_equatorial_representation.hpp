@@ -13,6 +13,7 @@
 #include <boost/is_base_template_of.hpp>
 #include <boost/astronomy/coordinate/base_representation.hpp>
 #include <boost/astronomy/coordinate/cartesian_representation.hpp>
+#include <boost/astronomy/coordinate/spherical_equatorial_differential.hpp>
 
 
 namespace boost
@@ -102,6 +103,18 @@ namespace boost
                 void set_lon(double lon)
                 {
                     boost::geometry::set<1>(this->point, lon);
+                }
+
+                template <typename DiffDegreeOrRadian>
+                boost::astronomy::coordinate::spherical_equatorial_representation<DegreeOrRadian>
+                    operator +(boost::astronomy::coordinate::spherical_equatorial_differential<DiffDegreeOrRadian> const& diff) const
+                {
+                    boost::astronomy::coordinate::spherical_equatorial_representation<DegreeOrRadian> temp(this->point);
+
+                    temp.set_lat(temp.get_lat() + diff.get_dlat());
+                    temp.set_lon(temp.get_lon() + diff.get_dlon());
+
+                    return temp;
                 }
             };
         }

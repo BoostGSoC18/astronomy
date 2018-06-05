@@ -12,6 +12,7 @@
 
 #include <boost/is_base_template_of.hpp>
 #include <boost/astronomy/coordinate/base_representation.hpp>
+#include <boost/astronomy/coordinate/cartesian_differential.hpp>
 
 
 namespace boost
@@ -30,7 +31,7 @@ namespace boost
                 cartesian_representation(){}
 
                 //constructs object from provided value of coordinates
-                cartesian_representation(double x, double y, double z=0.0)
+                cartesian_representation(double x, double y=0.0, double z=0.0)
                 {
                     boost::geometry::set<0>(this->point, x);
                     boost::geometry::set<1>(this->point, y);
@@ -111,6 +112,18 @@ namespace boost
                 void set_z(double z)
                 {
                     boost::geometry::set<2>(this->point, z);
+                }
+
+                boost::astronomy::coordinate::cartesian_representation 
+                    operator +(boost::astronomy::coordinate::cartesian_differential const& diff) const 
+                {
+                    boost::astronomy::coordinate::cartesian_representation temp(this->point);
+
+                    temp.set_x(temp.get_x() + diff.get_dx());
+                    temp.set_y(temp.get_y() + diff.get_dy());
+                    temp.set_z(temp.get_z() + diff.get_dx());
+
+                    return temp;
                 }
 
             }; //cartesian_representation

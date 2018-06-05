@@ -16,8 +16,7 @@ namespace boost
         {
             typedef boost::units::quantity<boost::units::degree::plane_angle> degree;
             typedef boost::units::quantity<boost::units::divide_typeof_helper
-                <boost::units::degree::plane_angle,boost::units::si::time>::type>
-                degree_per_sec;
+                <boost::units::degree::plane_angle,boost::units::si::time>::type> degree_per_sec;
 
             template <class Representation=void, class Differential=void>
             struct base_coordinate_system

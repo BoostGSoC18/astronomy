@@ -9,6 +9,7 @@
 #include <boost/geometry/arithmetic/dot_product.hpp>
 #include <boost/geometry/core/cs.hpp>
 #include <boost/static_assert.hpp>
+
 #include <boost/is_base_template_of.hpp>
 
 namespace boost
@@ -107,7 +108,7 @@ namespace boost
                 {
                     /*checking return type if they both are not subclass of
                     base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of<boost::astronomy::coordinate::base_representation, ReturnType>),
+                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of<boost::astronomy::coordinate::base_representation, ReturnType>::value),
                         "return type is expected to be a representation class");
 
                     return ReturnType(this->point);

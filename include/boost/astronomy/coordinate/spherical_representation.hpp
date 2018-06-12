@@ -49,8 +49,7 @@ namespace boost
                 }
 
                 //copy constructor
-                template <typename OtherDegreeOrRadian>
-                spherical_representation(spherical_representation<OtherDegreeOrRadian> const& other)
+                spherical_representation(spherical_representation<DegreeOrRadian> const& other)
                 {
                     this->point = other.get_point();
                 }

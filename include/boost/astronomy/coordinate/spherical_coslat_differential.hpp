@@ -22,7 +22,7 @@ namespace boost
     {
         namespace coordinate
         {
-            //Represents the differential in spherical representation
+            //Represents the differential in spherical representation including cos(latitude) term
             //Uses three components to represent a differential (dlatitude, dlongitude_coslat, ddistance)
             template <typename DegreeOrRadian>
             struct spherical_coslat_differential : public boost::astronomy::coordinate::base_differential
@@ -50,8 +50,8 @@ namespace boost
                 }
 
                 //copy constructor
-                template <typename OtherDegreeOrRadian>
-                spherical_coslat_differential(spherical_coslat_differential<OtherDegreeOrRadian> const& other)
+
+                spherical_coslat_differential(spherical_coslat_differential<DegreeOrRadian> const& other)
                 {
                     this->diff = other.get_differential();
                 }
@@ -70,7 +70,7 @@ namespace boost
                 }
 
                 // returns the (dlat, dlon, ddistance) in the form of tuple
-                std::tuple<double, double, double> get_dlat_dlon_ddist() const
+                std::tuple<double, double, double> get_dlat_dlon_coslat_ddist() const
                 {
                     return std::make_tuple(boost::geometry::get<0>(this->diff),
                         boost::geometry::get<1>(this->diff), boost::geometry::get<2>(this->diff));
@@ -82,8 +82,8 @@ namespace boost
                     return boost::geometry::get<0>(this->diff);
                 }
 
-                //returns the dlon component of differential
-                double get_dlon() const
+                //returns the lon_coslat component of differential
+                double get_dlon_coslat() const
                 {
                     return boost::geometry::get<1>(this->diff);
                 }
@@ -94,8 +94,8 @@ namespace boost
                     return boost::geometry::get<2>(this->diff);
                 }
 
-                //set value of (dlat, dlon, ddistance) in current object
-                void set_dlat_dlon_ddist(double dlat, double dlon, double ddistance)
+                //set value of (dlat, dlon_coslat, ddistance) in current object
+                void set_dlat_dlon_coslat_ddist(double dlat, double dlon, double ddistance)
                 {
                     boost::geometry::set<0>(this->diff, dlat);
                     boost::geometry::set<1>(this->diff, dlon);
@@ -108,8 +108,8 @@ namespace boost
                     boost::geometry::set<0>(this->diff, dlat);
                 }
 
-                //set value of dlon component of differential
-                void set_dlon(double dlon)
+                //set value of dlon_coslat component of differential
+                void set_dlon_coslat(double dlon)
                 {
                     boost::geometry::set<1>(this->diff, dlon);
                 }
@@ -121,13 +121,13 @@ namespace boost
                 }
 
                 template <typename DiffDegreeOrRadian>
-                boost::astronomy::coordinate::spherical_differential<DegreeOrRadian>
-                    operator +(boost::astronomy::coordinate::spherical_differential<DiffDegreeOrRadian> const& diff) const
+                boost::astronomy::coordinate::spherical_coslat_differential<DegreeOrRadian>
+                    operator +(boost::astronomy::coordinate::spherical_coslat_differential<DiffDegreeOrRadian> const& diff) const
                 {
-                    boost::astronomy::coordinate::spherical_differential<DegreeOrRadian> temp(this->diff);
+                    boost::astronomy::coordinate::spherical_coslat_differential<DegreeOrRadian> temp(this->diff);
 
                     temp.set_dlat(temp.get_dlat() + diff.get_dlat());
-                    temp.set_dlon(temp.get_dlon() + diff.get_dlon());
+                    temp.set_dlon_coslat(temp.get_dlon_coslat() + diff.get_dlon_coslat());
                     temp.set_ddist(temp.get_ddist() + diff.get_ddist());
 
                     return temp;

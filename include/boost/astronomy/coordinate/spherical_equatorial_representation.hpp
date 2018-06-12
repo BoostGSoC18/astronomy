@@ -49,8 +49,7 @@ namespace boost
                 }
 
                 //copy constructor
-                template <typename ObjectDegreeOrRadian>
-                spherical_equatorial_representation(spherical_equatorial_representation<ObjectDegreeOrRadian> const& object)
+                spherical_equatorial_representation(spherical_equatorial_representation<DegreeOrRadian> const& object)
                 {
                     this->point = object.get_point();
                 }

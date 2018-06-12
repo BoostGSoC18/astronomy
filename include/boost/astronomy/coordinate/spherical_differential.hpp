@@ -48,8 +48,7 @@ namespace boost
                 }
 
                 //copy constructor
-                template <typename OtherDegreeOrRadian>
-                spherical_differential(spherical_differential<OtherDegreeOrRadian> const& other)
+                spherical_differential(spherical_differential<DegreeOrRadian> const& other)
                 {
                     this->diff = other.get_differential();
                 }

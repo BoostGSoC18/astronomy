@@ -14,6 +14,9 @@ namespace boost
     {
         namespace coordinate
         {
+            typedef boost::geometry::degree degree;
+            typedef boost::geometry::radian radian;
+
             // structure which is the base for all the representation 
             template <int DimensionCount, typename Type>
             struct base_differential

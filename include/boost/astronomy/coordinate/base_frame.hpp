@@ -1,5 +1,5 @@
-#ifndef BOOOST_ASTRONOMY_COORDINATE_BASE_COORDINATE_SYSTEM_HPP
-#define BOOOST_ASTRONOMY_COORDINATE_BASE_COORDINATE_SYSTEM_HPP
+#ifndef BOOST_ASTRONOMY_COORDINATE_BASE_COORDINATE_SYSTEM_HPP
+#define BOOST_ASTRONOMY_COORDINATE_BASE_COORDINATE_SYSTEM_HPP
 
 #include <tuple>
 #include <cmath>
@@ -14,16 +14,18 @@
 #include <boost/astronomy/coordinate/differential.hpp>
 #include <boost/is_base_template_of.hpp>
 
-#define radian_to_degree 57.29577951308233
+
 namespace boost 
 {
     namespace astronomy
     {
         namespace coordinate
         {
+            typedef boost::geometry::degree degree;
+            typedef boost::geometry::radian radian;
 
             template <typename Representation, typename Differential>
-            struct base_coordinate
+            struct base_frame
             {
             protected:
                 Representation data;
@@ -84,7 +86,7 @@ namespace boost
                 double separation(OtherCoordinate const& other) const
                 {
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
-                        <boost::astronomy::coordinate::base_coordinate, OtherCoordinate>::value),
+                        <boost::astronomy::coordinate::base_frame, OtherCoordinate>::value),
                         "argument type is expected to be a coordinate class");
 
                     return std::acos(this->data.dot(other.get_data()));
@@ -95,4 +97,4 @@ namespace boost
         } //namespace coordinate
     } //namespace astronomy
 } //namespace boost
-#endif  // !BOOOST_ASTRONOMY_COORDINATE_BASE_COORDINATE_SYSTEM_HPP
+#endif  // !BOOST_ASTRONOMY_COORDINATE_BASE_COORDINATE_SYSTEM_HPP

@@ -1,5 +1,6 @@
-#ifndef BOOST_ASTRONOMY_COORDINATE_GALACTIC_HPP
-#define BOOST_ASTRONOMY_COORDINATE_GALACTIC_HPP
+#ifndef BOOST_ASTRONOMY_COORDINATE_BASE_EQUATORIAL_FRAME_HPP
+#define BOOST_ASTRONOMY_COORDINATE_BASE_EQUATORIAL_FRAME_HPP
+
 
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/geometries/point.hpp>
@@ -7,7 +8,6 @@
 #include <boost/geometry/algorithms/equals.hpp>
 
 #include <boost/is_base_template_of.hpp>
-#include <boost/astronomy/coordinate/base_representation.hpp>
 #include <boost/astronomy/coordinate/base_frame.hpp>
 #include <boost/astronomy/coordinate/spherical_representation.hpp>
 #include <boost/astronomy/coordinate/spherical_coslat_differential.hpp>
@@ -18,55 +18,44 @@ namespace boost
     {
         namespace coordinate
         {
-
             template <typename RepresentationDegreeOrRadian = degree,
                 typename DifferentialDegreeOrRadian = degree>
-            struct galactic: public boost::astronomy::coordinate::base_frame
+            struct base_equatorial_frame: public boost::astronomy::coordinate::base_frame
                 <boost::astronomy::coordinate::spherical_representation<RepresentationDegreeOrRadian>,
                 boost::astronomy::coordinate::spherical_coslat_differential<DifferentialDegreeOrRadian>>
             {
             public:
                 //default constructor no initialization
-                galactic() {}
+                base_equatorial_frame() {}
 
-                //creates coordinate in galactic frame using any subclass of base_representation
                 template <typename Representation>
-                galactic(Representation const& representation_data)
+                base_equatorial_frame(Representation const& representation_data)
                 {
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
-                        "Invalid representation class");
-
+                        "argument type is expected to be a representation class");
                     this->data = representation_data;
                 }
 
-                //creates coordinate from given values
-                //b -> latitude, l -> longitude
-                galactic(double b, double l, double distance)
+                base_equatorial_frame(double dec, double ra, double distance)
                 {
-                    this->data.set_lat_lon_dist(b, l, distance);
+                    this->data.set_lat_lon_dist(dec, ra, distance);
                 }
 
-                //creates coordinate with motion from given values
-                //b -> latitude, l -> longitude
-                //pm_b -> proper motion in b, pm_l_cosb -> proper motion in l including cos(b) 
-                galactic(double b, double l, double distance, double pm_b, double pm_l_cosb, double radial_velocity)
+                base_equatorial_frame(double dec, double ra, double distance, double pm_dec, double pm_ra_cosdec, double radial_velocity)
                 {
-                    this->data.set_lat_lon_dist(b, l, distance);
+                    this->data.set_lat_lon_dist(dec, ra, distance);
 
-                    this->motion.set_dlat_dlon_coslat_ddist(pm_b, pm_l_cosb, radial_velocity);
+                    this->motion.set_dlat_dlon_coslat_ddist(pm_dec, pm_ra_cosdec, radial_velocity);
                 }
 
-                //creates coordinate with motion
-                //representation class is used for coordinate data
-                //differential class is used for motion data
                 template <typename Representation, typename Differential>
-                galactic(Representation const& representation_data, Differential const& diff)
+                base_equatorial_frame(Representation const& representation_data, Differentail const& diff)
                 {
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
-                        "argument type is expected to be a differential class");
-                    this->data = representaion_data;
+                        "argument type is expected to be a representation class");
+                    this->data = representation_data;
 
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_differential, Differential>::value),
@@ -74,39 +63,32 @@ namespace boost
                     this->motion = diff;
                 }
 
-                //copy constructor
-                galactic(galactic const& other)
-                {
-                    this->data = other.get_data();
-                    this->motion = other.get_differential();
-                }
-
-                //returns component b of the galactic coordinate
-                double get_b() const
+                //returns Declination component of the coordinate
+                double get_dec() const
                 {
                     return boost::geometry::get<0>(this->data.get_point());
                 }
 
-                //returns component l of the galactic coordinate
-                double get_l() const
+                //returns Right Ascension component of the coordinate
+                double get_ra() const
                 {
                     return boost::geometry::get<1>(this->data.get_point());
                 }
 
-                //returns distance component of the galactic coordinate
+                //returns distance component of the coordinate
                 double get_distance() const
                 {
                     return boost::geometry::get<2>(this->data.get_point());
                 }
 
-                //returns proper motion in galactic latitude
-                double get_pm_b() const
+                //returns proper motion in Declination
+                double get_pm_dec() const
                 {
                     return boost::geometry::get<0>(this->motion.get_differential());
                 }
 
-                //returns proper motion in galactic longitude including cos(b)
-                double get_pm_l_cosb() const
+                //returns proper motion in Right Ascension including cos(dec)
+                double get_pm_ra_cosdec() const
                 {
                     return boost::geometry::get<1>(this->motion.get_differential());
                 }
@@ -117,34 +99,34 @@ namespace boost
                     return boost::geometry::get<2>(this->motion.get_differential());
                 }
 
-                //sets value of component b of the galactic coordinate
-                double set_b(double b)
+                //sets value of Declination component of the coordinate
+                double set_dec(double dec)
                 {
-                    boost::geometry::set<0>(this->data.get_point(), b);
+                    boost::geometry::set<0>(this->data.get_point(), dec);
                 }
 
-                //sets value of component l of the galactic coordinate
-                double set_l(double l) const
+                //sets value of Right Ascension component of the coordinate
+                double set_ra(double ra)
                 {
-                    boost::geometry::set<1>(this->data.get_point(), l);
+                    boost::geometry::set<1>(this->data.get_point(), ra);
                 }
 
-                //sets value of distance component of the galactic coordinate
+                //sets value of distance component of the coordinate
                 double set_distance(double distance)
                 {
                     boost::geometry::set<2>(this->data.get_point(), distance);
                 }
 
-                //sets the proper motion in galactic latitude
-                double set_pm_b(double pm_b)
+                //sets the proper motion in Declination
+                double set_pm_dec(double pm_dec)
                 {
-                    boost::geometry::set<0>(this->motion.get_differential(), pm_b);
+                    boost::geometry::set<0>(this->motion.get_differential(), pm_dec);
                 }
 
-                //sets the proper motion in galactic longitude including cos(b)
-                double set_pm_l_cosb(double pm_l_cosb)
+                //sets the proper motion in Right Ascension including cos(dec)
+                double set_pm_ra_cosdec(double pm_ra_cosdec)
                 {
-                    boost::geometry::set<1>(this->motion.get_differential(), pm_l_cosb);
+                    boost::geometry::set<1>(this->motion.get_differential(), pm_ra_cosdec);
                 }
 
                 //sets the radial_velocity
@@ -153,7 +135,9 @@ namespace boost
                     boost::geometry::set<2>(this->motion.get_differential(), radial_velocity);
                 }
             };
+
         } //namespace coordinate
     } //namespace astronomy
 } //namespace boost
-#endif // !BOOST_ASTRONOMY_COORDINATE_GALACTIC_HPP
+#endif // !BOOST_ASTRONOMY_COORDINATE_BASE_EQUATORIAL_FRAME_HPP
+

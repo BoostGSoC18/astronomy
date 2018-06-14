@@ -1,5 +1,5 @@
-#ifndef BOOOST_ASTRONOMY_COORDINATE_ALT_AZ_HPP
-#define BOOOST_ASTRONOMY_COORDINATE_ALT_AZ_HPP
+#ifndef BOOST_ASTRONOMY_COORDINATE_ALT_AZ_HPP
+#define BOOST_ASTRONOMY_COORDINATE_ALT_AZ_HPP
 
 #include <time.h>
 
@@ -47,5 +47,5 @@ namespace boost
         } //namespace coordinate
     } //namespace astronomy
 } //namespace boost
-#endif // !BOOOST_ASTRONOMY_COORDINATE_ALT_AZ_HPP
+#endif // !BOOST_ASTRONOMY_COORDINATE_ALT_AZ_HPP
 

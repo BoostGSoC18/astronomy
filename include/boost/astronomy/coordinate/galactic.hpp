@@ -50,10 +50,9 @@ namespace boost
                 //creates coordinate with motion from given values
                 //b -> latitude, l -> longitude
                 //pm_b -> proper motion in b, pm_l_cosb -> proper motion in l including cos(b) 
-                galactic(double b, double l, double distance, double pm_b, double pm_l_cosb, double radial_velocity)
+                galactic(double b, double l, double distance, double pm_b, double pm_l_cosb, double radial_velocity):
+                    galactic(b, l, distance)
                 {
-                    this->data.set_lat_lon_dist(b, l, distance);
-
                     this->motion.set_dlat_dlon_coslat_ddist(pm_b, pm_l_cosb, radial_velocity);
                 }
 

@@ -1,11 +1,14 @@
 #ifndef BOOST_ASTRONOMY_COORDINATE_BASE_EQUATORIAL_FRAME_HPP
 #define BOOST_ASTRONOMY_COORDINATE_BASE_EQUATORIAL_FRAME_HPP
 
+#include <type_traits>
+#include <string>
 
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/algorithms/transform.hpp>
 #include <boost/geometry/algorithms/equals.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include <boost/is_base_template_of.hpp>
 #include <boost/astronomy/coordinate/base_frame.hpp>
@@ -37,15 +40,35 @@ namespace boost
                     this->data = representation_data;
                 }
 
-                base_equatorial_frame(double dec, double ra, double distance)
+                template <typedef RaType>
+                base_equatorial_frame(double dec, RaType ra, double distance)
                 {
-                    this->data.set_lat_lon_dist(dec, ra, distance);
+                    double ra_final;
+                    if (std::is_same<RaType, std::string>::value)
+                    {
+                        if (std::is_same<RepresentationDegreeOrRadian, degree>::value)
+                        {
+                            ra_final = boost::lexical_cast<double>(ra.substr(0, 2)) * 15 +
+                                boost::lexical_cast<double>(ra.substr(3, 2)) * 60 +
+                                boost::lexical_cast<double>(ra.substr(4)) * 3600;
+                        }
+                        else
+                        {
+                            ra_final = (boost::lexical_cast<double>(ra.substr(0, 2)) * 15 +
+                                boost::lexical_cast<double>(ra.substr(3, 2)) * 60 +
+                                boost::lexical_cast<double>(ra.substr(4)) * 3600) * 0.0174533;
+                        }
+                    }
+                    else {
+                        ra_final = ra;
+                    }
+                    this->data.set_lat_lon_dist(dec, ra_final, distance);
                 }
 
-                base_equatorial_frame(double dec, double ra, double distance, double pm_dec, double pm_ra_cosdec, double radial_velocity)
+                template <typedef RaType>
+                base_equatorial_frame(double dec, RaType ra, double distance, double pm_dec, double pm_ra_cosdec, double radial_velocity):
+                    base_equatorial_frame(dec, ra, distance)
                 {
-                    this->data.set_lat_lon_dist(dec, ra, distance);
-
                     this->motion.set_dlat_dlon_coslat_ddist(pm_dec, pm_ra_cosdec, radial_velocity);
                 }
 
@@ -106,9 +129,29 @@ namespace boost
                 }
 
                 //sets value of Right Ascension component of the coordinate
-                double set_ra(double ra)
+                template <typename RaType>
+                double set_ra(RaType ra)
                 {
-                    boost::geometry::set<1>(this->data.get_point(), ra);
+                    double ra_final;
+                    if (std::is_same<RaType, std::string>::value)
+                    {
+                        if (std::is_same<RepresentationDegreeOrRadian, degree>::value)
+                        {
+                            ra_final = boost::lexical_cast<double>(ra.substr(0, 2)) * 15 +
+                                boost::lexical_cast<double>(ra.substr(3, 2)) * 60 +
+                                boost::lexical_cast<double>(ra.substr(4)) * 3600;
+                        }
+                        else
+                        {
+                            ra_final = (boost::lexical_cast<double>(ra.substr(0, 2)) * 15 +
+                                boost::lexical_cast<double>(ra.substr(3, 2)) * 60 +
+                                boost::lexical_cast<double>(ra.substr(4)) * 3600) * 0.0174533;
+                        }
+                    }
+                    else {
+                        ra_final = ra;
+                    }
+                    boost::geometry::set<1>(this->data.get_point(), ra_final);
                 }
 
                 //sets value of distance component of the coordinate

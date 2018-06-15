@@ -40,6 +40,12 @@ namespace boost
                     this->data = representation_data;
                 }
 
+                //RA is expected to be a double if value is in degree/radian
+                //if want to provide value in hours minute sec formate then a string expected with particular format
+                //hour angle formate: "hhmmss..."
+                //first two char as hours next two as minutes and remaining are treated as seconds
+                //hour angles are converted to degree/radian and then stored
+                //eg: RA = 06h 45m 08.9s then value should be provided like "064508.9"
                 template <typedef RaType>
                 base_equatorial_frame(double dec, RaType ra, double distance)
                 {
@@ -129,6 +135,12 @@ namespace boost
                 }
 
                 //sets value of Right Ascension component of the coordinate
+                //RA is expected to be a double if value is in degree/radian
+                //if want to provide value in hours minute sec formate then a string expected with particular format
+                //hour angle formate: "hhmmss..."
+                //first two char as hours next two as minutes and remaining are treated as seconds
+                //hour angles are converted to degree/radian and then stored
+                //eg: RA = 06h 45m 08.9s then value should be provided like "064508.9"
                 template <typename RaType>
                 double set_ra(RaType ra)
                 {

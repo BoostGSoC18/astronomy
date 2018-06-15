@@ -45,7 +45,7 @@ namespace boost
                 //hour angle formate: "hhmmss..."
                 //first two char as hours next two as minutes and remaining are treated as seconds
                 //hour angles are converted to degree/radian and then stored
-                //eg: RA = 06h 45m 08.9s then value should be provided like "064508.9"
+                //eg: if RA = 06h 45m 08.9s then value should be provided like "064508.9"
                 template <typedef RaType>
                 base_equatorial_frame(double dec, RaType ra, double distance)
                 {

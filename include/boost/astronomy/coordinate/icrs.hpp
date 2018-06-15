@@ -9,8 +9,8 @@ namespace boost
     {
         namespace coordinate
         {
-            template <typename RepresentationDegreeOrRadian = degree,
-                typename DifferentialDegreeOrRadian = degree>
+            template <typename RepresentationDegreeOrRadian = boost::astronomy::coordinate::degree,
+                typename DifferentialDegreeOrRadian = boost::astronomy::coordinate::degree>
             struct icrs : public boost::astronomy::coordinate::base_equatorial_frame
                 <RepresentationDegreeOrRadian, DifferentialDegreeOrRadian>
             {
@@ -27,15 +27,15 @@ namespace boost
                 //first two char as hours next two as minutes and remaining are treated as seconds
                 //hour angles are converted to degree/radian and then stored
                 //eg: if RA = 06h 45m 08.9s then value should be provided like "064508.9"
-                template <typedef RaType>
+                template <typename RaType>
                 icrs(double dec, RaType ra, double distance) : base_equatorial_frame(dec, ra, distance) {}
 
-                template <typedef RaType>
+                template <typename RaType>
                 icrs(double dec, RaType ra, double distance, double pm_dec, double pm_ra_cosdec, double radial_velocity) :
                     base_equatorial_frame(dec, ra, dustance, pm_dec, pm_ra_cosdec, radial_velocity) {}
 
                 template <typename Representation, typename Differential>
-                icrs(Representation const& representation_data, Differentail const& diff) : 
+                icrs(Representation const& representation_data, Differential const& diff) :
                     base_equatorial_frame(representation_data, diff) {}
             };
         } //namespace coordinate

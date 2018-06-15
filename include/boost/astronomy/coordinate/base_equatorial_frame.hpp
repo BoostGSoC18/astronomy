@@ -21,8 +21,8 @@ namespace boost
     {
         namespace coordinate
         {
-            template <typename RepresentationDegreeOrRadian = degree,
-                typename DifferentialDegreeOrRadian = degree>
+            template <typename RepresentationDegreeOrRadian = boost::astronomy::coordinate::degree,
+                typename DifferentialDegreeOrRadian = boost::astronomy::coordinate::degree>
             struct base_equatorial_frame: public boost::astronomy::coordinate::base_frame
                 <boost::astronomy::coordinate::spherical_representation<RepresentationDegreeOrRadian>,
                 boost::astronomy::coordinate::spherical_coslat_differential<DifferentialDegreeOrRadian>>
@@ -40,38 +40,39 @@ namespace boost
                     this->data = representation_data;
                 }
 
-                //RA is expected to be a double if value is in degree/radian
-                //if want to provide value in hours minute sec formate then a string expected with particular format
+                
+                //if want to provide value in hours:minute:sec formate then a string expected with particular format
                 //hour angle formate: "hhmmss..."
                 //first two char as hours next two as minutes and remaining are treated as seconds
                 //hour angles are converted to degree/radian and then stored
-                //eg: if RA = 06h 45m 08.9s then value should be provided like "064508.9"
-                template <typedef RaType>
-                base_equatorial_frame(double dec, RaType ra, double distance)
+                //eg: if RA = 06h 45m 08.9s then value should be provided like "064508.9"           
+                base_equatorial_frame(double dec, std::string const& ra, double distance)
                 {
                     double ra_final;
-                    if (std::is_same<RaType, std::string>::value)
+                    
+                    if (std::is_same<RepresentationDegreeOrRadian, degree>::value)
                     {
-                        if (std::is_same<RepresentationDegreeOrRadian, degree>::value)
-                        {
-                            ra_final = boost::lexical_cast<double>(ra.substr(0, 2)) * 15 +
-                                boost::lexical_cast<double>(ra.substr(3, 2)) * 60 +
-                                boost::lexical_cast<double>(ra.substr(4)) * 3600;
-                        }
-                        else
-                        {
-                            ra_final = (boost::lexical_cast<double>(ra.substr(0, 2)) * 15 +
-                                boost::lexical_cast<double>(ra.substr(3, 2)) * 60 +
-                                boost::lexical_cast<double>(ra.substr(4)) * 3600) * 0.0174533;
-                        }
+                        ra_final = (boost::lexical_cast<double>(ra.substr(0, 2)) * 15.0) +
+                            (boost::lexical_cast<double>(ra.substr(2, 2)) / 4.0) +
+                            (boost::lexical_cast<double>(ra.substr(4)) / 240.0);
                     }
-                    else {
-                        ra_final = ra;
+                    else
+                    {
+                        ra_final = ((boost::lexical_cast<double>(ra.substr(0, 2)) * 15.0) +
+                            (boost::lexical_cast<double>(ra.substr(2, 2)) / 4.0) +
+                            (boost::lexical_cast<double>(ra.substr(4)) / 240.0)) * 0.0174533;
                     }
+                    
                     this->data.set_lat_lon_dist(dec, ra_final, distance);
                 }
 
-                template <typedef RaType>
+                //RA is expected to be a double if value is in degree/radian
+                base_equatorial_frame(double dec, double ra, double distance)
+                {
+                    this->data.set_lat_lon_dist(dec, ra, distance);
+                }
+
+                template <typename RaType>
                 base_equatorial_frame(double dec, RaType ra, double distance, double pm_dec, double pm_ra_cosdec, double radial_velocity):
                     base_equatorial_frame(dec, ra, distance)
                 {
@@ -79,7 +80,7 @@ namespace boost
                 }
 
                 template <typename Representation, typename Differential>
-                base_equatorial_frame(Representation const& representation_data, Differentail const& diff)
+                base_equatorial_frame(Representation const& representation_data, Differential const& diff)
                 {
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
@@ -129,63 +130,65 @@ namespace boost
                 }
 
                 //sets value of Declination component of the coordinate
-                double set_dec(double dec)
+                void set_dec(double dec)
                 {
                     boost::geometry::set<0>(this->data.get_point(), dec);
                 }
 
                 //sets value of Right Ascension component of the coordinate
-                //RA is expected to be a double if value is in degree/radian
-                //if want to provide value in hours minute sec formate then a string expected with particular format
+                //if want to provide value in hours:minute:sec formate then a string expected with particular format
                 //hour angle formate: "hhmmss..."
                 //first two char as hours next two as minutes and remaining are treated as seconds
                 //hour angles are converted to degree/radian and then stored
                 //eg: RA = 06h 45m 08.9s then value should be provided like "064508.9"
-                template <typename RaType>
-                double set_ra(RaType ra)
+                void set_ra(std::string ra)
                 {
                     double ra_final;
-                    if (std::is_same<RaType, std::string>::value)
+                    
+                    if (std::is_same<RepresentationDegreeOrRadian, degree>::value)
                     {
-                        if (std::is_same<RepresentationDegreeOrRadian, degree>::value)
-                        {
-                            ra_final = boost::lexical_cast<double>(ra.substr(0, 2)) * 15 +
-                                boost::lexical_cast<double>(ra.substr(3, 2)) * 60 +
-                                boost::lexical_cast<double>(ra.substr(4)) * 3600;
-                        }
-                        else
-                        {
-                            ra_final = (boost::lexical_cast<double>(ra.substr(0, 2)) * 15 +
-                                boost::lexical_cast<double>(ra.substr(3, 2)) * 60 +
-                                boost::lexical_cast<double>(ra.substr(4)) * 3600) * 0.0174533;
-                        }
+                        ra_final = boost::lexical_cast<double>(ra.substr(0, 2)) * 15 +
+                            boost::lexical_cast<double>(ra.substr(3, 2)) * 60 +
+                            boost::lexical_cast<double>(ra.substr(4)) * 3600;
                     }
-                    else {
-                        ra_final = ra;
+                    else
+                    {
+                        ra_final = (boost::lexical_cast<double>(ra.substr(0, 2)) * 15 +
+                            boost::lexical_cast<double>(ra.substr(3, 2)) * 60 +
+                            boost::lexical_cast<double>(ra.substr(4)) * 3600) * 0.0174533;
                     }
+                    
                     boost::geometry::set<1>(this->data.get_point(), ra_final);
                 }
+                
+                //sets value of Right Ascension component of the coordinate
+                //RA is expected to be a double if value is in degree/radian
+                void set_ra(double ra)
+                {
+                    boost::geometry::set<1>(this->data.get_point(), ra);
+                }
+
 
                 //sets value of distance component of the coordinate
-                double set_distance(double distance)
+                void set_distance(double distance)
                 {
                     boost::geometry::set<2>(this->data.get_point(), distance);
                 }
 
                 //sets the proper motion in Declination
-                double set_pm_dec(double pm_dec)
+                void set_pm_dec(double pm_dec)
                 {
                     boost::geometry::set<0>(this->motion.get_differential(), pm_dec);
                 }
 
                 //sets the proper motion in Right Ascension including cos(dec)
-                double set_pm_ra_cosdec(double pm_ra_cosdec)
+                void set_pm_ra_cosdec(double pm_ra_cosdec)
                 {
                     boost::geometry::set<1>(this->motion.get_differential(), pm_ra_cosdec);
                 }
 
                 //sets the radial_velocity
-                double set_radial_velocity(double radial_velocity)
+                void set_radial_velocity(double radial_velocity)
                 {
                     boost::geometry::set<2>(this->motion.get_differential(), radial_velocity);
                 }

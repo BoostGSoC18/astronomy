@@ -33,15 +33,15 @@ namespace boost
                 //first two char as hours next two as minutes and remaining are treated as seconds
                 //hour angles are converted to degree/radian and then stored
                 //eg: if RA = 06h 45m 08.9s then value should be provided like "064508.9"
-                template <typedef RaType>
+                template <typename RaType>
                 cirs(double dec, RaType ra, double distance) : base_equatorial_frame(dec, ra, distance) {}
 
-                template <typedef RaType>
+                template <typename RaType>
                 cirs(double dec, RaType ra, double distance, double pm_dec, double pm_ra_cosdec, double radial_velocity) :
                     base_equatorial_frame(dec, ra, dustance, pm_dec, pm_ra_cosdec, radial_velocity) {}
 
                 template <typename Representation, typename Differential>
-                cirs(Representation const& representation_data, Differentail const& diff) :
+                cirs(Representation const& representation_data, Differential const& diff) :
                     base_equatorial_frame(representation_data, diff) {}
 
                 boost::posix_time::ptime get_obstime() const

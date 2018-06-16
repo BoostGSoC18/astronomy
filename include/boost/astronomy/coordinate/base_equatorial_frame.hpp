@@ -23,7 +23,7 @@ namespace boost
         {
             template <typename RepresentationDegreeOrRadian = boost::astronomy::coordinate::degree,
                 typename DifferentialDegreeOrRadian = boost::astronomy::coordinate::degree>
-            struct base_equatorial_frame: public boost::astronomy::coordinate::base_frame
+            struct base_equatorial_frame : public boost::astronomy::coordinate::base_frame
                 <boost::astronomy::coordinate::spherical_representation<RepresentationDegreeOrRadian>,
                 boost::astronomy::coordinate::spherical_coslat_differential<DifferentialDegreeOrRadian>>
             {
@@ -73,7 +73,8 @@ namespace boost
                 }
 
                 template <typename RaType>
-                base_equatorial_frame(double dec, RaType ra, double distance, double pm_dec, double pm_ra_cosdec, double radial_velocity):
+                base_equatorial_frame
+                (double dec, RaType const& ra, double distance, double pm_dec, double pm_ra_cosdec, double radial_velocity):
                     base_equatorial_frame(dec, ra, distance)
                 {
                     this->motion.set_dlat_dlon_coslat_ddist(pm_dec, pm_ra_cosdec, radial_velocity);
@@ -141,7 +142,7 @@ namespace boost
                 //first two char as hours next two as minutes and remaining are treated as seconds
                 //hour angles are converted to degree/radian and then stored
                 //eg: RA = 06h 45m 08.9s then value should be provided like "064508.9"
-                void set_ra(std::string ra)
+                void set_ra(std::string const& ra)
                 {
                     double ra_final;
                     

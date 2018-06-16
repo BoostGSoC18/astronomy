@@ -18,7 +18,6 @@ namespace boost
     {
         namespace coordinate
         {
-
             template <typename RepresentationDegreeOrRadian = degree,
                 typename DifferentialDegreeOrRadian = degree>
             struct galactic: public boost::astronomy::coordinate::base_frame

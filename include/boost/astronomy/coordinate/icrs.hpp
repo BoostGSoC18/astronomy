@@ -1,6 +1,7 @@
 #ifndef BOOST_ASTRONOMY_COORDINATE_ICRS_HPP
 #define BOOST_ASTRONOMY_COORDINATE_ICRS_HPP
 
+#include <boost/astronomy/coordinate/base_frame.hpp>
 #include <boost/astronomy/coordinate/base_equatorial_frame.hpp>
 
 namespace boost
@@ -28,10 +29,10 @@ namespace boost
                 //hour angles are converted to degree/radian and then stored
                 //eg: if RA = 06h 45m 08.9s then value should be provided like "064508.9"
                 template <typename RaType>
-                icrs(double dec, RaType ra, double distance) : base_equatorial_frame(dec, ra, distance) {}
+                icrs(double dec, RaType const& ra, double distance): base_equatorial_frame(dec, ra, distance) {}
 
                 template <typename RaType>
-                icrs(double dec, RaType ra, double distance, double pm_dec, double pm_ra_cosdec, double radial_velocity) :
+                icrs(double dec, RaType const& ra, double distance, double pm_dec, double pm_ra_cosdec, double radial_velocity) :
                     base_equatorial_frame(dec, ra, dustance, pm_dec, pm_ra_cosdec, radial_velocity) {}
 
                 template <typename Representation, typename Differential>

@@ -1,7 +1,7 @@
 #ifndef BOOST_ASTRONOMY_COORDINATE_ICRS_HPP
 #define BOOST_ASTRONOMY_COORDINATE_ICRS_HPP
 
-
+#include <string>
 #include <boost/astronomy/coordinate/base_equatorial_frame.hpp>
 
 namespace boost

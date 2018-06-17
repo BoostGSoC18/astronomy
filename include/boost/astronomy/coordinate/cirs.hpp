@@ -2,7 +2,8 @@
 #define BOOST_ASTRONOMY_COORDINATE_CIRS_HPP
 
 #include <string>
-#include <boost/date_time/posix_time/posix_time.hpp>
+#include <ctime>
+
 #include <boost/astronomy/coordinate/base_equatorial_frame.hpp>
 
 namespace boost
@@ -18,7 +19,7 @@ namespace boost
             {
             protected:
                 //time used to determine the position of earth at the time of observation
-                boost::posix_time::ptime obstime;
+                tm obstime;
 
             public:
                 //default constructor no initialization
@@ -44,22 +45,16 @@ namespace boost
                 cirs(Representation const& representation_data, Differential const& diff) :
                     base_equatorial_frame(representation_data, diff) {}
 
-                boost::posix_time::ptime get_obstime() const
+                tm get_obstime() const
                 {
                     return this->obstime;
                 }
 
-                //time stored in a string formatted using the ISO 8601
-                //reference: https://theboostcpplibraries.com/boost.datetime-location-independent-times
-                void set_obstime(std::string const& time)
-                {
-                    this->obstime = boost::posix_time::from_iso_string(time);
-                }
-
-                void set_obstime(boost::posix_time::ptime const& time)
+                void set_obstime(tm const& time)
                 {
                     this->obstime = time;
                 }
+
             };
         } //namespace coordinate
     } //namespace astronomy

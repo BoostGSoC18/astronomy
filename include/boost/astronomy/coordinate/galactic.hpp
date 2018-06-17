@@ -1,5 +1,5 @@
-#ifndef BOOST_ASTRONOMY_COORDINATE_GALACTIC_FRAME_HPP
-#define BOOST_ASTRONOMY_COORDINATE_GALACTIC_FRAME_HPP
+#ifndef BOOST_ASTRONOMY_COORDINATE_GALACTIC_HPP
+#define BOOST_ASTRONOMY_COORDINATE_GALACTIC_HPP
 
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/geometries/point.hpp>
@@ -20,17 +20,17 @@ namespace boost
         {
             template <typename RepresentationDegreeOrRadian = degree,
                 typename DifferentialDegreeOrRadian = degree>
-            struct galactic_frame: public boost::astronomy::coordinate::base_frame
+            struct galactic: public boost::astronomy::coordinate::base_frame
                 <boost::astronomy::coordinate::spherical_representation<RepresentationDegreeOrRadian>,
                 boost::astronomy::coordinate::spherical_coslat_differential<DifferentialDegreeOrRadian>>
             {
             public:
                 //default constructor no initialization
-                galactic_frame() {}
+                galactic() {}
 
                 //creates coordinate in galactic frame using any subclass of base_representation
                 template <typename Representation>
-                galactic_frame(Representation const& representation_data)
+                galactic(Representation const& representation_data)
                 {
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
@@ -41,7 +41,7 @@ namespace boost
 
                 //creates coordinate from given values
                 //b -> latitude, l -> longitude
-                galactic_frame(double b, double l, double distance)
+                galactic(double b, double l, double distance)
                 {
                     this->data.set_lat_lon_dist(b, l, distance);
                 }
@@ -49,8 +49,8 @@ namespace boost
                 //creates coordinate with motion from given values
                 //b -> latitude, l -> longitude
                 //pm_b -> proper motion in b, pm_l_cosb -> proper motion in l including cos(b) 
-                galactic_frame(double b, double l, double distance, double pm_b, double pm_l_cosb, double radial_velocity):
-                    galactic_frame(b, l, distance)
+                galactic(double b, double l, double distance, double pm_b, double pm_l_cosb, double radial_velocity):
+                    galactic(b, l, distance)
                 {
                     this->motion.set_dlat_dlon_coslat_ddist(pm_b, pm_l_cosb, radial_velocity);
                 }
@@ -59,7 +59,7 @@ namespace boost
                 //representation class is used for coordinate data
                 //differential class is used for motion data
                 template <typename Representation, typename Differential>
-                galactic_frame(Representation const& representation_data, Differential const& diff)
+                galactic(Representation const& representation_data, Differential const& diff)
                 {
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
@@ -73,7 +73,7 @@ namespace boost
                 }
 
                 //copy constructor
-                galactic_frame(galactic_frame const& other)
+                galactic(galactic const& other)
                 {
                     this->data = other.get_data();
                     this->motion = other.get_differential();
@@ -154,4 +154,4 @@ namespace boost
         } //namespace coordinate
     } //namespace astronomy
 } //namespace boost
-#endif // !BOOST_ASTRONOMY_COORDINATE_GALACTIC_FRAME_HPP
+#endif // !BOOST_ASTRONOMY_COORDINATE_GALACTIC_HPP

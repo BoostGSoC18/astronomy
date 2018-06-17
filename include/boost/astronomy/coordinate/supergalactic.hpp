@@ -1,5 +1,5 @@
-#ifndef BOOST_ASTRONOMY_COORDINATE_SUPERGALACTIC_FRAME_HPP
-#define BOOST_ASTRONOMY_COORDINATE_SUPERGALACTIC_FRAME_HPP
+#ifndef BOOST_ASTRONOMY_COORDINATE_SUPERGALACTIC_HPP
+#define BOOST_ASTRONOMY_COORDINATE_SUPERGALACTIC_HPP
 
 #include <boost/astronomy/coordinate/base_frame.hpp>
 #include <boost/astronomy/coordinate/spherical_representation.hpp>
@@ -12,17 +12,17 @@ namespace boost
         {
             template <typename RepresentationDegreeOrRadian = degree,
                 typename DifferentialDegreeOrRadian = degree>
-            struct supergalactic_frame : public boost::astronomy::coordinate::base_frame
+            struct supergalactic : public boost::astronomy::coordinate::base_frame
                 <boost::astronomy::coordinate::spherical_representation<RepresentationDegreeOrRadian>,
                 boost::astronomy::coordinate::spherical_coslat_differential<DifferentialDegreeOrRadian>>
             {
             public:
                 //default constructor no initialization
-                supergalactic_frame() {}
+                supergalactic() {}
 
                 //creates coordinate in supergalactic frame using any subclass of base_representation
                 template <typename Representation>
-                supergalactic_frame(Representation const& representation_data)
+                supergalactic(Representation const& representation_data)
                 {
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
@@ -33,7 +33,7 @@ namespace boost
 
                 //creates coordinate from given values
                 //sgb -> latitude, sgl -> longitude
-                supergalactic_frame(double sgb, double sgl, double distance)
+                supergalactic(double sgb, double sgl, double distance)
                 {
                     this->data.set_lat_lon_dist(sgb, sgl, distance);
                 }
@@ -41,8 +41,8 @@ namespace boost
                 //creates coordinate with motion from given values
                 //sgb -> latitude, sgl -> longitude
                 //pm_sgb -> proper motion in sgb, pm_sgl_cossgb -> proper motion in sgl including cos(sgb) 
-                supergalactic_frame(double sgb, double sgl, double distance, double pm_sgb, double pm_sgl_cossgb, double radial_velocity) :
-                    supergalactic_frame(sgb, sgl, distance)
+                supergalactic(double sgb, double sgl, double distance, double pm_sgb, double pm_sgl_cossgb, double radial_velocity) :
+                    supergalactic(sgb, sgl, distance)
                 {
                     this->motion.set_dlat_dlon_coslat_ddist(pm_sgb, pm_sgl_cossgb, radial_velocity);
                 }
@@ -51,7 +51,7 @@ namespace boost
                 //representation class is used for coordinate data
                 //differential class is used for motion data
                 template <typename Representation, typename Differential>
-                supergalactic_frame(Representation const& representation_data, Differential const& diff)
+                supergalactic(Representation const& representation_data, Differential const& diff)
                 {
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
@@ -65,7 +65,7 @@ namespace boost
                 }
 
                 //copy constructor
-                supergalactic_frame(supergalactic const& other)
+                supergalactic(supergalactic const& other)
                 {
                     this->data = other.get_data();
                     this->motion = other.get_differential();
@@ -146,5 +146,5 @@ namespace boost
         } //namespace coordinate
     } //namespace astronomy
 } //namespace boost
-#endif // !BOOST_ASTRONOMY_COORDINATE_SUPERGALACTIC_FRAME_HPP
+#endif // !BOOST_ASTRONOMY_COORDINATE_SUPERGALACTIC_HPP
 

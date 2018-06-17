@@ -87,6 +87,12 @@ namespace boost
                     return boost::geometry::get<2>(this->data.get_point());
                 }
 
+                //returns the (lat, lon, dist) in the form of tuple
+                std::tuple<double, double, double> get_lat_lon_dist() const
+                {
+                    return this->data.get_lat_lon_dist();
+                }
+
                 //returns proper motion in latitude
                 double get_pm_lat() const
                 {
@@ -105,6 +111,12 @@ namespace boost
                     return boost::geometry::get<2>(this->motion.get_differential());
                 }
 
+                //returns the proper motion in form of tuple
+                std::tuple<double, double, double> get_pm_lat_lon_radial() const
+                {
+                    return this->motion.get_dlat_dlon_coslat_ddist();
+                }
+
                 //sets value of latitude component of the coordinate
                 void set_lat(double lat)
                 {
@@ -117,11 +129,16 @@ namespace boost
                     boost::geometry::set<1>(this->data.get_point(), lon);
                 }
 
-
                 //sets value of distance component of the coordinate
                 void set_distance(double distance)
                 {
                     boost::geometry::set<2>(this->data.get_point(), distance);
+                }
+
+                //sets value of all component of the coordinate
+                void set_alt_az_dist(double lat, double lon, double dist)
+                {
+                    this->data.set_lat_lon_dist(lat, lon, dist);
                 }
 
                 //sets the proper motion in latitude
@@ -140,6 +157,12 @@ namespace boost
                 void set_radial_velocity(double radial_velocity)
                 {
                     boost::geometry::set<2>(this->motion.get_differential(), radial_velocity);
+                }
+
+                //set value of motion  including cos(b)
+                void set_pm_alt_az_radial(double pm_lat, double pm_lon_coslat, double radial_velocity)
+                {
+                    this->motion.set_dlat_dlon_coslat_ddist(pm_lat, pm_lon_coslat, radial_velocity);
                 }
 
                 tm get_equinox() const

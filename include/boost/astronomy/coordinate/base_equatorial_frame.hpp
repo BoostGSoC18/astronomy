@@ -112,6 +112,12 @@ namespace boost
                     return boost::geometry::get<2>(this->data.get_point());
                 }
 
+                //returns the (dec, ra, dist) in the form of tuple
+                std::tuple<double, double, double> get_dec_ra_dist() const
+                {
+                    return this->data.get_lat_lon_dist();
+                }
+
                 //returns proper motion in Declination
                 double get_pm_dec() const
                 {
@@ -128,6 +134,12 @@ namespace boost
                 double get_radial_velocity() const
                 {
                     return boost::geometry::get<2>(this->motion.get_differential());
+                }
+
+                //returns the proper motion in form of tuple including cos(dec)
+                std::tuple<double, double, double> get_pm_dec_ra_radial() const
+                {
+                    return this->motion.get_dlat_dlon_coslat_ddist();
                 }
 
                 //sets value of Declination component of the coordinate
@@ -176,6 +188,32 @@ namespace boost
                     boost::geometry::set<2>(this->data.get_point(), distance);
                 }
 
+                //sets value of all component of the coordinate 
+                void set_dec_ra_dist(double dec, double ra, double dist)
+                {
+                    this->data.set_lat_lon_dist(dec, ra, dist);
+                }
+
+                //sets value of all component of the coordinate (ra in hour angle)
+                void set_dec_ra_dist(double dec, std::string ra, double dist)
+                {
+                    double ra_final;
+
+                    if (std::is_same<RepresentationDegreeOrRadian, degree>::value)
+                    {
+                        ra_final = boost::lexical_cast<double>(ra.substr(0, 2)) * 15 +
+                            boost::lexical_cast<double>(ra.substr(3, 2)) * 60 +
+                            boost::lexical_cast<double>(ra.substr(4)) * 3600;
+                    }
+                    else
+                    {
+                        ra_final = (boost::lexical_cast<double>(ra.substr(0, 2)) * 15 +
+                            boost::lexical_cast<double>(ra.substr(3, 2)) * 60 +
+                            boost::lexical_cast<double>(ra.substr(4)) * 3600) * 0.0174533;
+                    }
+                    this->data.set_lat_lon_dist(dec, ra_final, dist);
+                }
+
                 //sets the proper motion in Declination
                 void set_pm_dec(double pm_dec)
                 {
@@ -192,6 +230,12 @@ namespace boost
                 void set_radial_velocity(double radial_velocity)
                 {
                     boost::geometry::set<2>(this->motion.get_differential(), radial_velocity);
+                }
+
+                //set value of motion including cos(dec)
+                void set_pm_dec_ra_radial(double pm_dec, double pm_ra_cosdec, double radial_velocity)
+                {
+                    this->motion.set_dlat_dlon_coslat_ddist(pm_dec, pm_ra_cosdec, radial_velocity);
                 }
             };
 

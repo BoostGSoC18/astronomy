@@ -1,6 +1,8 @@
 #ifndef BOOST_ASTRONOMY_COORDINATE_GALACTIC_HPP
 #define BOOST_ASTRONOMY_COORDINATE_GALACTIC_HPP
 
+#include <tuple>
+
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/algorithms/transform.hpp>
@@ -97,6 +99,12 @@ namespace boost
                     return boost::geometry::get<2>(this->data.get_point());
                 }
 
+                //returns the (b, l, dist) in the form of tuple
+                std::tuple<double, double, double> get_b_l_dist() const
+                {
+                    return this->data.get_lat_lon_dist();
+                }
+
                 //returns proper motion in galactic latitude
                 double get_pm_b() const
                 {
@@ -113,6 +121,12 @@ namespace boost
                 double get_radial_velocity() const
                 {
                     return boost::geometry::get<2>(this->motion.get_differential());
+                }
+
+                //returns the proper motion in form of tuple including cos(b)
+                std::tuple<double, double, double> get_pm_b_l_radial() const
+                {
+                    return this->motion.get_dlat_dlon_coslat_ddist();
                 }
 
                 //sets value of component b of the galactic coordinate
@@ -133,6 +147,12 @@ namespace boost
                     boost::geometry::set<2>(this->data.get_point(), distance);
                 }
 
+                //sets value of all component of the coordinate
+                void set_b_l_dist(double b, double l, double dist)
+                {
+                    this->data.set_lat_lon_dist(b, l, dist);
+                }
+
                 //sets the proper motion in galactic latitude
                 double set_pm_b(double pm_b)
                 {
@@ -149,6 +169,12 @@ namespace boost
                 double set_radial_velocity(double radial_velocity)
                 {
                     boost::geometry::set<2>(this->motion.get_differential(), radial_velocity);
+                }
+
+                //set value of motion including cos(b)
+                void set_pm_b_l_radial(double pm_b, double pm_l_cosb, double radial_velocity)
+                {
+                    this->motion.set_dlat_dlon_coslat_ddist(pm_b, pm_l_cosb, radial_velocity);
                 }
             };
         } //namespace coordinate

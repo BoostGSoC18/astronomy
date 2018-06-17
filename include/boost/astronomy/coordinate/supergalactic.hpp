@@ -89,6 +89,12 @@ namespace boost
                     return boost::geometry::get<2>(this->data.get_point());
                 }
 
+                //returns the (sgb, sgl, dist) in the form of tuple
+                std::tuple<double, double, double> get_sgb_sgl_dist() const
+                {
+                    return this->data.get_lat_lon_dist();
+                }
+
                 //returns proper motion in supergalactic latitude
                 double get_pm_sgb() const
                 {
@@ -105,6 +111,12 @@ namespace boost
                 double get_radial_velocity() const
                 {
                     return boost::geometry::get<2>(this->motion.get_differential());
+                }
+
+                //returns the proper motion in form of tuple including cos(b)
+                std::tuple<double, double, double> get_pm_sgb_sgl_radial() const
+                {
+                    return this->motion.get_dlat_dlon_coslat_ddist();
                 }
 
                 //sets value of component b of the supergalactic coordinate
@@ -125,6 +137,12 @@ namespace boost
                     boost::geometry::set<2>(this->data.get_point(), distance);
                 }
 
+                //sets value of all component of the coordinate 
+                void set_sgb_sgl_dist(double sgb, double sgl, double dist)
+                {
+                    this->data.set_lat_lon_dist(sgb, sgl, dist);
+                }
+
                 //sets the proper motion in supergalactic latitude
                 double set_pm_sgb(double pm_sgb)
                 {
@@ -141,6 +159,12 @@ namespace boost
                 double set_radial_velocity(double radial_velocity)
                 {
                     boost::geometry::set<2>(this->motion.get_differential(), radial_velocity);
+                }
+
+                //set value of motion including cos(b)
+                void set_pm_sgb_sgl_radial(double pm_sgb, double pm_sgl_cosb, double radial_velocity)
+                {
+                    this->motion.set_dlat_dlon_coslat_ddist(pm_sgb, pm_sgl_cosb, radial_velocity);
                 }
             };
         } //namespace coordinate

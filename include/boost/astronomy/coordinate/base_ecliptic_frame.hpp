@@ -23,7 +23,7 @@ namespace boost
         {
             template <typename RepresentationDegreeOrRadian = boost::astronomy::coordinate::degree,
                 typename DifferentialDegreeOrRadian = boost::astronomy::coordinate::degree>
-                struct base_ecliptic_frame : public boost::astronomy::coordinate::base_frame
+            struct base_ecliptic_frame : public boost::astronomy::coordinate::base_frame
                 <boost::astronomy::coordinate::spherical_representation<RepresentationDegreeOrRadian>,
                 boost::astronomy::coordinate::spherical_coslat_differential<DifferentialDegreeOrRadian>>
             {
@@ -45,9 +45,8 @@ namespace boost
                     this->data.set_lat_lon_dist(lat, lon, distance);
                 }
 
-                template <typename RaType>
                 base_ecliptic_frame
-                (double lat, RaType const& lon, double distance, double pm_lat, double pm_lon_coslat, double radial_velocity) :
+                (double lat, double lon, double distance, double pm_lat, double pm_lon_coslat, double radial_velocity) :
                     base_ecliptic_frame(lat, lon, distance)
                 {
                     this->motion.set_dlat_dlon_coslat_ddist(pm_lat, pm_lon_coslat, radial_velocity);

@@ -8,7 +8,7 @@
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/algorithms/transform.hpp>
 #include <boost/geometry/algorithms/equals.hpp>
-#include <boost/lexical_cast.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 #include <boost/is_base_template_of.hpp>
 #include <boost/astronomy/coordinate/base_frame.hpp>
@@ -27,6 +27,9 @@ namespace boost
                 <boost::astronomy::coordinate::spherical_representation<RepresentationDegreeOrRadian>,
                 boost::astronomy::coordinate::spherical_coslat_differential<DifferentialDegreeOrRadian>>
             {
+            protected:
+                boost::posix_time::ptime equinox;
+
             public:
                 //default constructor no initialization
                 base_ecliptic_frame() {}
@@ -137,6 +140,18 @@ namespace boost
                 void set_radial_velocity(double radial_velocity)
                 {
                     boost::geometry::set<2>(this->motion.get_differential(), radial_velocity);
+                }
+
+                //time stored in a string formatted using the ISO 8601
+                //reference: https://theboostcpplibraries.com/boost.datetime-location-independent-times
+                void set_equinox(std::string const& time)
+                {
+                    this->equinox = boost::posix_time::from_iso_string(time);
+                }
+
+                void set_equinox(boost::posix_time::ptime const& time)
+                {
+                    this->equinox = time;
                 }
             };
 

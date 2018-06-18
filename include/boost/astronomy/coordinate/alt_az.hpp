@@ -169,6 +169,7 @@ namespace boost
                     this->motion.set_dlat_dlon_coslat_ddist(pm_alt, pm_az_cosalt, radial_velocity);
                 }
 
+                //set all the perameters of current frame object
                 void set_frame_parameters
                 (boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> const& location,
                     boost::units::quantity<boost::units::si::pressure> const& pressure,
@@ -182,6 +183,7 @@ namespace boost
                     this->rel_humidity = rel_humidity;
                 }
 
+                //get all the perameters of current frame object
                 std::tuple<                
                     boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree>,
                     boost::units::quantity<boost::units::si::pressure>,
@@ -192,52 +194,62 @@ namespace boost
                     (this->earth_location, this->pressure, this->temperature, this->obs_time, this->rel_humidity);
                 }
 
+                //get earth location of the current object
                 boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> get_location() const
                 {
                     return this->earth_location;
                 }
 
+                //set earth location of the current object
                 void set_location
                 (boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> const& location)
                 {
                     this->earth_location = location;
                 }
 
+                //get atmospheric pressure
                 boost::units::quantity<boost::units::si::pressure> get_pressure() const
                 {
                     return this->pressure;
                 }
 
+                //set atmospheric pressure
                 void set_pressure(boost::units::quantity<boost::units::si::pressure> const& pressure)
                 {
                     this->pressure = pressure;
                 }
 
+                //get temperature of the location
                 boost::units::quantity<boost::units::temperature::celsius_base_unit> get_temprature() const
                 {
                     return this->temperature;
                 }
 
+                //set temperature of the location
                 void set_temprature(boost::units::quantity<boost::units::temperature::celsius_base_unit> const& temperature)
                 {
                     this->temperature = temperature;
                 }
 
+                //get observation time 
                 tm get_obs_time() const
                 {
                     return this->obs_time;
                 }
 
+                //set observation time 
                 void set_obs_time(tm const& time)
                 {
                     this->obs_time = time;
                 }
 
+                //get relative humidity
                 double get_rel_humidity() const
                 {
                     return this->rel_humidity;
                 }
 
+                //set relative humidity
                 void set_rel_humidity(double humidity)
                 {
                     this->rel_humidity = humidity;

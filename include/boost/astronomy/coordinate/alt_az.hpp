@@ -29,9 +29,10 @@ namespace boost
                 boost::astronomy::coordinate::spherical_coslat_differential<boost::geometry::degree>>
             {
             protected:
+                //frame parameters
                 boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> earth_location;
                 boost::units::quantity<boost::units::si::pressure> pressure = 0;
-                boost::units::quantity<boost::units::temperature::celsius_base_unit> temprature = 0;
+                boost::units::quantity<boost::units::temperature::celsius_base_unit> temperature = 0;
                 tm obs_time;
                 double rel_humidity;
 
@@ -168,7 +169,79 @@ namespace boost
                     this->motion.set_dlat_dlon_coslat_ddist(pm_alt, pm_az_cosalt, radial_velocity);
                 }
 
-                
+                void set_frame_parameters
+                (boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> const& location,
+                    boost::units::quantity<boost::units::si::pressure> const& pressure,
+                    boost::units::quantity<boost::units::temperature::celsius_base_unit> const& temperature,
+                    tm const& obs_time, double rel_humidity)
+                {
+                    this->earth_location = location;
+                    this->pressure = pressure;
+                    this->temperature = temperature;
+                    this->obs_time = obs_time;
+                    this->rel_humidity = rel_humidity;
+                }
+
+                std::tuple<                
+                    boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree>,
+                    boost::units::quantity<boost::units::si::pressure>,
+                    boost::units::quantity<boost::units::temperature::celsius_base_unit>,
+                    tm, double> get_frame_parameters() const
+                {
+                    return std::make_tuple
+                    (this->earth_location, this->pressure, this->temperature, this->obs_time, this->rel_humidity);
+                }
+
+                boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> get_location() const
+                {
+                    return this->earth_location;
+                }
+
+                void set_location
+                (boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> const& location)
+                {
+                    this->earth_location = location;
+                }
+
+                boost::units::quantity<boost::units::si::pressure> get_pressure() const
+                {
+                    return this->pressure;
+                }
+
+                void set_pressure(boost::units::quantity<boost::units::si::pressure> const& pressure)
+                {
+                    this->pressure = pressure;
+                }
+
+                boost::units::quantity<boost::units::temperature::celsius_base_unit> get_temprature() const
+                {
+                    return this->temperature;
+                }
+
+                void set_temprature(boost::units::quantity<boost::units::temperature::celsius_base_unit> const& temperature)
+                {
+                    this->temperature = temperature;
+                }
+
+                tm get_obs_time() const
+                {
+                    return this->obs_time;
+                }
+
+                void set_obs_time(tm const& time)
+                {
+                    this->obs_time = time;
+                }
+
+                double get_rel_humidity() const
+                {
+                    return this->rel_humidity;
+                }
+
+                void set_rel_humidity(double humidity)
+                {
+                    this->rel_humidity = humidity;
+                }
             };
         } //namespace coordinate
     } //namespace astronomy

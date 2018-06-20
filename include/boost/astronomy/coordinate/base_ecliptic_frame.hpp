@@ -167,7 +167,7 @@ namespace boost
 
                 tm get_equinox() const
                 {
-                    return this->equinox
+                    return this->equinox;
                 }
 
                 void set_equinox(tm const& time)

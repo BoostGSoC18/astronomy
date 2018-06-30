@@ -15,25 +15,26 @@ namespace boost
         {
             struct fits {
             protected:
-                std::map<std::string, std::string> header;
+                std::multimap<std::string, std::string> header;
                 std::fstream file;
 
             public:
                 fits() {}
 
-                //template <typename Mode=std::ios::in>
-                fits(std::string const& path)
+                fits(std::string const& path, std::ios_base::openmode mode = std::ios_base::in)
                 {
-                    file.open(path);
+                    file.open(path, mode);
                     
                     char card[81] = "";
                     std::string header_part = "", value_part = "";
-                    while (!(card[0] == 'E' && card[1] == 'N' && card[2] == 'D'))
+                    while (header_part != "END")
                     {
                         file.read(card, 80);
                         header_part.assign(card, 8);
+                        boost::algorithm::trim(header_part);
                         value_part.assign(card + 10, 70);
-                        header[header_part] = value_part;
+                        if(header_part != "")
+                            header.insert(std::pair<std::string, std::string>(header_part, value_part));
                     }
 
                     file.seekg(((int)(file.tellg() / 2880) + 1) * 2880);

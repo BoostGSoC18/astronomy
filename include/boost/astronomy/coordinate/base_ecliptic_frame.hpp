@@ -3,12 +3,12 @@
 
 #include <type_traits>
 #include <string>
-#include <ctime>
 
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/algorithms/transform.hpp>
 #include <boost/geometry/algorithms/equals.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 #include <boost/is_base_template_of.hpp>
 #include <boost/astronomy/coordinate/base_frame.hpp>
@@ -28,7 +28,7 @@ namespace boost
                 boost::astronomy::coordinate::spherical_coslat_differential<DifferentialDegreeOrRadian>>
             {
             protected:
-                tm equinox;
+                boost::posix_time::ptime equinox;
 
             public:
                 //default constructor no initialization
@@ -165,12 +165,12 @@ namespace boost
                     this->motion.set_dlat_dlon_coslat_ddist(pm_lat, pm_lon_coslat, radial_velocity);
                 }
 
-                tm get_equinox() const
+                boost::posix_time::ptime get_equinox() const
                 {
                     return this->equinox;
                 }
 
-                void set_equinox(tm const& time)
+                void set_equinox(boost::posix_time::ptime const& time)
                 {
                     this->equinox = boost::posix_time::from_iso_string(time);
                 }

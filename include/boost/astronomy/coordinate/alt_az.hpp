@@ -1,7 +1,6 @@
 #ifndef BOOST_ASTRONOMY_COORDINATE_ALT_AZ_HPP
 #define BOOST_ASTRONOMY_COORDINATE_ALT_AZ_HPP
 
-#include <ctime>
 #include <type_traits>
 #include <tuple>
 
@@ -12,6 +11,7 @@
 #include <boost/units/quantity.hpp>
 #include <boost/units/systems/si/pressure.hpp>
 #include <boost/units/systems/temperature/celsius.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 #include <boost/is_base_template_of.hpp>
 #include <boost/astronomy/coordinate/base_frame.hpp>
@@ -33,7 +33,7 @@ namespace boost
                 boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> earth_location;
                 boost::units::quantity<boost::units::si::pressure> pressure = 0;
                 boost::units::quantity<boost::units::temperature::celsius_base_unit> temperature = 0;
-                tm obs_time;
+                boost::posix_time::ptime obs_time;
                 double rel_humidity;
 
             public:
@@ -174,7 +174,7 @@ namespace boost
                 (boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> const& location,
                     boost::units::quantity<boost::units::si::pressure> const& pressure,
                     boost::units::quantity<boost::units::temperature::celsius_base_unit> const& temperature,
-                    tm const& obs_time, double rel_humidity)
+                    boost::posix_time::ptime const& obs_time, double rel_humidity)
                 {
                     this->earth_location = location;
                     this->pressure = pressure;
@@ -188,7 +188,7 @@ namespace boost
                     boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree>,
                     boost::units::quantity<boost::units::si::pressure>,
                     boost::units::quantity<boost::units::temperature::celsius_base_unit>,
-                    tm, double> get_frame_parameters() const
+                    boost::posix_time::ptime, double> get_frame_parameters() const
                 {
                     return std::make_tuple
                     (this->earth_location, this->pressure, this->temperature, this->obs_time, this->rel_humidity);
@@ -232,13 +232,13 @@ namespace boost
                 }
 
                 //get observation time 
-                tm get_obs_time() const
+                boost::posix_time::ptime get_obs_time() const
                 {
                     return this->obs_time;
                 }
 
                 //set observation time 
-                void set_obs_time(tm const& time)
+                void set_obs_time(boost::posix_time::ptime const& time)
                 {
                     this->obs_time = time;
                 }

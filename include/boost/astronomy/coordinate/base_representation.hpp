@@ -11,7 +11,7 @@
 #include <boost/geometry/core/cs.hpp>
 #include <boost/static_assert.hpp>
 
-#include <boost/is_base_template_of.hpp>
+#include <boost/astronomy/detail/is_base_template_of.hpp>
 
 namespace boost
 {
@@ -42,7 +42,7 @@ namespace boost
 
                     /*checking return type if it is not subclass of 
                     base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, ReturnType>::value), 
                         "return type is expected to be a representation class");
 
@@ -66,7 +66,7 @@ namespace boost
 
                     /*checking types of argument if they both are not subclass 
                     of base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
                         "function argument type is expected to be a representation type");
 
@@ -88,7 +88,7 @@ namespace boost
 
                     /*checking return type if they both are not subclass of
                     base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, ReturnType>::value),
                         "return type is expected to be a representation class");
                     
@@ -110,7 +110,7 @@ namespace boost
                 {
                     /*checking return type if they both are not subclass of
                     base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of<boost::astronomy::coordinate::base_representation, ReturnType>::value),
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of<boost::astronomy::coordinate::base_representation, ReturnType>::value),
                         "return type is expected to be a representation class");
 
                     return ReturnType(this->point);
@@ -122,7 +122,7 @@ namespace boost
                 { 
                     /*checking return type if it is not subclass of 
                     base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, ReturnType>::value),
                         "return type is expected to be a representation class");
 
@@ -145,7 +145,7 @@ namespace boost
                 {
                     /*checking return type if it is not subclass of
                     base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, ReturnType>::value),
                         "return type is expected to be a representation class");
 

@@ -10,7 +10,7 @@
 #include <boost/geometry/algorithms/equals.hpp>
 #include <boost/static_assert.hpp>
 
-#include <boost/is_base_template_of.hpp>
+#include <boost/astronomy/detail/is_base_template_of.hpp>
 #include <boost/astronomy/coordinate/base_representation.hpp>
 #include <boost/astronomy/coordinate/cartesian_representation.hpp>
 #include <boost/astronomy/coordinate/spherical_equatorial_differential.hpp>
@@ -58,7 +58,7 @@ namespace boost
                 template <typename Representation>
                 spherical_equatorial_representation(Representation const& other)
                 {
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
                         "No constructor found with given argument type");
 

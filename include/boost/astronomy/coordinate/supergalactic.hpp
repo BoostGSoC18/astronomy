@@ -24,7 +24,7 @@ namespace boost
                 template <typename Representation>
                 supergalactic(Representation const& representation_data)
                 {
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
                         "Invalid representation class");
 
@@ -53,12 +53,12 @@ namespace boost
                 template <typename Representation, typename Differential>
                 supergalactic(Representation const& representation_data, Differential const& diff)
                 {
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
                         "argument type is expected to be a differential class");
                     this->data = representaion_data;
 
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_differential, Differential>::value),
                         "argument type is expected to be a differential class");
                     this->motion = diff;

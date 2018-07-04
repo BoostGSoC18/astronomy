@@ -12,7 +12,7 @@
 
 #include <boost/astronomy/coordinate/representation.hpp>
 #include <boost/astronomy/coordinate/differential.hpp>
-#include <boost/is_base_template_of.hpp>
+#include <boost/astronomy/detail/is_base_template_of.hpp>
 
 
 namespace boost 
@@ -56,7 +56,7 @@ namespace boost
                 template <typename OtherRepresentation>
                 void set_differential(OtherRepresentation const& other)
                 {
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_differential, OtherRepresentation>::value),
                         "argument type is expected to be a differential class");
 
@@ -74,7 +74,7 @@ namespace boost
                 template <typename ReturnType>
                 ReturnType represen_as() const
                 {
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, ReturnType>::value), 
                         "return type is expected to be a representation class");
 
@@ -85,7 +85,7 @@ namespace boost
                 template <typename OtherCoordinate>
                 double separation(OtherCoordinate const& other) const
                 {
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_frame, OtherCoordinate>::value),
                         "argument type is expected to be a coordinate class");
 

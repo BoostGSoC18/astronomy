@@ -8,7 +8,7 @@
 #include <boost/geometry/algorithms/transform.hpp>
 #include <boost/geometry/algorithms/equals.hpp>
 
-#include <boost/is_base_template_of.hpp>
+#include <boost/astronomy/detail/is_base_template_of.hpp>
 #include <boost/astronomy/coordinate/base_representation.hpp>
 #include <boost/astronomy/coordinate/base_frame.hpp>
 #include <boost/astronomy/coordinate/spherical_representation.hpp>
@@ -34,7 +34,7 @@ namespace boost
                 template <typename Representation>
                 galactic(Representation const& representation_data)
                 {
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
                         "Invalid representation class");
 
@@ -63,12 +63,12 @@ namespace boost
                 template <typename Representation, typename Differential>
                 galactic(Representation const& representation_data, Differential const& diff)
                 {
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
                         "argument type is expected to be a differential class");
                     this->data = representaion_data;
 
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_differential, Differential>::value),
                         "argument type is expected to be a differential class");
                     this->motion = diff;

@@ -6,7 +6,7 @@
 #include <boost/geometry/core/cs.hpp>
 #include <boost/static_assert.hpp>
 
-#include <boost/is_base_template_of.hpp>
+#include <boost/astronomy/detail/is_base_template_of.hpp>
 #include <boost/astronomy/coordinate/base_differential.hpp>
 
 
@@ -50,7 +50,7 @@ namespace boost
                 template <typename Differential>
                 cartesian_differential(Differential const& other)
                 {
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_differential, Differential>::value),
                         "No constructor found with given argument type");
 

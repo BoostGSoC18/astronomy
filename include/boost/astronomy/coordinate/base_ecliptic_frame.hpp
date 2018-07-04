@@ -10,7 +10,7 @@
 #include <boost/geometry/algorithms/equals.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-#include <boost/is_base_template_of.hpp>
+#include <boost/astronomy/detail/is_base_template_of.hpp>
 #include <boost/astronomy/coordinate/base_frame.hpp>
 #include <boost/astronomy/coordinate/spherical_representation.hpp>
 #include <boost/astronomy/coordinate/spherical_coslat_differential.hpp>
@@ -37,7 +37,7 @@ namespace boost
                 template <typename Representation>
                 base_ecliptic_frame(Representation const& representation_data)
                 {
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
                         "argument type is expected to be a representation class");
                     this->data = representation_data;
@@ -58,12 +58,12 @@ namespace boost
                 template <typename Representation, typename Differential>
                 base_ecliptic_frame(Representation const& representation_data, Differential const& diff)
                 {
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
                         "argument type is expected to be a representation class");
                     this->data = representation_data;
 
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_differential, Differential>::value),
                         "argument type is expected to be a differential class");
                     this->motion = diff;

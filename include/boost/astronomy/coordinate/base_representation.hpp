@@ -1,6 +1,7 @@
 #ifndef BOOST_ASTRONOMY_COORDINATE_BASE_REPRESENTATION_HPP
 #define BOOST_ASTRONOMY_COORDINATE_BASE_REPRESENTATION_HPP
 
+#include <cstddef>
 
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/algorithms/transform.hpp>
@@ -22,27 +23,25 @@ namespace boost
             typedef boost::geometry::radian radian;
 
             // structure which is the base for all the representation 
-            template <int DimensionCount, typename Type>
+            template <std::size_t DimensionCount, typename Type>
             struct base_representation
             {
+                BOOST_STATIC_ASSERT_MSG((DimensionCount < 2 || DimensionCount > 3),
+                    "DimensionCount is expected to be 2 or 3");
             protected:
                 boost::geometry::model::point<double, DimensionCount, Type> point;
 
             public:
                 
                 // cross prodct of current vector with specified vector
-                template <typename ReturnType, typename Representation>
-                ReturnType cross(Representation const& other) const
+                template <typename ReturnType, std::size_t OtherDimensionCount, typename OtherType>
+                ReturnType cross(base_representation<OtherDimensionCount, OtherType> const& other) const
                 {
                     /*both the coordinates/vector are first converted into cartesian coordinate system then
                     cross product of both cartesian vectors is converted into requested type and returned*/
 
-                    /*checking types of argument and return type if they both are not
-                    subclass of base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
-                        <boost::astronomy::coordinate::base_representation, Representation>::value),
-                        "function argument type is expected to be a representation type");
-                    
+                    /*checking return type if it is not subclass of 
+                    base_representaion then compile time erorr is generated*/
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, ReturnType>::value), 
                         "return type is expected to be a representation class");
@@ -118,15 +117,11 @@ namespace boost
                 }
 
                 // sum of current vector and specified vector
-                template <typename ReturnType, typename Representation>
-                ReturnType sum(Representation const& other) const
+                template <typename ReturnType, std::size_t OtherDimensionCount, typename OtherType>
+                ReturnType sum(base_representation<OtherDimensionCount, OtherType> const& other) const
                 { 
-                    /*checking types of argument and return type if they both are not
-                    subclass of base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
-                        <boost::astronomy::coordinate::base_representation, Representation>::value),
-                        "function argument type is expected to be a representation type");
-
+                    /*checking return type if it is not subclass of 
+                    base_representaion then compile time erorr is generated*/
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, ReturnType>::value),
                         "return type is expected to be a representation class");
@@ -145,15 +140,11 @@ namespace boost
                 }
                 
                 // mean of current vector with specified vector
-                template <typename ReturnType, typename Representation>
-                ReturnType mean(Representation const& other) const
+                template <typename ReturnType, std::size_t OtherDimensionCount, typename OtherType>
+                ReturnType mean(base_representation<OtherDimensionCount, OtherType> const& other) const
                 {
-                    /*checking types of argument and return type if they both are not
-                    subclass of base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
-                        <boost::astronomy::coordinate::base_representation, Representation>::value),
-                        "function argument type is expected to be a representation type");
-
+                    /*checking return type if it is not subclass of
+                    base_representaion then compile time erorr is generated*/
                     BOOST_STATIC_ASSERT_MSG((boost::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, ReturnType>::value),
                         "return type is expected to be a representation class");

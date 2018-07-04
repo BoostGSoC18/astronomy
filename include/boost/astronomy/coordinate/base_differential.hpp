@@ -1,6 +1,8 @@
 #ifndef BOOST_ASTRONOMY_COORDINATE_BASE_DIFFERENTIAL_HPP
 #define BOOST_ASTRONOMY_COORDINATE_BASE_DIFFERENTIAL_HPP
 
+#include <cstddef>
+
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/algorithms/transform.hpp>
 #include <boost/geometry/core/cs.hpp>
@@ -18,9 +20,11 @@ namespace boost
             typedef boost::geometry::radian radian;
 
             // structure which is the base for all the representation 
-            template <int DimensionCount, typename Type>
+            template <std::size_t DimensionCount, typename Type>
             struct base_differential
             {
+                BOOST_STATIC_ASSERT_MSG((DimensionCount < 2 || DimensionCount > 3),
+                    "DimensionCount is expected to be 2 or 3");
             protected:
                 boost::geometry::model::point<double, DimensionCount, Type> diff;
 

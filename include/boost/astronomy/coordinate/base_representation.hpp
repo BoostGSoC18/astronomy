@@ -26,7 +26,7 @@ namespace boost
             template <std::size_t DimensionCount, typename Type>
             struct base_representation
             {
-                BOOST_STATIC_ASSERT_MSG((DimensionCount < 2 || DimensionCount > 3),
+                BOOST_STATIC_ASSERT_MSG((DimensionCount == 2 || DimensionCount == 3),
                     "DimensionCount is expected to be 2 or 3");
             protected:
                 boost::geometry::model::point<double, DimensionCount, Type> point;

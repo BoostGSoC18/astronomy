@@ -110,7 +110,8 @@ namespace boost
                 {
                     /*checking return type if they both are not subclass of
                     base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of<boost::astronomy::coordinate::base_representation, ReturnType>::value),
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
+                        <boost::astronomy::coordinate::base_representation, ReturnType>::value),
                         "return type is expected to be a representation class");
 
                     return ReturnType(this->point);
@@ -191,6 +192,17 @@ namespace boost
                 boost::geometry::model::point<double, DimensionCount, Type> get_point() const
                 {
                     return this->point;
+                }
+                
+                bool operator==(base_representation const& other)
+                {
+                    /*converting both coordinates/vector into cartesian system*/
+                    boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint1, tempPoint2;
+                    boost::geometry::transform(this->point, tempPoint1);
+                    boost::geometry::transform(other.get_point(), tempPoint2);
+
+                    return (tempPoint1.get<0>() == tempPoint2.get<0>()) && (tempPoint1.get<1>() == tempPoint2.get<1>())
+                        && (tempPoint1.get<2>() == tempPoint2.get<2>());
                 }
 
             }; //base_representation

@@ -44,7 +44,7 @@ namespace boost
 
                     boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint;
                     double mag = this->magnitude();     //magnitude of vector stored in current object
-                    boost::geometry::transform(this->point, tempPoint); //converting coordinate/vector into cartesian
+                    boost::geometry::transform(this->diff, tempPoint); //converting coordinate/vector into cartesian
 
                                                                         //performing calculations to find unit vector
                     boost::geometry::set<0>(tempPoint, (boost::geometry::get<0>(tempPoint) / mag));
@@ -59,7 +59,7 @@ namespace boost
                 {
                     double result = 0.0;
                     boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint;
-                    boost::geometry::transform(this->point, tempPoint);
+                    boost::geometry::transform(this->diff, tempPoint);
 
                     switch (DimensionCount)
                     {
@@ -85,10 +85,11 @@ namespace boost
                 {
                     /*checking return type if they both are not subclass of
                     base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of<boost::astronomy::coordinate::base_differential, ReturnType>),
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
+                        <boost::astronomy::coordinate::base_differential, ReturnType>),
                         "return type is expected to be a differential class");
 
-                    return ReturnType(this->point);
+                    return ReturnType(this->diff);
                 }
 
                 // returns the differential of calling object
@@ -97,6 +98,16 @@ namespace boost
                     return this->diff;
                 }
 
+                bool operator==(base_differential const& other)
+                {
+                    /*converting both coordinates/vector into cartesian system*/
+                    boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint1, tempPoint2;
+                    boost::geometry::transform(this->diff, tempPoint1);
+                    boost::geometry::transform(other.get_differential(), tempPoint2);
+
+                    return (tempPoint1.get<0>() == tempPoint2.get<0>()) && (tempPoint1.get<1>() == tempPoint2.get<1>())
+                        && (tempPoint1.get<2>() == tempPoint2.get<2>());
+                }
 
             };
         } // namespace coordinate

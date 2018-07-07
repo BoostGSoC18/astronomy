@@ -1,6 +1,7 @@
 #ifndef BOOST_ASTRONOMY_DETAIL_IS_BASE_TEMPLATE_OF_HPP
 #define BOOST_ASTRONOMY_DETAIL_IS_BASE_TEMPLATE_OF_HPP
 
+#include <cstddef>
 #include <boost/type_traits.hpp>
 
 namespace boost
@@ -10,7 +11,7 @@ namespace boost
         namespace detail
         {
             // structure to provide support like std::is_base_of for template base classes
-            template <template <int, typename...> class Base, typename Derived>
+            template <template <std::size_t, typename...> class Base, typename Derived>
             struct base_template
             {
                 using U = typename std::remove_cv<Derived>::type;
@@ -23,7 +24,7 @@ namespace boost
                 using type = decltype(test(std::declval<U*>()));
             };
 
-            template <template <int, typename...> class Base, typename Derived>
+            template <template <std::size_t, typename...> class Base, typename Derived>
             using is_base_template_of = typename base_template<Base, Derived>::type;
 
         } //namespace detail

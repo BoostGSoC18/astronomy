@@ -32,7 +32,7 @@ namespace boost
                 spherical_representation() {}
 
                 //constructs object from provided value of coordinates (latitude, longitude, distance)
-                spherical_representation(double lat, double lon, double distance)
+                spherical_representation(double lat, double lon, double distance = 1.0)
                 {
                     boost::geometry::set<0>(this->point, lat);
                     boost::geometry::set<1>(this->point, lon);

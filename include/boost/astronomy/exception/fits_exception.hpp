@@ -25,6 +25,15 @@ namespace boost
             }
         };
 
+        class hdu_unit_overflow_exception : public fits_exception
+        {
+        public:
+            const char* what() const throw()
+            {
+                return "HDU unit can accommodate 36 cards max";
+            }
+        };
+
     } //namespace astronomy
 } //namespace boost
 #endif // !BOOST_ASTRONOMY_EXCEPTION_FITS_EXCEPTION_HPP

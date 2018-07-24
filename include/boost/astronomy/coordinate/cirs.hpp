@@ -37,7 +37,7 @@ namespace boost
                 //hour angles are converted to degree/radian and then stored
                 //eg: if RA = 06h 45m 08.9s then value should be provided like "064508.9"
                 template <typename RaType>
-                cirs(double dec, RaType ra, double distance) : base_equatorial_frame
+                cirs(double dec, RaType ra, double distance = 1.0) : base_equatorial_frame
                     <RepresentationDegreeOrRadian, DifferentialDegreeOrRadian>(dec, ra, distance) {}
 
                 template <typename RaType>

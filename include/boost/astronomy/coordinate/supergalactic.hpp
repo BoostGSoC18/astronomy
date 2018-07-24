@@ -33,7 +33,7 @@ namespace boost
 
                 //creates coordinate from given values
                 //sgb -> latitude, sgl -> longitude
-                supergalactic(double sgb, double sgl, double distance)
+                supergalactic(double sgb, double sgl, double distance = 1.0)
                 {
                     this->data.set_lat_lon_dist(sgb, sgl, distance);
                 }

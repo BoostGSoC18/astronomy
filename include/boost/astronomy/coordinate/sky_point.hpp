@@ -3,9 +3,15 @@
 
 
 #include <string>
+#include <type_traits>
+#include <cmath>
 
 #include <boost/units/systems/angle/degrees.hpp>
 #include <boost/units/io.hpp>
+#include <boost/static_assert.hpp>
+
+#include <boost/astronomy/coordinate/frame.hpp>
+#include <boost/astronomy/detail/is_base_template_of.hpp>
 
 
 namespace boost
@@ -14,16 +20,18 @@ namespace boost
     {
         namespace coordinate
         {
-            typedef boost::units::quantity<boost::units::degree::plane_angle> degree;
+            //typedef boost::units::quantity<boost::units::degree::plane_angle> degree;
 
             /*sky_point is used to represent a point(coordinate) in the sky*/
-            template <class System, typename Unit, typename Unit2=void>
+            template <typename System>
             struct sky_point
             {
+				BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
+					<boost::astronomy::coordinate::base_frame, System>::value),
+					"Template argument is expected to be a fram class");
+				
             protected:
-                degree latitude;    //hosrizontal coordinate
-                degree longitude;   //vertical coordinate
-                std::string coordinate_system;  //type of coordinate system
+				System point;
 
             public:
                 //constructors  
@@ -32,36 +40,63 @@ namespace boost
                 sky_point() {}
 
                 //copy constructor
-                template<class OtherSystem, typename OtherUnit, typename OtherUnit2 = void>
-                sky_point(const sky_point<OtherSystem, OtherUnit, OtherUnit2> object);
+                template<class OtherSystem>
+                sky_point(const sky_point<OtherSystem> object);
 
                 //constructing from numbers
-                sky_point(double latitude, double longitude);
-
-                //constructing from string
-                sky_point(std::string latitude, std::string longitude);
+				sky_point(double lat, double lon, double distance=1)
+				{
+					System temp(lat, lon, distance);
+					this->point = temp;
+				}
 
                 //constructing from name of object if available in the calatoge
                 sky_point(std::string name);
 
-                // destructor 
-                ~sky_point();
-
                 std::string get_constillation();
 
-                template<class OtherSystem, typename OtherUnit, typename OtherUnit2 = void>
-                degree separation(const sky_point<OtherSystem, OtherUnit, OtherUnit2> object);
+				sky_point<System> from_name(std::string name);
 
-                template<class OtherSystem, typename OtherUnit, typename OtherUnit2 = void>
-                bool is_equivalant_system(const sky_point<OtherSystem, OtherUnit, OtherUnit2> object);
+                template<class OtherSystem>
+				double separation(const sky_point<OtherSystem> object)
+				{
+					return this->point.separation(object.get_point());
+				}
 
-                sky_point<System, Unit, Unit2> from_name(std::string name);
+                template<class OtherSystem>
+				bool is_equivalant_system(const sky_point<OtherSystem> object)
+				{
+					return std::is_same<System, otherSystem>::value;
+				}
 
-                template<class OtherSystem, typename OtherUnit, typename OtherUnit2 = void>
-                degree positional_angle(const sky_point<OtherSystem, OtherUnit, OtherUnit2> object);
+				// Returns positional angle in the radian
+                template<class OtherSystem>
+				double positional_angle(const sky_point<OtherSystem> object)
+				{
+					boost::astronomy::coordinate::spherical_representation<boost::astronomy::coordinate::radian> 
+						p1(this->point.get_data()), p2(object.get_point().get_data());
 
-                template<class OtherSystem, typename OtherUnit, typename OtherUnit2 = void>
-                sky_point<OtherSystem, OtherUnit, OtherUnit2> transform_to();
+					double diff = p2.get_lon() - p1.get_lon();
+					double coslat = std::cos(p2.get_lat());
+
+					double x = std::sin(p2.get_lat()) * std::cos(p1.get_lat()) - coslat * std::sin(p1.get_lat()) * std::cos(diff);
+					double y = std::sin(diff) * coslat;
+
+					return std::atan2(x, y);
+				}
+
+                template<class OtherSystem>
+                sky_point<OtherSystem> transform_to();
+
+				System get_point() const
+				{
+					return this->point;
+				}
+
+				void set_point(System otherPoint)
+				{
+					this->point = otherPoint;
+				}
 
             }; //sky_point
 

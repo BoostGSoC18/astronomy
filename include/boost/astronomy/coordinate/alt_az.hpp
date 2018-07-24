@@ -12,6 +12,7 @@
 #include <boost/units/systems/si/pressure.hpp>
 #include <boost/units/systems/temperature/celsius.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/static_assert.hpp>
 
 #include <boost/astronomy/detail/is_base_template_of.hpp>
 #include <boost/astronomy/coordinate/base_frame.hpp>

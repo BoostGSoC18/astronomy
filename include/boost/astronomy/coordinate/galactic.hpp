@@ -43,7 +43,7 @@ namespace boost
 
                 //creates coordinate from given values
                 //b -> latitude, l -> longitude
-                galactic(double b, double l, double distance)
+                galactic(double b, double l, double distance = 1.0)
                 {
                     this->data.set_lat_lon_dist(b, l, distance);
                 }

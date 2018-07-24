@@ -43,7 +43,7 @@ namespace boost
                     this->data = representation_data;
                 }
 
-                base_ecliptic_frame(double lat, double lon, double distance)
+                base_ecliptic_frame(double lat, double lon, double distance = 1.0)
                 {
                     this->data.set_lat_lon_dist(lat, lon, distance);
                 }

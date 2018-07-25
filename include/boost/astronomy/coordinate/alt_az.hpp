@@ -32,8 +32,11 @@ namespace boost
             protected:
                 //frame parameters
                 boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> earth_location;
-                boost::units::quantity<boost::units::si::pressure> pressure = 0;
-                boost::units::quantity<boost::units::temperature::celsius_base_unit> temperature = 0;
+
+                boost::units::quantity<boost::units::si::pressure> pressure = 0.0 * boost::units::si::pascals;
+
+				boost::units::quantity<boost::units::celsius::temperature> temperature = 0.0 * boost::units::celsius::degrees;
+
                 boost::posix_time::ptime obs_time;
                 double rel_humidity;
 
@@ -174,7 +177,7 @@ namespace boost
                 void set_frame_parameters
                 (boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> const& location,
                     boost::units::quantity<boost::units::si::pressure> const& pressure,
-                    boost::units::quantity<boost::units::temperature::celsius_base_unit> const& temperature,
+					boost::units::quantity<boost::units::celsius::temperature> const& temperature,
                     boost::posix_time::ptime const& obs_time, double rel_humidity)
                 {
                     this->earth_location = location;
@@ -188,7 +191,7 @@ namespace boost
                 std::tuple<                
                     boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree>,
                     boost::units::quantity<boost::units::si::pressure>,
-                    boost::units::quantity<boost::units::temperature::celsius_base_unit>,
+					boost::units::quantity<boost::units::celsius::temperature>,
                     boost::posix_time::ptime, double> get_frame_parameters() const
                 {
                     return std::make_tuple
@@ -221,13 +224,13 @@ namespace boost
                 }
 
                 //get temperature of the location
-                boost::units::quantity<boost::units::temperature::celsius_base_unit> get_temprature() const
+				boost::units::quantity<boost::units::celsius::temperature> get_temprature() const
                 {
                     return this->temperature;
                 }
 
                 //set temperature of the location
-                void set_temprature(boost::units::quantity<boost::units::temperature::celsius_base_unit> const& temperature)
+                void set_temprature(boost::units::quantity<boost::units::celsius::temperature> const& temperature)
                 {
                     this->temperature = temperature;
                 }

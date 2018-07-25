@@ -72,7 +72,7 @@ namespace boost
                 //returns latitude component of the coordinate
                 double get_lat() const
                 {
-					return this->motion.get_lat();
+					return this->data.get_lat();
                 }
 
                 //returns longitude component of the coordinate

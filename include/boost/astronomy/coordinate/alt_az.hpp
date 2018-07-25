@@ -52,7 +52,7 @@ namespace boost
                     this->data = representation_data;
                 }
 
-                alt_az(double alt, double az, double distance = 1.0)
+                alt_az(double alt, double az, double distance)
                 {
                     this->data.set_lat_lon_dist(alt, az, distance);
                 }

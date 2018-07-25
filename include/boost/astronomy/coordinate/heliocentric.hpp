@@ -21,7 +21,7 @@ namespace boost
                 heliocentric(Represetation const& representation_data) : base_ecliptic_frame
                     <RepresentationDegreeOrRadian, DifferentailDegreeOrRadian>(representation_data) {}
 
-                heliocentric(double lat, double lon, double distance = 1.0) : base_ecliptic_frame
+                heliocentric(double lat, double lon, double distance) : base_ecliptic_frame
                     <RepresentationDegreeOrRadian, DifferentailDegreeOrRadian>(lat, lon, distance) {}
 
                 heliocentric(double lat, double lon, double distance, double pm_lat, double pm_lon_coslat, double radial_velocity) :

@@ -46,7 +46,7 @@ namespace boost
                 //first two char as hours next two as minutes and remaining are treated as seconds
                 //hour angles are converted to degree/radian and then stored
                 //eg: if RA = 06h 45m 08.9s then value should be provided like "064508.9"           
-                base_equatorial_frame(double dec, std::string const& ra, double distance = 1.0)
+                base_equatorial_frame(double dec, std::string const& ra, double distance)
                 {
                     double ra_final;
                     

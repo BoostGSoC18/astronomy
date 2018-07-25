@@ -72,19 +72,19 @@ namespace boost
                 //returns latitude component of the coordinate
                 double get_lat() const
                 {
-                    return boost::geometry::get<0>(this->data.get_point());
+					return this->motion.get_lat();
                 }
 
                 //returns longitude component of the coordinate
                 double get_lon() const
                 {
-                    return boost::geometry::get<1>(this->data.get_point());
+					return this->data.get_lon();
                 }
 
                 //returns distance component of the coordinate
                 double get_distance() const
                 {
-                    return boost::geometry::get<2>(this->data.get_point());
+					return this->data.get_dist();
                 }
 
                 //returns the (lat, lon, dist) in the form of tuple
@@ -96,19 +96,19 @@ namespace boost
                 //returns proper motion in latitude
                 double get_pm_lat() const
                 {
-                    return boost::geometry::get<0>(this->motion.get_differential());
+					return this->motion.get_dlat();
                 }
 
                 //returns proper motion in longitude including cos(lat)
                 double get_pm_lon_coslat() const
                 {
-                    return boost::geometry::get<1>(this->motion.get_differential());
+					return this->motion.get_dlon_coslat();
                 }
 
                 //returns radial_velocity
                 double get_radial_velocity() const
                 {
-                    return boost::geometry::get<2>(this->motion.get_differential());
+					return this->motion.get_ddist();
                 }
 
                 //returns the proper motion in form of tuple
@@ -120,19 +120,19 @@ namespace boost
                 //sets value of latitude component of the coordinate
                 void set_lat(double lat)
                 {
-                    boost::geometry::set<0>(this->data.get_point(), lat);
+					this->data.set_lat(lat);
                 }
 
                 //sets value of longitude component of the coordinate
                 void set_lon(double lon)
                 {
-                    boost::geometry::set<1>(this->data.get_point(), lon);
+					this->data.set_lon(lon);
                 }
 
                 //sets value of distance component of the coordinate
                 void set_distance(double distance)
                 {
-                    boost::geometry::set<2>(this->data.get_point(), distance);
+					this->data.set_dist(distance);
                 }
 
                 //sets value of all component of the coordinate
@@ -144,19 +144,19 @@ namespace boost
                 //sets the proper motion in latitude
                 void set_pm_lat(double pm_lat)
                 {
-                    boost::geometry::set<0>(this->motion.get_differential(), pm_lat);
+					this->motion.set_dlat(pm_lat);
                 }
 
                 //sets the proper motion in longitude including cos(lat)
                 void set_pm_lon_coslat(double pm_lon_coslat)
                 {
-                    boost::geometry::set<1>(this->motion.get_differential(), pm_lon_coslat);
+					this->motion.set_dlon_coslat(pm_lon_coslat);
                 }
 
                 //sets the radial_velocity
                 void set_radial_velocity(double radial_velocity)
                 {
-                    boost::geometry::set<2>(this->motion.get_differential(), radial_velocity);
+					this->motion.set_dlon_coslat(radial_velocity);
                 }
 
                 //set value of motion  including cos(b)

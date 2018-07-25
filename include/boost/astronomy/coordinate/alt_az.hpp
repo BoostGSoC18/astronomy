@@ -77,19 +77,19 @@ namespace boost
                 //returns altitude component of the coordinate
                 double get_alt() const
                 {
-                    return boost::geometry::get<0>(this->data.get_point());
+					return this->data.get_lat();
                 }
 
                 //returns azimuth component of the coordinate
                 double get_az() const
                 {
-                    return boost::geometry::get<1>(this->data.get_point());
+					return this->data.get_lon();
                 }
 
                 //returns distance component of the coordinate
                 double get_distance() const
                 {
-                    return boost::geometry::get<2>(this->data.get_point());
+					return this->data.get_dist();
                 }
 
                 //returns the (alt, az, dist) in the form of tuple
@@ -101,19 +101,19 @@ namespace boost
                 //returns proper motion in altitude
                 double get_pm_alt() const
                 {
-                    return boost::geometry::get<0>(this->motion.get_differential());
+					return this->motion.get_dlat();
                 }
 
                 //returns proper motion in azimuth including cos(alt)
                 double get_pm_az_cosalt() const
                 {
-                    return boost::geometry::get<1>(this->motion.get_differential());
+					return this->motion.get_dlon_coslat();
                 }
 
                 //returns radial_velocity
                 double get_radial_velocity() const
                 {
-                    return boost::geometry::get<2>(this->motion.get_differential());
+					return this->motion.get_ddist();
                 }
 
                 //returns the proper motion in tuple form
@@ -125,19 +125,19 @@ namespace boost
                 //sets value of altitude component of the coordinate
                 void set_alt(double alt)
                 {
-                    boost::geometry::set<0>(this->data.get_point(), alt);
+					this->data.set_lat(alt);
                 }
 
                 //sets value of azimuth component of the coordinate
                 void set_az(double az)
                 {
-                    boost::geometry::set<1>(this->data.get_point(), az);
+					this->data.set_lon(az);
                 }
 
                 //sets value of distance component of the coordinate
                 void set_distance(double distance)
                 {
-                    boost::geometry::set<2>(this->data.get_point(), distance);
+					this->data.set_dist(distance);
                 }
 
                 //sets value of all component of the coordinate including cos(alt)
@@ -149,19 +149,19 @@ namespace boost
                 //sets the proper motion in altitude
                 void set_pm_alt(double pm_alt)
                 {
-                    boost::geometry::set<0>(this->motion.get_differential(), pm_alt);
+					this->motion.set_dlat(pm_alt);
                 }
 
                 //sets the proper motion in azimuth including cos(alt)
                 void set_pm_az_cosalt(double pm_az_cosalt)
                 {
-                    boost::geometry::set<1>(this->motion.get_differential(), pm_az_cosalt);
+					this->motion.set_dlon_coslat(pm_az_cosalt);
                 }
 
                 //sets the radial_velocity
                 void set_radial_velocity(double radial_velocity)
                 {
-                    boost::geometry::set<2>(this->motion.get_differential(), radial_velocity);
+					this->motion.set_ddist(radial_velocity);
                 }
 
                 //set value of motion

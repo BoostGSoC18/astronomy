@@ -97,19 +97,19 @@ namespace boost
                 //returns Declination component of the coordinate
                 double get_dec() const
                 {
-                    return boost::geometry::get<0>(this->data.get_point());
+					return this->data.get_lat();
                 }
 
                 //returns Right Ascension component of the coordinate
                 double get_ra() const
                 {
-                    return boost::geometry::get<1>(this->data.get_point());
+					return this->data.get_lon();
                 }
 
                 //returns distance component of the coordinate
                 double get_distance() const
                 {
-                    return boost::geometry::get<2>(this->data.get_point());
+					return this->data.get_dist();
                 }
 
                 //returns the (dec, ra, dist) in the form of tuple
@@ -121,19 +121,19 @@ namespace boost
                 //returns proper motion in Declination
                 double get_pm_dec() const
                 {
-                    return boost::geometry::get<0>(this->motion.get_differential());
+					return this->motion.get_dlat();
                 }
 
                 //returns proper motion in Right Ascension including cos(dec)
                 double get_pm_ra_cosdec() const
                 {
-                    return boost::geometry::get<1>(this->motion.get_differential());
+					return this->motion.get_dlon_coslat();
                 }
 
                 //returns radial_velocity
                 double get_radial_velocity() const
                 {
-                    return boost::geometry::get<2>(this->motion.get_differential());
+					return this->motion.get_ddist();
                 }
 
                 //returns the proper motion in form of tuple including cos(dec)
@@ -145,7 +145,7 @@ namespace boost
                 //sets value of Declination component of the coordinate
                 void set_dec(double dec)
                 {
-                    boost::geometry::set<0>(this->data.get_point(), dec);
+					this->data.set_lat(dec);
                 }
 
                 //sets value of Right Ascension component of the coordinate
@@ -171,21 +171,21 @@ namespace boost
                             boost::lexical_cast<double>(ra.substr(4)) * 3600) * 0.0174533;
                     }
                     
-                    boost::geometry::set<1>(this->data.get_point(), ra_final);
+					this->data.set_lon(ra_final);
                 }
                 
                 //sets value of Right Ascension component of the coordinate
                 //RA is expected to be a double if value is in degree/radian
                 void set_ra(double ra)
                 {
-                    boost::geometry::set<1>(this->data.get_point(), ra);
+					this->data.set_lon(ra);
                 }
 
 
                 //sets value of distance component of the coordinate
                 void set_distance(double distance)
                 {
-                    boost::geometry::set<2>(this->data.get_point(), distance);
+					this->data.set_dist(distance);
                 }
 
                 //sets value of all component of the coordinate 
@@ -217,19 +217,19 @@ namespace boost
                 //sets the proper motion in Declination
                 void set_pm_dec(double pm_dec)
                 {
-                    boost::geometry::set<0>(this->motion.get_differential(), pm_dec);
+					this->motion.set_dlat(pm_dec);
                 }
 
                 //sets the proper motion in Right Ascension including cos(dec)
                 void set_pm_ra_cosdec(double pm_ra_cosdec)
                 {
-                    boost::geometry::set<1>(this->motion.get_differential(), pm_ra_cosdec);
+					this->motion.set_dlon_coslat(pm_ra_cosdec);
                 }
 
                 //sets the radial_velocity
                 void set_radial_velocity(double radial_velocity)
                 {
-                    boost::geometry::set<2>(this->motion.get_differential(), radial_velocity);
+					this->motion.set_ddist(radial_velocity);
                 }
 
                 //set value of motion including cos(dec)

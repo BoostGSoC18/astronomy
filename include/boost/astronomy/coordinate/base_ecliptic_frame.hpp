@@ -69,107 +69,109 @@ namespace boost
                     this->motion = diff;
                 }
 
-                //returns latitude component of the coordinate
+                //!returns latitude component of the coordinate
                 double get_lat() const
                 {
 					return this->data.get_lat();
                 }
 
-                //returns longitude component of the coordinate
+                //!returns longitude component of the coordinate
                 double get_lon() const
                 {
 					return this->data.get_lon();
                 }
 
-                //returns distance component of the coordinate
+                //!returns distance component of the coordinate
                 double get_distance() const
                 {
 					return this->data.get_dist();
                 }
 
-                //returns the (lat, lon, dist) in the form of tuple
+                //!returns the (lat, lon, dist) in the form of tuple
                 std::tuple<double, double, double> get_lat_lon_dist() const
                 {
                     return this->data.get_lat_lon_dist();
                 }
 
-                //returns proper motion in latitude
+                //!returns proper motion in latitude
                 double get_pm_lat() const
                 {
 					return this->motion.get_dlat();
                 }
 
-                //returns proper motion in longitude including cos(lat)
+                //!returns proper motion in longitude including cos(lat)
                 double get_pm_lon_coslat() const
                 {
 					return this->motion.get_dlon_coslat();
                 }
 
-                //returns radial_velocity
+                //!returns radial_velocity
                 double get_radial_velocity() const
                 {
 					return this->motion.get_ddist();
                 }
 
-                //returns the proper motion in form of tuple
+                //!returns the proper motion in form of tuple
                 std::tuple<double, double, double> get_pm_lat_lon_radial() const
                 {
                     return this->motion.get_dlat_dlon_coslat_ddist();
                 }
 
-                //sets value of latitude component of the coordinate
+                //!sets value of latitude component of the coordinate
                 void set_lat(double lat)
                 {
 					this->data.set_lat(lat);
                 }
 
-                //sets value of longitude component of the coordinate
+                //!sets value of longitude component of the coordinate
                 void set_lon(double lon)
                 {
 					this->data.set_lon(lon);
                 }
 
-                //sets value of distance component of the coordinate
+                //!sets value of distance component of the coordinate
                 void set_distance(double distance)
                 {
 					this->data.set_dist(distance);
                 }
 
-                //sets value of all component of the coordinate
+                //!sets value of all component of the coordinate
                 void set_alt_az_dist(double lat, double lon, double dist)
                 {
                     this->data.set_lat_lon_dist(lat, lon, dist);
                 }
 
-                //sets the proper motion in latitude
+                //!sets the proper motion in latitude
                 void set_pm_lat(double pm_lat)
                 {
 					this->motion.set_dlat(pm_lat);
                 }
 
-                //sets the proper motion in longitude including cos(lat)
+                //!sets the proper motion in longitude including cos(lat)
                 void set_pm_lon_coslat(double pm_lon_coslat)
                 {
 					this->motion.set_dlon_coslat(pm_lon_coslat);
                 }
 
-                //sets the radial_velocity
+                //!sets the radial_velocity
                 void set_radial_velocity(double radial_velocity)
                 {
 					this->motion.set_dlon_coslat(radial_velocity);
                 }
 
-                //set value of motion  including cos(b)
+                //!set value of motion  including cos(b)
                 void set_pm_alt_az_radial(double pm_lat, double pm_lon_coslat, double radial_velocity)
                 {
                     this->motion.set_dlat_dlon_coslat_ddist(pm_lat, pm_lon_coslat, radial_velocity);
                 }
 
+				//!returns equinox time
                 boost::posix_time::ptime get_equinox() const
                 {
                     return this->equinox;
                 }
 
+				//!sets equinox time
                 void set_equinox(boost::posix_time::ptime const& time)
                 {
                     this->equinox = boost::posix_time::from_iso_string(time);

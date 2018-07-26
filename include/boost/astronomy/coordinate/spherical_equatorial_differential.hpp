@@ -22,8 +22,8 @@ namespace boost
     {
         namespace coordinate
         {
-            //Represents the differential in spherical representation on unit sphere
-            //Uses two components to represent a differential (dlatitude, dlongitude)
+            //!Represents the differential in spherical representation on unit sphere
+            //!Uses two components to represent a differential (dlatitude, dlongitude)
             template <typename DegreeOrRadian>
             struct spherical_equatorial_differential : public boost::astronomy::coordinate::base_differential
                 <2, boost::geometry::cs::spherical_equatorial<DegreeOrRadian>>
@@ -32,14 +32,14 @@ namespace boost
                 //default constructor no initialization
                 spherical_equatorial_differential() {}
 
-                //constructs object from provided value of differential (dlatitude, dlongitude)
+                //!constructs object from provided value of differential (dlatitude, dlongitude)
                 spherical_equatorial_differential(double dlat, double dlon)
                 {
                     boost::geometry::set<0>(this->diff, dlat);
                     boost::geometry::set<1>(this->diff, dlon);
                 }
 
-                //constructs object from boost::geometry::model::point object
+                //!constructs object from boost::geometry::model::point object
                 template <int DimensionCount, typename Type>
                 spherical_equatorial_differential(boost::geometry::model::point<double, DimensionCount, Type> const& pointObject)
                 {
@@ -54,7 +54,7 @@ namespace boost
                     this->diff = object.get_differential();
                 }
 
-                //constructs object from any type of differential
+                //!constructs object from any type of differential
                 template <typename Differential>
                 spherical_equatorial_differential(Differential const& other)
                 {
@@ -67,38 +67,38 @@ namespace boost
                         <boost::astronomy::coordinate::cartesian_differential>().get_differential(), this->diff);
 
                 }
-                // returns the (dlat, dlon) in the form of tuple
+                //! returns the (dlat, dlon) in the form of tuple
                 std::tuple<double, double> get_dlat_dlon() const
                 {
                     return std::make_tuple(boost::geometry::get<0>(this->diff), boost::geometry::get<1>(this->diff));
                 }
 
-                //returns the dlat component of differential
+                //!returns the dlat component of differential
                 double get_dlat() const
                 {
                     return boost::geometry::get<0>(this->diff);
                 }
 
-                //returns the dlon component of differential
+                //!returns the dlon component of differential
                 double get_dlon() const
                 {
                     return boost::geometry::get<1>(this->diff);
                 }
 
-                //set value of (dlat, dlon) in current object
+                //!set value of (dlat, dlon) in current object
                 void set_dlat_dlon(double dlat, double dlon)
                 {
                     boost::geometry::set<0>(this->diff, dlat);
                     boost::geometry::set<1>(this->diff, dlon);
                 }
 
-                //set value of dlat component of differential
+                //!set value of dlat component of differential
                 void set_dlat(double dlat)
                 {
                     boost::geometry::set<0>(this->diff, dlat);
                 }
 
-                //set value of dlon component of differential
+                //!set value of dlon component of differential
                 void set_dlon(double dlon)
                 {
                     boost::geometry::set<1>(this->diff, dlon);

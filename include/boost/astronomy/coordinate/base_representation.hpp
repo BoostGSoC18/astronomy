@@ -26,18 +26,20 @@ namespace boost
             template <std::size_t DimensionCount, typename Type>
             struct base_representation
             {
+				///@cond INTERNAL
                 BOOST_STATIC_ASSERT_MSG((DimensionCount == 2 || DimensionCount == 3),
                     "DimensionCount is expected to be 2 or 3");
+				///@endcond
             protected:
                 boost::geometry::model::point<double, DimensionCount, Type> point;
 
             public:
                 
-                // cross prodct of current vector with specified vector
+                /// cross prodct of current vector with specified vector
                 template <typename ReturnType, std::size_t OtherDimensionCount, typename OtherType>
                 ReturnType cross(base_representation<OtherDimensionCount, OtherType> const& other) const
                 {
-                    /*both the coordinates/vector are first converted into cartesian coordinate system then
+                    /*!both the coordinates/vector are first converted into cartesian coordinate system then
                     cross product of both cartesian vectors is converted into requested type and returned*/
 
                     /*checking return type if it is not subclass of 
@@ -57,11 +59,11 @@ namespace boost
                         (tempPoint1, tempPoint2));
                 }
                 
-                // dot prodct of current vector with specified vector
+                //! dot prodct of current vector with specified vector
                 template <typename Representation>
                 double dot(Representation const& other) const
                 {
-                    /*both the coordinates/vector are first converted into cartesian coordinate system then
+                    /*!both the coordinates/vector are first converted into cartesian coordinate system then
                     dot product of both cartesian product is converted into requested type and returned*/
 
                     /*checking types of argument if they both are not subclass 
@@ -79,11 +81,11 @@ namespace boost
 
                 }
 
-                // returns the unit vector of current vector
+                //! returns the unit vector of current vector
                 template <typename ReturnType>
                 ReturnType unit_vector() const
                 {
-                    /*given coordinates/vectors are converted into cartesian and 
+                    /*!given coordinates/vectors are converted into cartesian and 
                     unit vector of it is returned by converting it into requested type*/
 
                     /*checking return type if they both are not subclass of
@@ -104,7 +106,7 @@ namespace boost
                     return ReturnType(tempPoint);
                 }
 
-                // converts current representation into specified representation
+                //! converts current representation into specified representation
                 template <typename ReturnType>
                 ReturnType to_representation() const
                 {
@@ -117,7 +119,7 @@ namespace boost
                     return ReturnType(this->point);
                 }
 
-                // sum of current vector and specified vector
+                //! sum of current vector and specified vector
                 template <typename ReturnType, std::size_t OtherDimensionCount, typename OtherType>
                 ReturnType sum(base_representation<OtherDimensionCount, OtherType> const& other) const
                 { 
@@ -140,7 +142,7 @@ namespace boost
                     return ReturnType(result);
                 }
                 
-                // mean of current vector with specified vector
+                //! mean of current vector with specified vector
                 template <typename ReturnType, std::size_t OtherDimensionCount, typename OtherType>
                 ReturnType mean(base_representation<OtherDimensionCount, OtherType> const& other) const
                 {
@@ -163,7 +165,7 @@ namespace boost
                     return ReturnType(result);
                 }
 
-                // magnitude of the current class is returned
+                //! magnitude of the current class is returned
                 double magnitude() const
                 {
                     double result = 0.0;
@@ -188,7 +190,7 @@ namespace boost
                     return std::sqrt(result);
                 }
 
-                // returns the point/vector of calling object
+                //! returns the point/vector of calling object
                 boost::geometry::model::point<double, DimensionCount, Type> get_point() const
                 {
                     return this->point;

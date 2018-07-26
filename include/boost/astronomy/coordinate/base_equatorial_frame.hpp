@@ -41,11 +41,11 @@ namespace boost
                 }
 
                 
-                //if want to provide value in hours:minute:sec formate then a string expected with particular format
-                //hour angle formate: "hhmmss..."
-                //first two char as hours next two as minutes and remaining are treated as seconds
-                //hour angles are converted to degree/radian and then stored
-                //eg: if RA = 06h 45m 08.9s then value should be provided like "064508.9"           
+                /*!if want to provide value in hours:minute:sec formate then a string expected with particular format
+                hour angle formate: "hhmmss..."
+                first two char as hours next two as minutes and remaining are treated as seconds
+                hour angles are converted to degree/radian and then stored
+                eg: if RA = 06h 45m 08.9s then value should be provided like "064508.9"*/
                 base_equatorial_frame(double dec, std::string const& ra, double distance)
                 {
                     double ra_final;
@@ -66,7 +66,7 @@ namespace boost
                     this->data.set_lat_lon_dist(dec, ra_final, distance);
                 }
 
-                //RA is expected to be a double if value is in degree/radian
+                //!RA is expected to be a double if value is in degree/radian
                 base_equatorial_frame(double dec, double ra, double distance)
                 {
                     this->data.set_lat_lon_dist(dec, ra, distance);
@@ -94,66 +94,66 @@ namespace boost
                     this->motion = diff;
                 }
 
-                //returns Declination component of the coordinate
+                //!returns Declination component of the coordinate
                 double get_dec() const
                 {
 					return this->data.get_lat();
                 }
 
-                //returns Right Ascension component of the coordinate
+                //!returns Right Ascension component of the coordinate
                 double get_ra() const
                 {
 					return this->data.get_lon();
                 }
 
-                //returns distance component of the coordinate
+                //!returns distance component of the coordinate
                 double get_distance() const
                 {
 					return this->data.get_dist();
                 }
 
-                //returns the (dec, ra, dist) in the form of tuple
+                //!returns the (dec, ra, dist) in the form of tuple
                 std::tuple<double, double, double> get_dec_ra_dist() const
                 {
                     return this->data.get_lat_lon_dist();
                 }
 
-                //returns proper motion in Declination
+                //!returns proper motion in Declination
                 double get_pm_dec() const
                 {
 					return this->motion.get_dlat();
                 }
 
-                //returns proper motion in Right Ascension including cos(dec)
+                //!returns proper motion in Right Ascension including cos(dec)
                 double get_pm_ra_cosdec() const
                 {
 					return this->motion.get_dlon_coslat();
                 }
 
-                //returns radial_velocity
+                //!returns radial_velocity
                 double get_radial_velocity() const
                 {
 					return this->motion.get_ddist();
                 }
 
-                //returns the proper motion in form of tuple including cos(dec)
+                //!returns the proper motion in form of tuple including cos(dec)
                 std::tuple<double, double, double> get_pm_dec_ra_radial() const
                 {
                     return this->motion.get_dlat_dlon_coslat_ddist();
                 }
 
-                //sets value of Declination component of the coordinate
+                //!sets value of Declination component of the coordinate
                 void set_dec(double dec)
                 {
 					this->data.set_lat(dec);
                 }
 
-                //sets value of Right Ascension component of the coordinate
-                //if want to provide value in hours:minute:sec formate then a string expected with particular format
-                //hour angle formate: "hhmmss..."
-                //first two char as hours next two as minutes and remaining are treated as seconds
-                //hour angles are converted to degree/radian and then stored
-                //eg: RA = 06h 45m 08.9s then value should be provided like "064508.9"
+                /*!sets value of Right Ascension component of the coordinate
+                if want to provide value in hours:minute:sec formate then a string expected with particular format
+                hour angle formate: "hhmmss..."
+                first two char as hours next two as minutes and remaining are treated as seconds
+                hour angles are converted to degree/radian and then stored
+                eg: RA = 06h 45m 08.9s then value should be provided like "064508.9"*/
                 void set_ra(std::string const& ra)
                 {
                     double ra_final;
@@ -174,27 +174,27 @@ namespace boost
 					this->data.set_lon(ra_final);
                 }
                 
-                //sets value of Right Ascension component of the coordinate
-                //RA is expected to be a double if value is in degree/radian
+                //!sets value of Right Ascension component of the coordinate
+                //!RA is expected to be a double if value is in degree/radian if it is in hour format see the overloaded funciton
                 void set_ra(double ra)
                 {
 					this->data.set_lon(ra);
                 }
 
 
-                //sets value of distance component of the coordinate
+                //!sets value of distance component of the coordinate
                 void set_distance(double distance)
                 {
 					this->data.set_dist(distance);
                 }
 
-                //sets value of all component of the coordinate 
+                //!sets value of all component of the coordinate 
                 void set_dec_ra_dist(double dec, double ra, double dist)
                 {
                     this->data.set_lat_lon_dist(dec, ra, dist);
                 }
 
-                //sets value of all component of the coordinate (ra in hour angle)
+                //!sets value of all component of the coordinate (ra in hour angle)
                 void set_dec_ra_dist(double dec, std::string ra, double dist)
                 {
                     double ra_final;
@@ -214,25 +214,25 @@ namespace boost
                     this->data.set_lat_lon_dist(dec, ra_final, dist);
                 }
 
-                //sets the proper motion in Declination
+                //!sets the proper motion in Declination
                 void set_pm_dec(double pm_dec)
                 {
 					this->motion.set_dlat(pm_dec);
                 }
 
-                //sets the proper motion in Right Ascension including cos(dec)
+                //!sets the proper motion in Right Ascension including cos(dec)
                 void set_pm_ra_cosdec(double pm_ra_cosdec)
                 {
 					this->motion.set_dlon_coslat(pm_ra_cosdec);
                 }
 
-                //sets the radial_velocity
+                //!sets the radial_velocity
                 void set_radial_velocity(double radial_velocity)
                 {
 					this->motion.set_ddist(radial_velocity);
                 }
 
-                //set value of motion including cos(dec)
+                //!set value of motion including cos(dec)
                 void set_pm_dec_ra_radial(double pm_dec, double pm_ra_cosdec, double radial_velocity)
                 {
                     this->motion.set_dlat_dlon_coslat_ddist(pm_dec, pm_ra_cosdec, radial_velocity);

@@ -77,103 +77,103 @@ namespace boost
                     this->motion = diff;
                 }
 
-                //returns altitude component of the coordinate
+                //!returns altitude component of the coordinate
                 double get_alt() const
                 {
 					return this->data.get_lat();
                 }
 
-                //returns azimuth component of the coordinate
+                //!returns azimuth component of the coordinate
                 double get_az() const
                 {
 					return this->data.get_lon();
                 }
 
-                //returns distance component of the coordinate
+                //!returns distance component of the coordinate
                 double get_distance() const
                 {
 					return this->data.get_dist();
                 }
 
-                //returns the (alt, az, dist) in the form of tuple
+                //!returns the (alt, az, dist) in the form of tuple
                 std::tuple<double, double, double> get_alt_az_dist() const
                 {
                     return this->data.get_lat_lon_dist();
                 }
 
-                //returns proper motion in altitude
+                //!returns proper motion in altitude
                 double get_pm_alt() const
                 {
 					return this->motion.get_dlat();
                 }
 
-                //returns proper motion in azimuth including cos(alt)
+                //!returns proper motion in azimuth including cos(alt)
                 double get_pm_az_cosalt() const
                 {
 					return this->motion.get_dlon_coslat();
                 }
 
-                //returns radial_velocity
+                //!returns radial_velocity
                 double get_radial_velocity() const
                 {
 					return this->motion.get_ddist();
                 }
 
-                //returns the proper motion in tuple form
+                //!returns the proper motion in tuple form
                 std::tuple<double, double, double> get_pm_alt_az_radial() const
                 {
                     return this->motion.get_dlat_dlon_coslat_ddist();
                 }
 
-                //sets value of altitude component of the coordinate
+                //!sets value of altitude component of the coordinate
                 void set_alt(double alt)
                 {
 					this->data.set_lat(alt);
                 }
 
-                //sets value of azimuth component of the coordinate
+                //!sets value of azimuth component of the coordinate
                 void set_az(double az)
                 {
 					this->data.set_lon(az);
                 }
 
-                //sets value of distance component of the coordinate
+                //!sets value of distance component of the coordinate
                 void set_distance(double distance)
                 {
 					this->data.set_dist(distance);
                 }
 
-                //sets value of all component of the coordinate including cos(alt)
+                //!sets value of all component of the coordinate including cos(alt)
                 void set_alt_az_dist(double alt, double az, double dist)
                 {
                     this->data.set_lat_lon_dist(alt, az, dist);
                 }
 
-                //sets the proper motion in altitude
+                //!sets the proper motion in altitude
                 void set_pm_alt(double pm_alt)
                 {
 					this->motion.set_dlat(pm_alt);
                 }
 
-                //sets the proper motion in azimuth including cos(alt)
+                //!sets the proper motion in azimuth including cos(alt)
                 void set_pm_az_cosalt(double pm_az_cosalt)
                 {
 					this->motion.set_dlon_coslat(pm_az_cosalt);
                 }
 
-                //sets the radial_velocity
+                //!sets the radial_velocity
                 void set_radial_velocity(double radial_velocity)
                 {
 					this->motion.set_ddist(radial_velocity);
                 }
 
-                //set value of motion
+                //!set value of motion
                 void set_pm_alt_az_radial(double pm_alt, double pm_az_cosalt, double radial_velocity)
                 {
                     this->motion.set_dlat_dlon_coslat_ddist(pm_alt, pm_az_cosalt, radial_velocity);
                 }
 
-                //set all the perameters of current frame object
+                //!set all the perameters of current frame object
                 void set_frame_parameters
                 (boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> const& location,
                     boost::units::quantity<boost::units::si::pressure> const& pressure,
@@ -187,7 +187,7 @@ namespace boost
                     this->rel_humidity = rel_humidity;
                 }
 
-                //get all the perameters of current frame object
+                //!get all the perameters of current frame object
                 std::tuple<                
                     boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree>,
                     boost::units::quantity<boost::units::si::pressure>,
@@ -198,62 +198,62 @@ namespace boost
                     (this->earth_location, this->pressure, this->temperature, this->obs_time, this->rel_humidity);
                 }
 
-                //get earth location of the current object
+                //!get earth location of the current object
                 boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> get_location() const
                 {
                     return this->earth_location;
                 }
 
-                //set earth location of the current object
+                //!set earth location of the current object
                 void set_location
                 (boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> const& location)
                 {
                     this->earth_location = location;
                 }
 
-                //get atmospheric pressure
+                //!get atmospheric pressure
                 boost::units::quantity<boost::units::si::pressure> get_pressure() const
                 {
                     return this->pressure;
                 }
 
-                //set atmospheric pressure
+                //!set atmospheric pressure
                 void set_pressure(boost::units::quantity<boost::units::si::pressure> const& pressure)
                 {
                     this->pressure = pressure;
                 }
 
-                //get temperature of the location
+                //!get temperature of the location
 				boost::units::quantity<boost::units::celsius::temperature> get_temprature() const
                 {
                     return this->temperature;
                 }
 
-                //set temperature of the location
+                //!set temperature of the location
                 void set_temprature(boost::units::quantity<boost::units::celsius::temperature> const& temperature)
                 {
                     this->temperature = temperature;
                 }
 
-                //get observation time 
+                //!get observation time 
                 boost::posix_time::ptime get_obs_time() const
                 {
                     return this->obs_time;
                 }
 
-                //set observation time 
+                //!set observation time 
                 void set_obs_time(boost::posix_time::ptime const& time)
                 {
                     this->obs_time = time;
                 }
 
-                //get relative humidity
+                //!get relative humidity
                 double get_rel_humidity() const
                 {
                     return this->rel_humidity;
                 }
 
-                //set relative humidity
+                //!set relative humidity
                 void set_rel_humidity(double humidity)
                 {
                     this->rel_humidity = humidity;

@@ -33,27 +33,27 @@ namespace boost
 
             public:
 
-                //returns 2d propermotion
+                //!returns 2d propermotion
                 std::tuple<double, double> proper_motion() const
                 {
                     return std::make_tuple(boost::geometry::get<0>(data.get_differential()), 
 						boost::geometry::get<1>(data.get_differential()));
                 }
 
-                //returns radial velocity (line of sight velocity) of the object
+                //!returns radial velocity (line of sight velocity) of the object
                 double radial_velocity() const
                 {
                     return boost::geometry::get<2>(data.get_differential());
                 }
 
-                /*returns differential data in form of boost::geometry::model::point 
+                /*!returns differential data in form of boost::geometry::model::point 
                 having components (pm_lat, pm_lon, radial_velocity) including cos(lat) component*/
                 Differential get_differential() const
                 {
                     return motion;
                 }
 
-                //set differential for the motion of the object
+                //!set differential for the motion of the object
                 template <typename OtherRepresentation>
                 void set_differential(OtherRepresentation const& other)
                 {
@@ -64,14 +64,14 @@ namespace boost
                     this->motion = other;
                 }
 
-                /*returns coordinate data in form of boost::geometry::model::point
+                /*!returns coordinate data in form of boost::geometry::model::point
                 having components (lat, lon, distance)*/
                 Representation get_data() const
                 {
                     return data;
                 }
 
-                //returns data in specified subclass of base_representation
+                //!returns data in specified subclass of base_representation
                 template <typename ReturnType>
                 ReturnType represen_as() const
                 {
@@ -82,7 +82,7 @@ namespace boost
                     return ReturnType(data);
                 }
 
-                //angular separation between two coordinates in radians
+                //!angular separation between two coordinates in radians
                 template <typename OtherCoordinate>
                 double separation(OtherCoordinate const& other) const
                 {

@@ -19,21 +19,23 @@ namespace boost
             typedef boost::geometry::degree degree;
             typedef boost::geometry::radian radian;
 
-            // structure which is the base for all the representation 
+            //! structure which is the base for all the representation 
             template <std::size_t DimensionCount, typename Type>
             struct base_differential
             {
+				///@cond INTERNAL
                 BOOST_STATIC_ASSERT_MSG((DimensionCount == 2 || DimensionCount == 3),
                     "DimensionCount is expected to be 2 or 3");
+				///@endcond
             protected:
                 boost::geometry::model::point<double, DimensionCount, Type> diff;
 
             public:
-                // returns the unit vector of current differential
+                //! returns the unit vector of current differential
                 template <typename ReturnType>
                 ReturnType unit_vector() const
                 {
-                    /*given coordinates/vectors are converted into cartesian and
+                    /*!given coordinates/vectors are converted into cartesian and
                     unit vector of it is returned by converting it into requested type*/
 
                     /*checking return type if they both are not subclass of
@@ -54,7 +56,7 @@ namespace boost
                     return ReturnType(tempPoint);
                 }
 
-                // magnitude of the current class is returned
+                //! magnitude of the current class is returned
                 double magnitude() const
                 {
                     double result = 0.0;
@@ -79,7 +81,7 @@ namespace boost
                     return std::sqrt(result);
                 }
 
-                // converts current representation into specified representation
+                //! converts current representation into specified representation
                 template <typename ReturnType>
                 ReturnType to_differential() const
                 {
@@ -92,7 +94,7 @@ namespace boost
                     return ReturnType(this->diff);
                 }
 
-                // returns the differential of calling object
+                //! returns the differential of calling object
                 boost::geometry::model::point<double, DimensionCount, Type> get_differential() const
                 {
                     return this->diff;

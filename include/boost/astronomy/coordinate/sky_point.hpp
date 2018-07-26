@@ -26,9 +26,11 @@ namespace boost
             template <typename System>
             struct sky_point
             {
+				///@cond INTERNAL
 				BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
 					<boost::astronomy::coordinate::base_frame, System>::value),
 					"Template argument is expected to be a fram class");
+				///@endcond
 				
             protected:
 				System point;

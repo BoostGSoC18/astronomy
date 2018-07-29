@@ -35,7 +35,7 @@ namespace boost
 
                 boost::units::quantity<boost::units::si::pressure> pressure = 0.0 * boost::units::si::pascals;
 
-				boost::units::quantity<boost::units::celsius::temperature> temperature = 0.0 * boost::units::celsius::degrees;
+                boost::units::quantity<boost::units::celsius::temperature> temperature = 0.0 * boost::units::celsius::degrees;
 
                 boost::posix_time::ptime obs_time;
                 double rel_humidity;
@@ -80,19 +80,19 @@ namespace boost
                 //!returns altitude component of the coordinate
                 double get_alt() const
                 {
-					return this->data.get_lat();
+                    return this->data.get_lat();
                 }
 
                 //!returns azimuth component of the coordinate
                 double get_az() const
                 {
-					return this->data.get_lon();
+                    return this->data.get_lon();
                 }
 
                 //!returns distance component of the coordinate
                 double get_distance() const
                 {
-					return this->data.get_dist();
+                    return this->data.get_dist();
                 }
 
                 //!returns the (alt, az, dist) in the form of tuple
@@ -104,19 +104,19 @@ namespace boost
                 //!returns proper motion in altitude
                 double get_pm_alt() const
                 {
-					return this->motion.get_dlat();
+                    return this->motion.get_dlat();
                 }
 
                 //!returns proper motion in azimuth including cos(alt)
                 double get_pm_az_cosalt() const
                 {
-					return this->motion.get_dlon_coslat();
+                    return this->motion.get_dlon_coslat();
                 }
 
                 //!returns radial_velocity
                 double get_radial_velocity() const
                 {
-					return this->motion.get_ddist();
+                    return this->motion.get_ddist();
                 }
 
                 //!returns the proper motion in tuple form
@@ -128,19 +128,19 @@ namespace boost
                 //!sets value of altitude component of the coordinate
                 void set_alt(double alt)
                 {
-					this->data.set_lat(alt);
+                    this->data.set_lat(alt);
                 }
 
                 //!sets value of azimuth component of the coordinate
                 void set_az(double az)
                 {
-					this->data.set_lon(az);
+                    this->data.set_lon(az);
                 }
 
                 //!sets value of distance component of the coordinate
                 void set_distance(double distance)
                 {
-					this->data.set_dist(distance);
+                    this->data.set_dist(distance);
                 }
 
                 //!sets value of all component of the coordinate including cos(alt)
@@ -152,19 +152,19 @@ namespace boost
                 //!sets the proper motion in altitude
                 void set_pm_alt(double pm_alt)
                 {
-					this->motion.set_dlat(pm_alt);
+                    this->motion.set_dlat(pm_alt);
                 }
 
                 //!sets the proper motion in azimuth including cos(alt)
                 void set_pm_az_cosalt(double pm_az_cosalt)
                 {
-					this->motion.set_dlon_coslat(pm_az_cosalt);
+                    this->motion.set_dlon_coslat(pm_az_cosalt);
                 }
 
                 //!sets the radial_velocity
                 void set_radial_velocity(double radial_velocity)
                 {
-					this->motion.set_ddist(radial_velocity);
+                    this->motion.set_ddist(radial_velocity);
                 }
 
                 //!set value of motion
@@ -177,7 +177,7 @@ namespace boost
                 void set_frame_parameters
                 (boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree> const& location,
                     boost::units::quantity<boost::units::si::pressure> const& pressure,
-					boost::units::quantity<boost::units::celsius::temperature> const& temperature,
+                    boost::units::quantity<boost::units::celsius::temperature> const& temperature,
                     boost::posix_time::ptime const& obs_time, double rel_humidity)
                 {
                     this->earth_location = location;
@@ -191,7 +191,7 @@ namespace boost
                 std::tuple<                
                     boost::astronomy::coordinate::spherical_equatorial_representation<boost::geometry::degree>,
                     boost::units::quantity<boost::units::si::pressure>,
-					boost::units::quantity<boost::units::celsius::temperature>,
+                    boost::units::quantity<boost::units::celsius::temperature>,
                     boost::posix_time::ptime, double> get_frame_parameters() const
                 {
                     return std::make_tuple
@@ -224,7 +224,7 @@ namespace boost
                 }
 
                 //!get temperature of the location
-				boost::units::quantity<boost::units::celsius::temperature> get_temprature() const
+                boost::units::quantity<boost::units::celsius::temperature> get_temprature() const
                 {
                     return this->temperature;
                 }

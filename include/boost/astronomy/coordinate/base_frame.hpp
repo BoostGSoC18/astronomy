@@ -37,7 +37,7 @@ namespace boost
                 std::tuple<double, double> proper_motion() const
                 {
                     return std::make_tuple(boost::geometry::get<0>(data.get_differential()), 
-						boost::geometry::get<1>(data.get_differential()));
+                        boost::geometry::get<1>(data.get_differential()));
                 }
 
                 //!returns radial velocity (line of sight velocity) of the object

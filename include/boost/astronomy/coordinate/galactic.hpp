@@ -84,19 +84,19 @@ namespace boost
                 //!returns component b of the galactic coordinate
                 double get_b() const
                 {
-					return this->data.get_lat();
+                    return this->data.get_lat();
                 }
 
                 //!returns component l of the galactic coordinate
                 double get_l() const
                 {
-					return this->data.get_lon();
+                    return this->data.get_lon();
                 }
 
                 //!returns distance component of the galactic coordinate
                 double get_distance() const
                 {
-					return this->data.get_dist();
+                    return this->data.get_dist();
                 }
 
                 //!returns the (b, l, dist) in the form of tuple
@@ -108,19 +108,19 @@ namespace boost
                 //!returns proper motion in galactic latitude
                 double get_pm_b() const
                 {
-					return this->motion.get_dlat();
+                    return this->motion.get_dlat();
                 }
 
                 //!returns proper motion in galactic longitude including cos(b)
                 double get_pm_l_cosb() const
                 {
-					return this->motion.get_dlon_coslat();
+                    return this->motion.get_dlon_coslat();
                 }
 
                 //!returns radial_velocity
                 double get_radial_velocity() const
                 {
-					return this->motion.get_ddist();
+                    return this->motion.get_ddist();
                 }
 
                 //!returns the proper motion in form of tuple including cos(b)
@@ -132,19 +132,19 @@ namespace boost
                 //!sets value of component b of the galactic coordinate
                 double set_b(double b)
                 {
-					this->data.set_lat(b);
+                    this->data.set_lat(b);
                 }
 
                 //!sets value of component l of the galactic coordinate
                 double set_l(double l) const
                 {
-					this->data.set_lon(l);
+                    this->data.set_lon(l);
                 }
 
                 //!sets value of distance component of the galactic coordinate
                 double set_distance(double distance)
                 {
-					this->data.set_dist(distance);
+                    this->data.set_dist(distance);
                 }
 
                 //!sets value of all component of the coordinate
@@ -156,19 +156,19 @@ namespace boost
                 //!sets the proper motion in galactic latitude
                 double set_pm_b(double pm_b)
                 {
-					this->motion.set_dlat(pm_b);
+                    this->motion.set_dlat(pm_b);
                 }
 
                 //!sets the proper motion in galactic longitude including cos(b)
                 double set_pm_l_cosb(double pm_l_cosb)
                 {
-					this->motion.set_dlon_coslat(pm_l_cosb);
+                    this->motion.set_dlon_coslat(pm_l_cosb);
                 }
 
                 //!sets the radial_velocity
                 double set_radial_velocity(double radial_velocity)
                 {
-					this->motion.set_ddist(radial_velocity);
+                    this->motion.set_ddist(radial_velocity);
                 }
 
                 //!set value of motion including cos(b)

@@ -46,6 +46,7 @@ namespace boost
 				image(std::fstream file, std::size_t start, std::size_t width, std::size_t height)
 				{
 					data.resize(width*height);
+					file.seekg(start);
 					std::copy_n(std::istreambuf_iterator<char>(file.rdbuf()), width*height, std::begin(data));
 				}
 			};
@@ -57,9 +58,9 @@ namespace boost
 				image(std::fstream file, std::size_t start, std::size_t width, std::size_t height)
 				{
 					data.resize(width*height);
+					file.seekg(start);
 
 					pixel_data single_pixel;
-
 					for (size_t i = 0; i < height*width; i++)
 					{
 						std::copy_n(std::istreambuf_iterator<char>(file.rdbuf()), 2, std::begin(single_pixel.byte));
@@ -75,9 +76,9 @@ namespace boost
 				image(std::fstream file, std::size_t start, std::size_t width, std::size_t height)
 				{
 					data.resize(width*height);
+					file.seekg(start);
 
 					pixel_data single_pixel;
-
 					for (size_t i = 0; i < height*width; i++)
 					{
 						std::copy_n(std::istreambuf_iterator<char>(file.rdbuf()), 4, std::begin(single_pixel.byte));
@@ -94,9 +95,9 @@ namespace boost
 				image(std::fstream file, std::size_t start, std::size_t width, std::size_t height)
 				{
 					data.resize(width*height);
+					file.seekg(start);
 
 					pixel_data single_pixel;
-
 					for (size_t i = 0; i < height*width; i++)
 					{
 						std::copy_n(std::istreambuf_iterator<char>(file.rdbuf()), 4, std::begin(single_pixel.byte));
@@ -113,9 +114,9 @@ namespace boost
 				image(std::fstream file, std::size_t start, std::size_t width, std::size_t height)
 				{
 					data.resize(width*height);
+					file.seekg(start);
 
 					pixel_data single_pixel;
-
 					for (size_t i = 0; i < height*width; i++)
 					{
 						std::copy_n(std::istreambuf_iterator<char>(file.rdbuf()), 8, std::begin(single_pixel.byte));

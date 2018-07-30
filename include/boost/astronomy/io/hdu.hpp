@@ -1,7 +1,7 @@
 #ifndef BOOST_ASTRONOMY_IO_HDU_HPP
 #define BOOST_ASTRONOMY_IO_HDU_HPP
 
-#include <map>
+//#include <map>
 #include <string>
 #include <fstream>
 #include <vector>
@@ -9,6 +9,7 @@
 
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/astronomy/io/image.hpp>
 
 #include <boost/astronomy/exception/fits_exception.hpp>
 
@@ -18,7 +19,7 @@ namespace boost
     {
         namespace io
         {
-            //structure to store a card (80 byte key value pairs as well as comments and history cards)
+            //!structure to store a card (80 byte key value pairs as well as comments and history cards)
             struct card
             {
             private:
@@ -39,7 +40,7 @@ namespace boost
                     this->card_ = str;
                 }
 
-                std::string keyword(bool whole = false) const
+                std::string key(bool whole = false) const
                 {
                     if (whole)
                     {
@@ -85,55 +86,54 @@ namespace boost
             };
 
             //structure to represent a header unit with max 36 cards
-            struct hdu_unit
-            {
-            protected:
-                std::vector<card> cards;
+            //struct hdu_unit
+            //{
+            //protected:
+            //    std::vector<card> cards;
 
-            public:
-                hdu_unit() {}
+            //public:
+            //    hdu_unit() {}
 
-                hdu_unit(std::vector<card> c)
-                {
-                    if (c.size() > 36)
-                    {
-                        throw hdu_unit_overflow_exception();
-                    }
-                    this->cards = c;
-                }
+            //    hdu_unit(std::vector<card> const& c)
+            //    {
+            //        if (c.size() > 36)
+            //        {
+            //            throw hdu_unit_overflow_exception();
+            //        }
+            //        this->cards = c;
+            //    }
 
-                void add_card(card c)
-                {
-                    if (cards.size() == 36)
-                    {
-                        throw hdu_unit_overflow_exception();
-                    }
-                    this->cards.push_back(c);
-                }
+            //    void add_card(card const &c)
+            //    {
+            //        if (cards.size() == 36)
+            //        {
+            //            throw hdu_unit_overflow_exception();
+            //        }
+            //        this->cards.push_back(c);
+            //    }
 
-                void add_card(std::string str)
-                {
-                    card c(str);
-                    this->add_card(c);
-                }
+            //    void add_card(std::string str)
+            //    {
+            //        card c(str);
+            //        this->add_card(c);
+            //    }
 
-                inline std::size_t size()
-                {
-                    return cards.size();
-                }
-            };
+            //    inline std::size_t size() const
+            //    {
+            //        return cards.size();
+            //    }
+            //};
 
             struct hdu
             {
             protected:
-                long bitpix;
-                long naxis;
-                long bzero;
-                long bscale;
+                boost::astronomy::io::bitpixes bitpix;
+                std::vector<std::size_t> naxis;
+                std::vector<card> cards;
+                //std::map<std::string, int> index;
 
             public:
                 hdu() {}
-
             };
         } //namespace io
     } //namespace astronomy

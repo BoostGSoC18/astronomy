@@ -86,7 +86,6 @@ namespace boost
                         data[i] = (single_pixel.byte[3] << 0) | (single_pixel.byte[2] << 8) |
                             (single_pixel.byte[1] << 16) | (single_pixel.byte[0] << 24);
                     }
-                    std::cout << data[0] << std::endl;
                 }
             };
 

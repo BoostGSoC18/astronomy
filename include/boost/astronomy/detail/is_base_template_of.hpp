@@ -10,6 +10,7 @@ namespace boost
     {
         namespace detail
         {
+            ///@cond INTERNAL
             // structure to provide support like std::is_base_of for template base classes
             template <template <std::size_t, typename...> class Base, typename Derived>
             struct base_template
@@ -26,7 +27,7 @@ namespace boost
 
             template <template <std::size_t, typename...> class Base, typename Derived>
             using is_base_template_of = typename base_template<Base, Derived>::type;
-
+            ///@endcond
         } //namespace detail
     } //namespace astronomy
 } //namespace boost

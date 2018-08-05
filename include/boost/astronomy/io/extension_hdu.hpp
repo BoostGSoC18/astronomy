@@ -18,8 +18,8 @@ namespace boost
             struct extension_hdu : public boost::astronomy::io::hdu
             {
             protected:
-                long gcount;
-                long pcount;
+                int gcount = 1;
+                int pcount = 0;
 
             public:
 

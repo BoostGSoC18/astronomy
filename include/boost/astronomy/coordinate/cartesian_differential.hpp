@@ -40,7 +40,7 @@ namespace boost
                     boost::geometry::transform(pointObject, this->diff);
                 }
 
-                //copy constructor
+                //!copy constructor
                 cartesian_differential(cartesian_differential const& object)
                 {
                     boost::geometry::transform(object.get_differential(), this->diff);

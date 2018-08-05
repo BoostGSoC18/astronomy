@@ -26,6 +26,12 @@ namespace boost
                 {
                     this->card_.reserve(80);
                 }
+                //! creating card from const char*
+                //! it will read 80 char from provided pointer
+                card(char const* c) : card()
+                {
+                    this->card_.assign(c, 80);
+                }
 
                 //!a string is expected with lenght no more than 80 chars 
                 //!this string will be directly stored in the card
@@ -68,74 +74,11 @@ namespace boost
                     }
                 }
 
-                //!if whole value is set to true then string is returned with trailing spaces
-                std::string key(bool whole = false) const
-                {
-                    if (whole)
-                    {
-                        return this->card_.substr(0, 8);
-                    }
-                    return boost::algorithm::trim_copy(this->card_.substr(0, 8));
-                }
-
-                //!if whole value is set to true then string is returned with value and comment
-                //!if whole is set to false then corresponding value will be returned with corresponding data-type
-                //!return types can be int, double, bool, string (date and complex numbers are returned as string surrounded in single quotes)
-                template <typename ReturnType>
-                ReturnType value(bool comment = false) const
-                {
-                    if (comment)
-                    {
-                        return this->card_.substr(10);
-                    }
-                    std::string val = boost::algorithm::trim_copy(this->card_.substr(10, this->card_.find('/')));
-                    try
-                    {
-                        return boost::lexical_cast<int>(val);
-                    }
-                    catch (boost::bad_lexical_cast& int_e)
-                    {
-                        try
-                        {
-                            return boost::lexical_cast<double>(val);
-                        }
-                        catch (boost::bad_lexical_cast& double_e)
-                        {
-                            if (val == "T")
-                            {
-                                return true;
-                            }
-                            else if (val == "F")
-                            {
-                                return false;
-                            }
-                            else
-                            {
-                                return val;
-                            }
-                        }
-                    }
-                }
-
-                //set value of current card
-                void value(std::string const& value)
-                {
-                    if (this->key().length() == 0)
-                    {
-                        throw key_not_defined_exception();
-                    }
-                    if (value.length() > 70)
-                    {
-                        throw invalid_value_length_exception();
-                    }
-                    this->card_.append(70 - value.length(), ' ');
-                }
-
                 //!this overload supports date and string types
                 //!key, value and optional comments are expected
                 //!all the values will be directly stored as provided so necessary spaces befor values must be provided
                 //!spaces after the keyword and value will be taken care implicitly
-                void create_card(std::string const& key, std::string const& value, std::string const& comment)
+                void create_card(std::string const& key, std::string const& value, std::string const& comment = "")
                 {
                     if (key.length() > 8)
                     {
@@ -162,7 +105,7 @@ namespace boost
                 }
 
                 //!create card with boolean value
-                void create_card(std::string const& key, bool value, std::string const& comment)
+                void create_card(std::string const& key, bool value, std::string const& comment = "")
                 {
                     if (value)
                     {
@@ -174,7 +117,7 @@ namespace boost
                     }
                 }
 
-
+                //!create card with numeric value
                 template <typename Value>
                 void create_card(std::string const& key, Value value, std::string const& comment = "")
                 {
@@ -183,7 +126,7 @@ namespace boost
 
                     std::string val = stream.str();
                     val.insert(0, ' ', 20 - val.length());
-                    create_card(key, val, comment)
+                    create_card(key, val, comment);
                 }
 
                 //!create card for complex value
@@ -196,6 +139,60 @@ namespace boost
                     std::string value = "(" + stream.str() + ")";
 
                     create_card(key, value, comment);
+                }
+
+                //! to create comment, history or balnk keyword cards
+                //! value will be put from column 11
+                void create_commentary_card(std::string const& key, std::string const& value)
+                {
+                    if (key.length() > 8)
+                    {
+                        throw invalid_key_length_exception();
+                    }
+                    if (value.length() > 70)
+                    {
+                        throw invalid_value_length_exception();
+                    }
+
+                    this->card_ = std::string(key).append(8 - key.length(), ' ') + "  " + std::string(value).append(70 - key.length(), ' ');
+                }
+
+                //!if whole value is set to true then string is returned with trailing spaces
+                std::string key(bool whole = false) const
+                {
+                    if (whole)
+                    {
+                        return this->card_.substr(0, 8);
+                    }
+                    return boost::algorithm::trim_copy(this->card_.substr(0, 8));
+                }
+
+                //!return types can be int, double, bool, string (date and complex numbers are returned as string surrounded in single quotes)
+                template <typename ReturnType>
+                ReturnType value() const
+                {
+                    std::string val = boost::algorithm::trim_copy(this->card_.substr(10, this->card_.find('/')-10));
+                    return boost::lexical_cast<ReturnType>(val);
+                }
+
+                //!returns value portion of card with comment as std::string 
+                std::string value_with_comment() const
+                {
+                    return this->card_.substr(10);
+                }
+
+                //!set value of current card
+                void value(std::string const& value)
+                {
+                    if (this->key().length() == 0)
+                    {
+                        throw key_not_defined_exception();
+                    }
+                    if (value.length() > 70)
+                    {
+                        throw invalid_value_length_exception();
+                    }
+                    this->card_.append(70 - value.length(), ' ');
                 }
             };
         } //namespace io

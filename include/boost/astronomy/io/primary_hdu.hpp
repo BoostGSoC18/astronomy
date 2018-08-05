@@ -9,6 +9,7 @@
 #include <fstream>
 
 #include <boost/astronomy/io/hdu.hpp>
+#include <boost/astronomy/io/image.hpp>
 
 namespace boost
 {
@@ -16,11 +17,13 @@ namespace boost
     {
         namespace io
         {
+            template <typename DataType>
             struct primary_hdu : public boost::astronomy::io::hdu
             {
             protected:
                 bool simple;
                 bool extend;
+                image_buffer<DataType> *data;
                 
             public:
                 primary_hdu() {}

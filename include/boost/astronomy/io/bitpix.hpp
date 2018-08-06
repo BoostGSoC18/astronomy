@@ -8,7 +8,7 @@ namespace boost
         namespace io
         {
             //! enum used to represetn different values of bitpix in header
-            enum bitpixes
+            enum bitpix
             {
                 B8, //! 8-bit unsigned integer
                 B16, //! 16-bit two's complement integer

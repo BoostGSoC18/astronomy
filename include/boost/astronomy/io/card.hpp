@@ -167,13 +167,26 @@ namespace boost
                     return boost::algorithm::trim_copy(this->card_.substr(0, 8));
                 }
 
-                //!return types can be int, double, bool, string (date and complex numbers are returned as string surrounded in single quotes)
+                //!return types can be int, float, double, bool, string (date and complex numbers are returned as string surrounded in single quotes or in brackets)
                 template <typename ReturnType>
                 ReturnType value() const
                 {
                     std::string val = boost::algorithm::trim_copy(this->card_.substr(10, this->card_.find('/')-10));
                     return boost::lexical_cast<ReturnType>(val);
                 }
+
+                ///@cond INTERNAL
+                template <>
+                bool value<bool>() const
+                {
+                    std::string val = boost::algorithm::trim_copy(this->card_.substr(10, this->card_.find('/') - 10));
+                    if (val == "T") 
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                ///@endcond
 
                 //!returns value portion of card with comment as std::string 
                 std::string value_with_comment() const

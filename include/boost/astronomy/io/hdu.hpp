@@ -23,10 +23,10 @@ namespace boost
             struct hdu
             {
             protected:
-                boost::astronomy::io::bitpix bitpix_value;
-                std::vector<std::size_t> _naxis;
-                std::vector<card> cards;
-                std::unordered_map<std::string, int> key_index;
+                boost::astronomy::io::bitpix bitpix_value; //! stores the BITPIX value (enum bitpix)
+                std::vector<std::size_t> _naxis; //! values of all naxis (NAXIS, NAXIS1, NAXIS2...)
+                std::vector<card> cards; //! Stores the each card in header unit (80 char key value pair)
+                std::unordered_map<std::string, std::size_t> key_index; //! stores the card-key index (used for faster searching)
 
             public:
                 hdu() {}
@@ -41,19 +41,23 @@ namespace boost
                     read_header(file, pos);
                 }
 
+                //!Starts reading the header from current streampos of file
                 void read_header(std::fstream &file)
                 {
-                    cards.reserve(36);
-                    char _80_char_from_file[80];
+                    cards.reserve(36); //reserves the space of atleast 1 HDU unit 
+                    char _80_char_from_file[80]; //used as buffer to read a card consisting of 80 char
 
-                    //reading file line by line 
+                    //reading file card by card until END card is found
                     while (true)
                     {
+                        //read from file and create push card into the vector
                         file.read(_80_char_from_file, 80);
                         cards.emplace_back(_80_char_from_file);
 
+                        //store the index of the card in map
                         this->key_index[this->cards.back().key()] = this->cards.size() - 1;
 
+                        //check if end card is found
                         if(this->cards.back().key(true) == "END     ")
                         {
                             break;
@@ -95,6 +99,7 @@ namespace boost
                     }
                 }
 
+                //!starts reading file from the position specified
                 void read_header(std::fstream &file, std::streampos pos)
                 {
                     file.seekg(pos);
@@ -121,11 +126,10 @@ namespace boost
 
                 //!returns the value of perticular key 
                 template <typename ReturnType>
-                ReturnType value_of(std::string const& key) const
+                ReturnType value_of(std::string const& key)// const
                 {
-                    return cards[key_index[key]].value<ReturnType>()
+                    return this->cards[key_index[key]].value<ReturnType>();
                 }
-
             };
         } //namespace io
     } //namespace astronomy

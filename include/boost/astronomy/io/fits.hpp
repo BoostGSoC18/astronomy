@@ -18,8 +18,8 @@ namespace boost
             struct fits 
             {
             protected:
-                std::fstream fits_file;
-                std::vector<std::shared_ptr<boost::astronomy::io::hdu>> _hdu; //stores all th HDU in file
+                std::fstream fits_file; //!FITS to be processed
+                std::vector<std::shared_ptr<boost::astronomy::io::hdu>> _hdu; //!Stores all th HDU in file
 
             public:
                 fits() {}
@@ -34,8 +34,29 @@ namespace boost
 
                 void read_primary_hdu()
                 {
-                    _hdu[0] = std::make_shared<hdu>(fits_file);
-                    _hdu[0] = std::make_shared<primary_hdu<_hdu[0]->bitpix()>>(*_hdu[0]);
+                    _hdu[0] = std::make_shared<boost::astronomy::io::hdu>(fits_file);
+                    
+                    switch (_hdu[0]->value_of<int>(std::string("BITPIX")))
+                    {
+                    case 8:
+                        _hdu[0] = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::B8>>(fits_file, *_hdu[0]);
+                        break;
+                    case 16:
+                        _hdu[0] = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::B16>>(fits_file, *_hdu[0]);
+                        break;
+                    case 32:
+                        _hdu[0] = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::B32>>(fits_file, *_hdu[0]);
+                        break;
+                    case -32:
+                        _hdu[0] = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::_B32>>(fits_file, *_hdu[0]);
+                        break;
+                    case -64:
+                        _hdu[0] = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::_B64>>(fits_file, *_hdu[0]);
+                        break;
+                    default:
+                        throw fits_exception();
+                        break;
+                    }
                 }
 
                 void read_extensions()

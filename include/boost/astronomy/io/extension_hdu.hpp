@@ -1,7 +1,6 @@
 #ifndef BOOST_ASTRONOMY_IO_EXTENSION_HDU_HPP
 #define BOOST_ASTRONOMY_IO_EXTENSION_HDU_HPP
 
-//#include <map>
 #include <string>
 #include <vector>
 #include <cstddef>
@@ -22,7 +21,25 @@ namespace boost
                 int pcount = 0;
 
             public:
+                extension_hdu() {}
 
+                extension_hdu(std::fstream &file) : hdu(file) 
+                {
+                    gcount = this->value_of<int>("GCOUNT");
+                    pcount = this->value_of<int>("PCOUNT");
+                }
+
+                extension_hdu(std::fstream &file, hdu const& other) : hdu(other)
+                {
+                    gcount = this->value_of<int>("GCOUNT");
+                    pcount = this->value_of<int>("PCOUNT");
+                }
+
+                extension_hdu(std::fstream &file, std::streampos pos) : hdu(file, pos)
+                {
+                    gcount = this->value_of<int>("GCOUNT");
+                    pcount = this->value_of<int>("PCOUNT");
+                }
             };
         } //namespace io
     } //namespace astronomy

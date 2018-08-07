@@ -46,6 +46,7 @@ namespace boost
                         break;
                     case 2:
                         data.read_image(file, this->naxis(1), this->naxis(2));
+                        break;
                     default:
                         data.read_image(file, this->naxis(1), std::accumulate(this->_naxis.begin()+1, this->_naxis.end(), 0, std::multiplies<std::size_t>()));
                         break;

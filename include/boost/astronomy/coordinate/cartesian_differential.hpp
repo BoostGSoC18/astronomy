@@ -119,6 +119,18 @@ namespace boost
 
                     return temp;
                 }
+
+                boost::astronomy::coordinate::cartesian_differential
+                    operator *(double multiplier) const
+                {
+                    boost::astronomy::coordinate::cartesian_differential temp(this->diff);
+
+                    temp.set_dx(temp.get_dx() * multiplier);
+                    temp.set_dy(temp.get_dy() * multiplier);
+                    temp.set_dz(temp.get_dz() * multiplier);
+
+                    return temp;
+                }
             };
 
         }// namespace coordinate

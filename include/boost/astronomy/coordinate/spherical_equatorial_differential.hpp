@@ -115,6 +115,18 @@ namespace boost
 
                     return temp;
                 }
+
+                template <typename DiffDegreeOrRadian>
+                boost::astronomy::coordinate::spherical_equatorial_differential<DegreeOrRadian>
+                    operator *(double multiplier) const
+                {
+                    boost::astronomy::coordinate::spherical_equatorial_differential<DegreeOrRadian> temp(this->diff);
+
+                    temp.set_dlat(temp.get_dlat() * multiplier);
+                    temp.set_dlon(temp.get_dlon() * multiplier);
+
+                    return temp;
+                }
             };
         }
     }

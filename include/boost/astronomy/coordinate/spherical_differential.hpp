@@ -129,6 +129,19 @@ namespace boost
 
                     return temp;
                 }
+
+                template <typename DiffDegreeOrRadian>
+                boost::astronomy::coordinate::spherical_differential<DegreeOrRadian>
+                    operator *(double multiplier) const
+                {
+                    boost::astronomy::coordinate::spherical_differential<DegreeOrRadian> temp(this->diff);
+
+                    temp.set_dlat(temp.get_dlat() * multiplier);
+                    temp.set_dlon(temp.get_dlon() * multiplier);
+                    temp.set_ddist(temp.get_ddist() * multiplier);
+
+                    return temp;
+                }
             };
         }//namespace coordinate
     } //namespace astronomy

@@ -1,5 +1,5 @@
 #define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE representation
+#define BOOST_TEST_MODULE differential
 
 #include <boost/test/included/unit_test.hpp>
 #include <boost/astronomy/coordinate/differential.hpp>

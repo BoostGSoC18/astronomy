@@ -54,7 +54,7 @@ namespace boost
                         <boost::astronomy::coordinate::base_differential, Differential>::value),
                         "No constructor found with given argument type");
 
-                    boost::geometry::transform(other.get_differential, this->diff);
+                    boost::geometry::transform(other.get_differential(), this->diff);
                 }
 
                 //! returns the (dx, dy, dz) in the form of tuple

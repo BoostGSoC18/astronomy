@@ -5,8 +5,8 @@
 #include <boost/test/included/unit_test.hpp>
 #include <boost/astronomy/coordinate/representation.hpp>
 
-using namespace boost::astronomy::coordinate;
 using namespace std;
+using namespace boost::astronomy::coordinate;
 
 BOOST_AUTO_TEST_SUITE(constructor)
 

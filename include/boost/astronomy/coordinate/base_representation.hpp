@@ -60,17 +60,11 @@ namespace boost
                 }
                 
                 //! dot prodct of current vector with specified vector
-                template <typename Representation>
-                double dot(Representation const& other) const
+                template <std::size_t OtherDimensionCount, typename OtherType>
+                double dot(base_representation<OtherDimensionCount, OtherType>  const& other) const
                 {
                     /*!both the coordinates/vector are first converted into cartesian coordinate system then
                     dot product of both cartesian product is converted into requested type and returned*/
-
-                    /*checking types of argument if they both are not subclass 
-                    of base_representaion then compile time erorr is generated*/
-                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
-                        <boost::astronomy::coordinate::base_representation, Representation>::value),
-                        "function argument type is expected to be a representation type");
 
                     /*converting both coordinates/vector into cartesian system*/
                     boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> tempPoint1, tempPoint2;

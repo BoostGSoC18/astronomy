@@ -18,6 +18,8 @@ This classes also provide multiplication and addition operator overload.
 * If you want to add motion stored in differential to a representation class for one instance of time then addition operator can be used
 * If you want to add motion stored in differential to a representation class for n instance of time then first multiply the differential by n and then add it to the representation.
 
+>**Note:** Only corresponding types of representation and differential can be added (in any spherical representation and differential should be in same degree or radian). But spherical_coslat_differential can be added to any spherical representation.
+
 required heade files to inclue all the differential classes:
 
 ```c++

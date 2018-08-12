@@ -30,7 +30,7 @@ The following tutorial will show how to use this library. This tutorial is creat
     * [1.1 Euclidean Coordinate Systems](coordinate/euclidean_coordinate.md)
         * [1.1.1 Creating a coordinate point (Cartesian, Spherical, Equatorial)](coordinate/coordinate_point.md)
         * [1.1.2 Conversions of coordinate systems](coordinate/coordinate_conversion.md)
-        * [1.1.3 Operations on vector](vector_operation.md)
+        * [1.1.3 Operations on vector](coordinate/vector_operation.md)
     * [1.2 Motion in Euclidean Space](coordinate/motion.md)
     * [1.3 Astronomical Coordinate System]()
         * [1.3.1 Creating celestial points](coordinate/astronomical_coordinate.md)

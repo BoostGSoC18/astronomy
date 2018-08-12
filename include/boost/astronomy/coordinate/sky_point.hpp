@@ -41,11 +41,34 @@ namespace boost
                 //default constructor
                 sky_point() {}
 
-                //copy constructor
+                sky_point(System const& object) : point(object) {}
+
+                //create point with providing representation and differential class object
+                template <typename Representation, typename Differential>
+                sky_point(Representation const& point, Differential const& diff)
+                {
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
+                        <boost::astronomy::coordinate::base_representation, Representation>::value),
+                        "argument type is expected to be a representation class");
+                    this->data = representation_data;
+
+                    BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
+                        <boost::astronomy::coordinate::base_differential, Differential>::value),
+                        "argument type is expected to be a differential class");
+
+                    point = System(point, diff);
+                }
+
+                //create point with direct values of representation and differential
+                sky_point(double lat, double lon, double distance, double pm_lat, double pm_lon_coslat, double radial_velocity)
+                {
+                    point = System(lat, lon, distance, pm_lat, pm_lon_coslat, radian_velocity);
+                }
+
                 template<class OtherSystem>
                 sky_point(const sky_point<OtherSystem> object);
 
-                //constructing from numbers
+                //constructing from direct value of representation
                 sky_point(double lat, double lon, double distance=1)
                 {
                     System temp(lat, lon, distance);
@@ -53,27 +76,19 @@ namespace boost
                 }
 
                 //constructing from name of object if available in the calatoge
-                sky_point(std::string name);
+                sky_point(std::string const& name);
 
                 std::string get_constillation();
 
-                sky_point<System> from_name(std::string name);
+                sky_point<System> from_name(std::string const& name);
 
-                template<class OtherSystem>
-                double separation(const sky_point<OtherSystem> object)
+                double separation(const sky_point<System> object)
                 {
                     return this->point.separation(object.get_point());
                 }
 
-                template<class OtherSystem>
-                bool is_equivalant_system(const sky_point<OtherSystem> object)
-                {
-                    return std::is_same<System, otherSystem>::value;
-                }
-
                 // Returns positional angle in the radian
-                template<class OtherSystem>
-                double positional_angle(const sky_point<OtherSystem> object)
+                double positional_angle(const sky_point<System> object)
                 {
                     boost::astronomy::coordinate::spherical_representation<boost::astronomy::coordinate::radian> 
                         p1(this->point.get_data()), p2(object.get_point().get_data());
@@ -85,6 +100,12 @@ namespace boost
                     double y = std::sin(diff) * coslat;
 
                     return std::atan2(x, y);
+                }
+
+                template<class OtherSystem>
+                bool is_equivalant_system(const sky_point<OtherSystem> object)
+                {
+                    return std::is_same<System, otherSystem>::value;
                 }
 
                 template<class OtherSystem>

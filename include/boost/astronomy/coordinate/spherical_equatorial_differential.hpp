@@ -104,9 +104,8 @@ namespace boost
                     boost::geometry::set<1>(this->diff, dlon);
                 }
 
-                template <typename DiffDegreeOrRadian>
                 boost::astronomy::coordinate::spherical_equatorial_differential<DegreeOrRadian>
-                    operator +(boost::astronomy::coordinate::spherical_equatorial_differential<DiffDegreeOrRadian> const& diff) const
+                    operator +(boost::astronomy::coordinate::spherical_equatorial_differential<DegreeOrRadian> const& diff) const
                 {
                     boost::astronomy::coordinate::spherical_equatorial_differential<DegreeOrRadian> temp(this->diff);
 
@@ -116,7 +115,7 @@ namespace boost
                     return temp;
                 }
 
-                template <typename DiffDegreeOrRadian>
+                
                 boost::astronomy::coordinate::spherical_equatorial_differential<DegreeOrRadian>
                     operator *(double multiplier) const
                 {

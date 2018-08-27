@@ -36,7 +36,7 @@ namespace boost
                 template <typename RaType>
                 icrs(double dec, RaType const& ra, double distance, double pm_dec, double pm_ra_cosdec, double radial_velocity) :
                     base_equatorial_frame<RepresentationDegreeOrRadian, DifferentialDegreeOrRadian>
-                    (dec, ra, dustance, pm_dec, pm_ra_cosdec, radial_velocity) {}
+                    (dec, ra, distance, pm_dec, pm_ra_cosdec, radial_velocity) {}
 
                 template <typename Representation, typename Differential>
                 icrs(Representation const& representation_data, Differential const& diff) :

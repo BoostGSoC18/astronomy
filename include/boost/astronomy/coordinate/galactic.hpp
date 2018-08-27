@@ -66,7 +66,7 @@ namespace boost
                     BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_representation, Representation>::value),
                         "argument type is expected to be a differential class");
-                    this->data = representaion_data;
+                    this->data = representation_data;
 
                     BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
                         <boost::astronomy::coordinate::base_differential, Differential>::value),

@@ -51,6 +51,8 @@ namespace boost
                         data.read_image(file, this->naxis(1), std::accumulate(this->_naxis.begin()+1, this->_naxis.end(), 0, std::multiplies<std::size_t>()));
                         break;
                     }
+
+                    set_unit_end(file);    //set cursor to the end of the HDU unit
                 }
 
                 //!This constructore should be used when boost::astronomy::io::hdu object already exist for the file 
@@ -76,6 +78,8 @@ namespace boost
                         data.read_image(file, this->naxis(1), std::accumulate(this->_naxis.begin() + 1, this->_naxis.end(), 0, std::multiplies<std::size_t>()));
                         break;
                     }
+
+                    set_unit_end(file);    //set cursor to the end of the HDU unit
                 }
 
                 //!returnes the stored data

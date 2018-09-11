@@ -40,6 +40,7 @@ namespace boost
                         data.read_image(file, this->naxis(1), std::accumulate(this->_naxis.begin() + 1, this->_naxis.end(), 0, std::multiplies<std::size_t>()));
                         break;
                     }
+                    set_unit_end(file);
                 }
 
                 image_extension(std::fstream &file, hdu const& other) : extension_hdu(file, other)
@@ -59,6 +60,7 @@ namespace boost
                         data.read_image(file, this->naxis(1), std::accumulate(this->_naxis.begin() + 1, this->_naxis.end(), 0, std::multiplies<std::size_t>()));
                         break;
                     }
+                    set_unit_end(file);
                 }
 
                 image_extension(std::fstream &file, std::streampos pos) : extension_hdu(file, pos)
@@ -78,6 +80,7 @@ namespace boost
                         data.read_image(file, this->naxis(1), std::accumulate(this->_naxis.begin() + 1, this->_naxis.end(), 0, std::multiplies<std::size_t>()));
                         break;
                     }
+                    set_unit_end(file);
                 }
             };
         } //namespace io

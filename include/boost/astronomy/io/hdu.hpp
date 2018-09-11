@@ -63,7 +63,7 @@ namespace boost
                             break;
                         }
                     }
-                    file.seekg(((int)(file.tellg() / 2880) + 1) * 2880);    //set cursor to the end of the HDU unit
+                    set_unit_end(file);    //set cursor to the end of the HDU unit
 
                     //finding and storing bitpix value
                     
@@ -129,6 +129,11 @@ namespace boost
                 ReturnType value_of(std::string const& key)// const
                 {
                     return this->cards[key_index[key]].value<ReturnType>();
+                }
+
+                void set_unit_end(std::fstream &file) const
+                {
+                    file.seekg((file.tellg() + (2880 - (file.tellg() % 2880))));    //set cursor to the end of the HDU unit
                 }
             };
         } //namespace io

@@ -8,6 +8,7 @@
 
 #include <boost/astronomy/io/primary_hdu.hpp>
 #include <boost/astronomy/io/extension_hdu.hpp>
+#include <boost/astronomy/exception/fits_exception.hpp>
 
 namespace boost
 {
@@ -61,7 +62,46 @@ namespace boost
 
                 void read_extensions()
                 {
+                    //if no extension then return
+                    if (!_hdu[0]->value_of<bool>("EXTEND"))
+                    {
+                        return;
+                    }
 
+                    while (!fits_file.eof())
+                    {
+                        _hdu.emplace_back(std::make_shared<boost::astronomy::io::hdu>(fits_file));
+
+                        if (_hdu.back()->value_of<std::string>("XTENSION") == "'IMAGE   '")
+                        {
+                            switch (_hdu.back()->value_of<int>(std::string("BITPIX")))
+                            {
+                            case 8:
+                                _hdu.back() = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::B8>>(fits_file, *_hdu.back());
+                                break;
+                            case 16:
+                                _hdu.back() = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::B16>>(fits_file, *_hdu.back());
+                                break;
+                            case 32:
+                                _hdu.back() = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::B32>>(fits_file, *_hdu.back());
+                                break;
+                            case -32:
+                                _hdu.back() = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::_B32>>(fits_file, *_hdu.back());
+                                break;
+                            case -64:
+                                _hdu.back() = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::_B64>>(fits_file, *_hdu.back());
+                                break;
+                            default:
+                                throw fits_exception();
+                                break;
+                            }
+                        }
+                        else if (_hdu.back()->value_of<std::string>("XTENSION") == "'TABLE   '")
+                        {
+
+                        }
+                        
+                    }
                 }
             };
         } //namespace io

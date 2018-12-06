@@ -13,6 +13,7 @@
 #include <numeric>
 
 #include <boost/astronomy/io/bitpix.hpp>
+#include <boost/endian/conversion.hpp>
 
 
 namespace boost
@@ -159,7 +160,8 @@ namespace boost
                         //std::copy_n(std::istreambuf_iterator<char>(file.rdbuf()), 2, std::begin(single_pixel.byte));
 
                         file.read((char*)single_pixel.byte, 2);
-                        data[i] = (single_pixel.byte[1] << 0) | (single_pixel.byte[0] << 8);
+                        //data[i] = (single_pixel.byte[1] << 0) | (single_pixel.byte[0] << 8);
+                        data[i] = boost::endian::big_to_native(data[i]);
                     }
                 }
 
@@ -198,8 +200,9 @@ namespace boost
                         //std::copy_n(std::istreambuf_iterator<char>(file.rdbuf()), 4, std::begin(single_pixel.byte));
 
                         file.read((char*)single_pixel.byte, 4);
-                        data[i] = (single_pixel.byte[3] << 0) | (single_pixel.byte[2] << 8) |
-                            (single_pixel.byte[1] << 16) | (single_pixel.byte[0] << 24);
+                        //data[i] = (single_pixel.byte[3] << 0) | (single_pixel.byte[2] << 8) |
+                        //    (single_pixel.byte[1] << 16) | (single_pixel.byte[0] << 24);
+                        data[i] = boost::endian::big_to_native(data[i]);
                     }
                 }
 
@@ -237,8 +240,9 @@ namespace boost
                         //std::copy_n(std::istreambuf_iterator<char>(file.rdbuf()), 4, std::begin(single_pixel.byte));
 
                         file.read((char*)single_pixel.byte, 4);
-                        data[i] = (single_pixel.byte[3] << 0) | (single_pixel.byte[2] << 8) |
-                            (single_pixel.byte[1] << 16) | (single_pixel.byte[0] << 24);
+                        //data[i] = (single_pixel.byte[3] << 0) | (single_pixel.byte[2] << 8) |
+                        //    (single_pixel.byte[1] << 16) | (single_pixel.byte[0] << 24);
+                        data[i] = boost::endian::big_to_native(data[i]);
                     }
                 }
 
@@ -276,10 +280,11 @@ namespace boost
                         //std::copy_n(std::istreambuf_iterator<char>(file.rdbuf()), 8, std::begin(single_pixel.byte));
 
                         file.read((char*)single_pixel.byte, 8);
-                        data[i] = (single_pixel.byte[7] << 0) | (single_pixel.byte[6] << 8) |
-                            (single_pixel.byte[5] << 16) | (single_pixel.byte[4] << 24) |
-                            (single_pixel.byte[3] << 32) | (single_pixel.byte[2] << 40) |
-                            (single_pixel.byte[1] << 48) | (single_pixel.byte[0] << 56);
+                        //data[i] = (single_pixel.byte[7] << 0) | (single_pixel.byte[6] << 8) |
+                        //    (single_pixel.byte[5] << 16) | (single_pixel.byte[4] << 24) |
+                        //    (single_pixel.byte[3] << 32) | (single_pixel.byte[2] << 40) |
+                        //    (single_pixel.byte[1] << 48) | (single_pixel.byte[0] << 56);
+                        data[i] = boost::endian::big_to_native(data[i]);
                     }
                 }
 
@@ -293,4 +298,3 @@ namespace boost
 } //namespace boost
 
 #endif // !BOOST_ASTRONOMY_IO_IMAGE_HPP
-

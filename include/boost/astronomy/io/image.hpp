@@ -14,6 +14,7 @@
 
 #include <boost/astronomy/io/bitpix.hpp>
 #include <boost/endian/conversion.hpp>
+#include <boost/cstdfloat.hpp>
 
 
 namespace boost
@@ -214,7 +215,7 @@ namespace boost
 
 
             template <>
-            struct image<_B32> : public image_buffer<float>
+            struct image<_B32> : public image_buffer<boost::float32_t>
             {
             public:
                 image() {}
@@ -240,9 +241,8 @@ namespace boost
                         //std::copy_n(std::istreambuf_iterator<char>(file.rdbuf()), 4, std::begin(single_pixel.byte));
 
                         file.read((char*)single_pixel.byte, 4);
-                        //data[i] = (single_pixel.byte[3] << 0) | (single_pixel.byte[2] << 8) |
-                        //    (single_pixel.byte[1] << 16) | (single_pixel.byte[0] << 24);
-                        data[i] = boost::endian::big_to_native(data[i]);
+                        data[i] = (single_pixel.byte[3] << 0) | (single_pixel.byte[2] << 8) |
+                            (single_pixel.byte[1] << 16) | (single_pixel.byte[0] << 24);
                     }
                 }
 
@@ -254,7 +254,7 @@ namespace boost
 
 
             template <>
-            struct image<_B64> : public image_buffer<double>
+            struct image<_B64> : public image_buffer<boost::float64_t>
             {
             public:
                 image() {}
@@ -280,11 +280,10 @@ namespace boost
                         //std::copy_n(std::istreambuf_iterator<char>(file.rdbuf()), 8, std::begin(single_pixel.byte));
 
                         file.read((char*)single_pixel.byte, 8);
-                        //data[i] = (single_pixel.byte[7] << 0) | (single_pixel.byte[6] << 8) |
-                        //    (single_pixel.byte[5] << 16) | (single_pixel.byte[4] << 24) |
-                        //    (single_pixel.byte[3] << 32) | (single_pixel.byte[2] << 40) |
-                        //    (single_pixel.byte[1] << 48) | (single_pixel.byte[0] << 56);
-                        data[i] = boost::endian::big_to_native(data[i]);
+                        data[i] = (single_pixel.byte[7] << 0) | (single_pixel.byte[6] << 8) |
+                            (single_pixel.byte[5] << 16) | (single_pixel.byte[4] << 24) |
+                            (single_pixel.byte[3] << 32) | (single_pixel.byte[2] << 40) |
+                            (single_pixel.byte[1] << 48) | (single_pixel.byte[0] << 56);
                     }
                 }
 

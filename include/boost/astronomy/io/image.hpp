@@ -30,7 +30,7 @@ namespace boost
                 std::valarray<PixelType> data; //! stores the image
                 std::size_t width; //! width of image 
                 std::size_t height; //! height of image
-                std::fstream image_file; //! image file
+                //std::fstream image_file; //! image file
 
                 //! Used purly for Type punning
                 union pixel_data
@@ -43,21 +43,12 @@ namespace boost
             public:
                 image_buffer() {}
 
-                image_buffer(std::string const& file_name, std::size_t width, std::size_t height) :
-                    image_file(file_name), width(width), height(height)
-                {
-                    this->data.resize(width*height);
-                }
-
                 image_buffer(std::size_t width, std::size_t height) : width(width), height(height)
                 {
                     this->data.resize(width*height);
                 }
 
-                virtual ~image_buffer()
-                {
-                    if (this->image_file.is_open()) image_file.close();
-                }
+                virtual ~image_buffer() {}
 
                 //! returns the maximum value of all the pixels in the image
                 PixelType max() const
@@ -131,19 +122,33 @@ namespace boost
                 image() {}
 
                 image(std::string const& file, std::size_t width, std::size_t height, std::streamoff start) :
-                    image_buffer<std::uint8_t>(file, width, height)
-                {
+                    image_buffer<std::uint8_t>(width, height)
+                {   
+                    std::fstream image_file(file);
                     image_file.seekg(start);
-                    read_image();
+                    read_image_logic(image_file);
+                    image_file.close();
                 }
 
                 image(std::string const& file, std::size_t width, std::size_t height) :
-                    image_buffer<std::uint8_t>(file, width, height)
+                    image_buffer<std::uint8_t>(width, height)
                 {
-                    read_image();
+                    std::fstream image_file(file);
+                    read_image_logic(image_file);
+                    image_file.close();
                 }
 
-                void read_image()
+                image(std::fstream &file, std::size_t width, std::size_t height, std::streamoff start)
+                {
+                    read_image(file, width, height, start);
+                }
+
+                image(std::fstream &file, std::size_t width, std::size_t height)
+                {
+                    read_image(file, width, height);
+                }
+
+                void read_image_logic(std::fstream &image_file)
                 {
                     image_file.read((char*)std::begin(data), width*height);
                     //std::copy_n(std::istreambuf_iterator<char>(file.rdbuf()), width*height, std::begin(data));
@@ -151,16 +156,31 @@ namespace boost
 
                 void read_image(std::string const& file, std::size_t width, std::size_t height, std::streamoff start)
                 {
-                    this->image_file.open(file);
+                    std::fstream image_file(file);
                     data.resize(width*height);
                     image_file.seekg(start);
 
-                    read_image();
+                    read_image_logic(image_file);
+
+                    image_file.close();
                 }
 
                 void read_image(std::string const& file, std::size_t width, std::size_t height)
                 {
                     read_image(file, width, height, 0);
+                }
+
+                void read_image(std::fstream &file, std::size_t width, std::size_t height, std::streamoff start)
+                {
+                    data.resize(width*height);
+                    file.seekg(start);
+
+                    read_image_logic(file);
+                }
+
+                void read_image(std::fstream &file, std::size_t width, std::size_t height)
+                {
+                    read_image(file, width, height, file.tellg());
                 }
             };
 
@@ -172,19 +192,33 @@ namespace boost
                 image() {}
 
                 image(std::string const& file, std::size_t width, std::size_t height, std::streamoff start) :
-                    image_buffer<std::int16_t>(file, width, height)
+                    image_buffer<std::int16_t>(width, height)
                 {
+                    std::fstream image_file(file);
                     image_file.seekg(start);
-                    read_image();
+                    read_image_logic(image_file);
+                    image_file.close();
                 }
 
                 image(std::string const& file, std::size_t width, std::size_t height) :
-                    image_buffer<std::int16_t>(file, width, height)
+                    image_buffer<std::int16_t>(width, height)
                 {
-                    read_image();
+                    std::fstream image_file(file);
+                    read_image_logic(image_file);
+                    image_file.close();
                 }
 
-                void read_image()
+                image(std::fstream &file, std::size_t width, std::size_t height, std::streamoff start)
+                {
+                    read_image(file, width, height, start);
+                }
+
+                image(std::fstream &file, std::size_t width, std::size_t height)
+                {
+                    read_image(file, width, height);
+                }
+
+                void read_image_logic(std::fstream &image_file)
                 {
                     for (std::size_t i = 0; i < height*width; i++)
                     {
@@ -195,16 +229,32 @@ namespace boost
 
                 void read_image(std::string const& file, std::size_t width, std::size_t height, std::streamoff start)
                 {
-                    this->image_file.open(file);
+                    std::fstream image_file(file);
+                    image_file.open(file);
                     data.resize(width*height);
                     image_file.seekg(start);
 
-                    read_image();
+                    read_image_logic(image_file);
+
+                    image_file.close();
                 }
 
                 void read_image(std::string const& file, std::size_t width, std::size_t height)
                 {
                     read_image(file, width, height, 0);
+                }
+
+                void read_image(std::fstream &file, std::size_t width, std::size_t height, std::streamoff start)
+                {
+                    data.resize(width*height);
+                    file.seekg(start);
+
+                    read_image_logic(file);
+                }
+
+                void read_image(std::fstream &file, std::size_t width, std::size_t height)
+                {
+                    read_image(file, width, height, file.tellg());
                 }
             };
 
@@ -216,19 +266,33 @@ namespace boost
                 image() {}
 
                 image(std::string const& file, std::size_t width, std::size_t height, std::streamoff start) :
-                    image_buffer<std::int32_t>(file, width, height)
+                    image_buffer<std::int32_t>(width, height)
                 {
+                    std::fstream image_file(file);
                     image_file.seekg(start);
-                    read_image();
+                    read_image_logic(image_file);
+                    image_file.close();
                 }
 
                 image(std::string const& file, std::size_t width, std::size_t height) :
-                    image_buffer<std::int32_t>(file, width, height)
+                    image_buffer<std::int32_t>(width, height)
                 {
-                    read_image();
+                    std::fstream image_file(file);
+                    read_image_logic(image_file);
+                    image_file.close();
                 }
 
-                void read_image()
+                image(std::fstream &file, std::size_t width, std::size_t height, std::streamoff start)
+                {
+                    read_image(file, width, height, start);
+                }
+
+                image(std::fstream &file, std::size_t width, std::size_t height)
+                {
+                    read_image(file, width, height);
+                }
+
+                void read_image_logic(std::fstream &image_file)
                 {
                     for (std::size_t i = 0; i < height*width; i++)
                     {
@@ -240,16 +304,31 @@ namespace boost
                 //!reads image
                 void read_image(std::string const& file, std::size_t width, std::size_t height, std::streamoff start)
                 {
-                    this->image_file.open(file);
+                    std::fstream image_file(file);
                     data.resize(width*height);
                     image_file.seekg(start);
 
-                    read_image();
+                    read_image_logic(image_file);
+
+                    image_file.close();
                 }
 
                 void read_image(std::string const& file, std::size_t width, std::size_t height)
                 {
                     read_image(file, width, height, 0);
+                }
+
+                void read_image(std::fstream &file, std::size_t width, std::size_t height, std::streamoff start)
+                {
+                    data.resize(width*height);
+                    file.seekg(start);
+
+                    read_image_logic(file);
+                }
+
+                void read_image(std::fstream &file, std::size_t width, std::size_t height)
+                {
+                    read_image(file, width, height, file.tellg());
                 }
             };
 
@@ -261,19 +340,33 @@ namespace boost
                 image() {}
 
                 image(std::string const& file, std::size_t width, std::size_t height, std::streamoff start) :
-                    image_buffer<boost::float32_t>(file, width, height)
+                    image_buffer<boost::float32_t>(width, height)
                 {
+                    std::fstream image_file(file);
                     image_file.seekg(start);
-                    read_image();
+                    read_image_logic(image_file);
+                    image_file.close();
                 }
 
                 image(std::string const& file, std::size_t width, std::size_t height) :
-                    image_buffer<boost::float32_t>(file, width, height)
+                    image_buffer<boost::float32_t>(width, height)
                 {
-                    read_image();
+                    std::fstream image_file(file);
+                    read_image_logic(image_file);
+                    image_file.close();
                 }
 
-                void read_image()
+                image(std::fstream &file, std::size_t width, std::size_t height, std::streamoff start)
+                {
+                    read_image(file, width, height, start);
+                }
+
+                image(std::fstream &file, std::size_t width, std::size_t height)
+                {
+                    read_image(file, width, height);
+                }
+
+                void read_image_logic(std::fstream &image_file)
                 {
                     pixel_data single_pixel;
                     for (std::size_t i = 0; i < height*width; i++)
@@ -286,16 +379,30 @@ namespace boost
 
                 void read_image(std::string const& file, std::size_t width, std::size_t height, std::streamoff start)
                 {
-                    this->image_file.open(file);
+                    std::fstream image_file(file);
                     data.resize(width*height);
                     image_file.seekg(start);
 
-                    read_image();
+                    read_image_logic(image_file);
+                    image_file.close();
                 }
 
                 void read_image(std::string const& file, std::size_t width, std::size_t height)
                 {
                     read_image(file, width, height, 0);
+                }
+
+                void read_image(std::fstream &file, std::size_t width, std::size_t height, std::streamoff start)
+                {
+                    data.resize(width*height);
+                    file.seekg(start);
+
+                    read_image_logic(file);
+                }
+
+                void read_image(std::fstream &file, std::size_t width, std::size_t height)
+                {
+                    read_image(file, width, height, file.tellg());
                 }
             };
 
@@ -307,19 +414,33 @@ namespace boost
                 image() {}
 
                 image(std::string const& file, std::size_t width, std::size_t height, std::streamoff start) :
-                    image_buffer<boost::float64_t>(file, width, height)
+                    image_buffer<boost::float64_t>(width, height)
                 {
+                    std::fstream image_file(file);
                     image_file.seekg(start);
-                    read_image();
+                    read_image_logic(image_file);
+                    image_file.close();
                 }
 
                 image(std::string const& file, std::size_t width, std::size_t height) :
-                    image_buffer<boost::float64_t>(file, width, height)
+                    image_buffer<boost::float64_t>(width, height)
                 {
-                    read_image();
+                    std::fstream image_file(file);
+                    read_image_logic(image_file);
+                    image_file.close();
                 }
 
-                void read_image()
+                image(std::fstream &file, std::size_t width, std::size_t height, std::streamoff start)
+                {
+                    read_image(file, width, height, start);
+                }
+
+                image(std::fstream &file, std::size_t width, std::size_t height)
+                {
+                    read_image(file, width, height);
+                }
+
+                void read_image_logic(std::fstream &image_file)
                 {
                     pixel_data single_pixel;
                     for (std::size_t i = 0; i < height*width; i++)
@@ -334,16 +455,31 @@ namespace boost
 
                 void read_image(std::string const& file, std::size_t width, std::size_t height, std::streamoff start)
                 {
-                    this->image_file.open(file);
+                    std::fstream image_file(file);
                     data.resize(width*height);
                     image_file.seekg(start);
 
-                    read_image();
+                    read_image_logic(image_file);
+
+                    image_file.close();
                 }
 
                 void read_image(std::string const& file, std::size_t width, std::size_t height)
                 {
                     read_image(file, width, height, 0);
+                }
+
+                void read_image(std::fstream &file, std::size_t width, std::size_t height, std::streamoff start)
+                {
+                    data.resize(width*height);
+                    file.seekg(start);
+
+                    read_image_logic(file);
+                }
+
+                void read_image(std::fstream &file, std::size_t width, std::size_t height)
+                {
+                    read_image(file, width, height, file.tellg());
                 }
             };
         } //namespace io

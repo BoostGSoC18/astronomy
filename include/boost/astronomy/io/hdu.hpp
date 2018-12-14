@@ -31,6 +31,20 @@ namespace boost
             public:
                 hdu() {}
 
+                hdu(std::string const& file_name)
+                {
+                    std::fstream file(file_name, std::ios_base::in | std::ios_base::binary);
+                    read_header(file);
+                    file.close();
+                }
+
+                hdu(std::string const& file_name, std::streampos pos)
+                {
+                    std::fstream file(file_name, std::ios_base::in | std::ios_base::binary);
+                    read_header(file, pos);
+                    file.close();
+                }
+
                 hdu(std::fstream &file)
                 {
                     read_header(file);
@@ -93,7 +107,7 @@ namespace boost
                     _naxis.emplace_back(cards[key_index["NAXIS"]].value<std::size_t>());
                     _naxis.reserve(_naxis[0]);
                     
-                    for (size_t i = 1; i <= _naxis[0]; i++)
+                    for (std::size_t i = 1; i <= _naxis[0]; i++)
                     {
                         _naxis.emplace_back(cards[key_index["NAXIS" + boost::lexical_cast<std::string>(i)]].value<std::size_t>());
                     }

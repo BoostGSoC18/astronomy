@@ -42,4 +42,4 @@
 /ClassDiagram.cd
 /doc/tutorials/.vscode/settings.json
 /.idea
-/.cmake-build-debug
+/cmake-build-debug

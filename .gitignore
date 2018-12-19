@@ -41,3 +41,5 @@
 /astronomy.sln
 /ClassDiagram.cd
 /doc/tutorials/.vscode/settings.json
+/.idea
+/.cmake-build-debug

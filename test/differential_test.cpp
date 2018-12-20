@@ -1,14 +1,13 @@
 #define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE differential
 
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <boost/astronomy/coordinate/differential.hpp>
 #include <boost/astronomy/coordinate/representation.hpp>
 
 using namespace std;
 using namespace boost::astronomy::coordinate;
 
-BOOST_AUTO_TEST_SUITE(constructor)
+BOOST_AUTO_TEST_SUITE(differential_constructors)
 
 BOOST_AUTO_TEST_CASE(cartesian)
 {
@@ -70,7 +69,7 @@ BOOST_AUTO_TEST_CASE(spherical)
 
 BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_AUTO_TEST_SUITE(functions)
+BOOST_AUTO_TEST_SUITE(differential_functions)
 
 BOOST_AUTO_TEST_CASE(magnitude)
 {
@@ -84,7 +83,7 @@ BOOST_AUTO_TEST_CASE(magnitude)
 
 BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_AUTO_TEST_SUITE(operators)
+BOOST_AUTO_TEST_SUITE(differential_operators)
 
 BOOST_AUTO_TEST_CASE(addition)
 {

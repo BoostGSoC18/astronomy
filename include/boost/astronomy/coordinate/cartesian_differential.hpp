@@ -34,7 +34,7 @@ namespace boost
                 }
 
                 //!constructs object from boost::geometry::model::point object
-                template <int DimensionCount, typename Type>
+                template <std::size_t DimensionCount, typename Type>
                 cartesian_differential(boost::geometry::model::point<double, DimensionCount, Type> const& pointObject)
                 {
                     boost::geometry::transform(pointObject, this->diff);
@@ -115,7 +115,7 @@ namespace boost
 
                     temp.set_dx(temp.get_dx() + diff.get_dx());
                     temp.set_dy(temp.get_dy() + diff.get_dy());
-                    temp.set_dz(temp.get_dz() + diff.get_dx());
+                    temp.set_dz(temp.get_dz() + diff.get_dz());
 
                     return temp;
                 }

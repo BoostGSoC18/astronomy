@@ -88,7 +88,7 @@ namespace boost
                     /*checking return type if they both are not subclass of
                     base_representaion then compile time erorr is generated*/
                     BOOST_STATIC_ASSERT_MSG((boost::astronomy::detail::is_base_template_of
-                        <boost::astronomy::coordinate::base_differential, ReturnType>),
+                        <boost::astronomy::coordinate::base_differential, ReturnType>::value),
                         "return type is expected to be a differential class");
 
                     return ReturnType(this->diff);

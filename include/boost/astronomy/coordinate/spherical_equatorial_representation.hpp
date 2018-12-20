@@ -40,7 +40,7 @@ namespace boost
                 }
 
                 //!constructs object from boost::geometry::model::point object
-                template <int DimensionCount, typename Type>
+                template <std::size_t DimensionCount, typename Type>
                 spherical_equatorial_representation(boost::geometry::model::point<double, DimensionCount, Type> const& pointObject)
                 {
                     boost::astronomy::coordinate::cartesian_representation temp = pointObject;

@@ -39,7 +39,7 @@ namespace boost
                 }
 
                 //!constructs object from boost::geometry::model::point object
-                template <int DimensionCount, typename Type>
+                template <std::size_t DimensionCount, typename Type>
                 cartesian_representation(boost::geometry::model::point<double, DimensionCount, Type> const& pointObject)
                 {
                     boost::geometry::transform(pointObject, this->point);
@@ -121,7 +121,7 @@ namespace boost
 
                     temp.set_x(temp.get_x() + diff.get_dx());
                     temp.set_y(temp.get_y() + diff.get_dy());
-                    temp.set_z(temp.get_z() + diff.get_dx());
+                    temp.set_z(temp.get_z() + diff.get_dz());
 
                     return temp;
                 }

@@ -2,7 +2,8 @@
 #define BOOST_ASTRONOMY_DETAIL_IS_BASE_TEMPLATE_OF_HPP
 
 #include <cstddef>
-#include <boost/type_traits.hpp>
+#include <type_traits>
+
 
 namespace boost
 {
@@ -15,14 +16,14 @@ namespace boost
             template <template <std::size_t, typename...> class Base, typename Derived>
             struct base_template
             {
-                using U = typename std::remove_cv<Derived>::type;
+                //using U = typename std::remove_cv<Derived>::type;
 
-                template <int T, typename... Args>
-                static std::true_type test(Base<T, Args...>*);
+                template <std::size_t T, typename... Args>
+                static std::true_type test(const Base<T, Args...>*);
 
-                static std::false_type test(void*);
+                static std::false_type test(...);
 
-                using type = decltype(test(std::declval<U*>()));
+                using type = decltype(test(std::declval<Derived*>()));
             };
 
             template <template <std::size_t, typename...> class Base, typename Derived>

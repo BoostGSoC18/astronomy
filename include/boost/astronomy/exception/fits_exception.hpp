@@ -21,7 +21,7 @@ namespace boost
         public:
             const char* what() const throw()
             {
-                return "Card length must not be more 80 chars";
+                return "Card length must not be more than 80 chars";
             }
         };
 
@@ -30,7 +30,7 @@ namespace boost
         public:
             const char* what() const throw()
             {
-                return "HDU unit can accommodate 36 cards max";
+                return "HDU unit can accommodate max 36 cards";
             }
         };
 
@@ -39,7 +39,7 @@ namespace boost
         public:
             const char* what() const throw()
             {
-                return "Key length must note be more than 8 chars";
+                return "Key length must not be more than 8 chars";
             }
         };
 
@@ -48,7 +48,7 @@ namespace boost
         public:
             const char* what() const throw()
             {
-                return "value length must not be more than 70 chars including comments";
+                return "Value length must not be more than 70 chars including comments";
             }
         };
 
@@ -57,7 +57,7 @@ namespace boost
         public:
             const char* what() const throw()
             {
-                return "key is not defined";
+                return "Key is not defined";
             }
         };
 

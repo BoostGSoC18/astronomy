@@ -40,8 +40,8 @@ namespace boost
                 }
 
                 //!constructs object from boost::geometry::model::point object
-                template <std::size_t DimensionCount, typename Type>
-                spherical_equatorial_differential(boost::geometry::model::point<double, DimensionCount, Type> const& pointObject)
+                template <std::size_t DimensionCount, typename System>
+                spherical_equatorial_differential(boost::geometry::model::point<double, DimensionCount, System> const& pointObject)
                 {
                     boost::astronomy::coordinate::cartesian_differential temp = pointObject;
                     boost::geometry::transform(temp.unit_vector

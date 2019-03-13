@@ -39,8 +39,8 @@ namespace boost
                 }
 
                 //!constructs object from boost::geometry::model::point object
-                template<std::size_t DimensionCount, typename Type>
-                spherical_differential(boost::geometry::model::point<double, DimensionCount, Type> const& pointObject)
+                template<std::size_t DimensionCount, typename System>
+                spherical_differential(boost::geometry::model::point<double, DimensionCount, System> const& pointObject)
                 {
                     boost::geometry::model::point<double, 3, boost::geometry::cs::cartesian> temp;
                     boost::geometry::transform(pointObject, temp);

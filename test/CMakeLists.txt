@@ -1,6 +1,18 @@
-find_package(Boost 1.67.0 COMPONENTS unit_test_framework REQUIRED)
+foreach(_name
+        differential
+        representation)
+    set(_target test_${_name})
 
-add_executable(Tests test.cpp representation_test.cpp differential_test.cpp)
-target_link_libraries(Tests ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+    add_executable(${_target} "")
+    target_sources(${_target} PRIVATE ${_name}.cpp test.cpp)
+    target_link_libraries(${_target}
+            PRIVATE
+            astronomy_compile_options
+            astronomy_include_directories
+            astronomy_dependencies)
+    add_test(test.astro.${_name} ${_target})
 
-add_test(NAME Tests COMMAND Tests)
+    unset(_name)
+    unset(_target)
+endforeach()
+

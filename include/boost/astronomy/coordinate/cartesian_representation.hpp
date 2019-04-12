@@ -67,7 +67,7 @@ namespace boost
                 std::tuple<double, double, double> get_xyz() const
                 {
                     return std::make_tuple(boost::geometry::get<0>(this->point),
-                        boost::geometry::get<0>(this->point), boost::geometry::get<0>(this->point));
+                        boost::geometry::get<1>(this->point), boost::geometry::get<2>(this->point));
                 }
 
                 //!returns the x component of point

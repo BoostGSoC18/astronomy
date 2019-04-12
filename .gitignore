@@ -43,3 +43,5 @@
 /doc/tutorials/.vscode/settings.json
 /.idea
 /cmake-build-debug
+*.user
+/x64/Debug

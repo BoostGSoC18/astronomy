@@ -8,6 +8,7 @@
 
 #include <boost/astronomy/io/primary_hdu.hpp>
 #include <boost/astronomy/io/extension_hdu.hpp>
+#include <boost/astronomy/io/image_extension.hpp>
 #include <boost/astronomy/exception/fits_exception.hpp>
 
 namespace boost
@@ -20,7 +21,7 @@ namespace boost
             {
             protected:
                 std::fstream fits_file; //!FITS to be processed
-                std::vector<std::shared_ptr<boost::astronomy::io::hdu>> _hdu; //!Stores all th HDU in file
+                std::vector<std::shared_ptr<hdu>> hdu_; //!Stores all th HDU in file
 
             public:
                 fits() {}
@@ -28,75 +29,75 @@ namespace boost
                 fits(std::string file_path, std::ios_base::openmode mode = std::ios_base::in | std::ios_base::binary)
                 {
                     fits_file.open(file_path, std::ios_base::in | std::ios_base::binary | mode);
-                    _hdu.resize(1);
                     read_primary_hdu();
-                    read_extensions();
+                    //read_extensions();
                 }
 
                 void read_primary_hdu()
                 {
-                    _hdu[0] = std::make_shared<boost::astronomy::io::hdu>(fits_file);
+                    hdu_[0] = std::make_shared<hdu>(fits_file);
                     
-                    switch (_hdu[0]->value_of<int>(std::string("BITPIX")))
+                    switch (hdu_[0]->value_of<int>(std::string("BITPIX")))
                     {
                     case 8:
-                        _hdu[0] = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::B8>>(fits_file, *_hdu[0]);
+                        hdu_[0] = std::make_shared<primary_hdu<B8>>(fits_file, *hdu_[0]);
                         break;
                     case 16:
-                        _hdu[0] = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::B16>>(fits_file, *_hdu[0]);
+                        hdu_[0] = std::make_shared<primary_hdu<B16>>(fits_file, *hdu_[0]);
                         break;
                     case 32:
-                        _hdu[0] = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::B32>>(fits_file, *_hdu[0]);
+                        hdu_[0] = std::make_shared<primary_hdu<B32>>(fits_file, *hdu_[0]);
                         break;
                     case -32:
-                        _hdu[0] = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::_B32>>(fits_file, *_hdu[0]);
+                        hdu_[0] = std::make_shared<primary_hdu<_B32>>(fits_file, *hdu_[0]);
                         break;
                     case -64:
-                        _hdu[0] = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::_B64>>(fits_file, *_hdu[0]);
+                        hdu_[0] = std::make_shared<primary_hdu<_B64>>(fits_file, *hdu_[0]);
                         break;
                     default:
                         throw fits_exception();
-                        break;
                     }
                 }
 
                 void read_extensions()
                 {
                     //if no extension then return
-                    if (!_hdu[0]->value_of<bool>("EXTEND"))
+                    if (!hdu_[0]->value_of<bool>("EXTEND"))
                     {
                         return;
                     }
 
                     while (!fits_file.eof())
                     {
-                        _hdu.emplace_back(std::make_shared<boost::astronomy::io::hdu>(fits_file));
+                        //this statement allows up to read all the cards stored
+                        //It gives us the benefit of knowing which kind of data we need to store
+                        hdu_.emplace_back(std::make_shared<hdu>(fits_file));
 
-                        if (_hdu.back()->value_of<std::string>("XTENSION") == "'IMAGE   '")
+                        if (hdu_.back()->value_of<std::string>("XTENSION") == "'IMAGE   '")
                         {
-                            switch (_hdu.back()->value_of<int>(std::string("BITPIX")))
+                            switch (hdu_.back()->value_of<int>(std::string("BITPIX")))
                             {
                             case 8:
-                                _hdu.back() = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::B8>>(fits_file, *_hdu.back());
+                                hdu_.back() = std::make_shared<image_extension<B8>>(fits_file, *hdu_.back());
                                 break;
                             case 16:
-                                _hdu.back() = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::B16>>(fits_file, *_hdu.back());
+                                hdu_.back() = std::make_shared<image_extension<B16>>(fits_file, *hdu_.back());
                                 break;
                             case 32:
-                                _hdu.back() = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::B32>>(fits_file, *_hdu.back());
+                                hdu_.back() = std::make_shared<image_extension<B32>>(fits_file, *hdu_.back());
                                 break;
                             case -32:
-                                _hdu.back() = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::_B32>>(fits_file, *_hdu.back());
+                                hdu_.back() = std::make_shared<image_extension<_B32>>(fits_file, *hdu_.back());
                                 break;
                             case -64:
-                                _hdu.back() = std::make_shared<boost::astronomy::io::primary_hdu<boost::astronomy::io::_B64>>(fits_file, *_hdu.back());
+                                hdu_.back() = std::make_shared<image_extension<_B64>>(fits_file, *hdu_.back());
                                 break;
                             default:
                                 throw fits_exception();
                                 break;
                             }
                         }
-                        else if (_hdu.back()->value_of<std::string>("XTENSION") == "'TABLE   '")
+                        else if (hdu_.back()->value_of<std::string>("XTENSION") == "'TABLE   '")
                         {
 
                         }

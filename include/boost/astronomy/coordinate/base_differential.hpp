@@ -20,7 +20,7 @@ namespace boost
             typedef boost::geometry::radian radian;
 
             //! structure which is the base for all the representation 
-            template <std::size_t DimensionCount, typename Type>
+            template <std::size_t DimensionCount, typename System>
             struct base_differential
             {
                 ///@cond INTERNAL
@@ -28,7 +28,7 @@ namespace boost
                     "DimensionCount is expected to be 2 or 3");
                 ///@endcond
             protected:
-                boost::geometry::model::point<double, DimensionCount, Type> diff;
+                boost::geometry::model::point<double, DimensionCount, System> diff;
 
             public:
                 //! returns the unit vector of current differential
@@ -95,7 +95,7 @@ namespace boost
                 }
 
                 //! returns the differential of calling object
-                boost::geometry::model::point<double, DimensionCount, Type> get_differential() const
+                boost::geometry::model::point<double, DimensionCount, System> get_differential() const
                 {
                     return this->diff;
                 }

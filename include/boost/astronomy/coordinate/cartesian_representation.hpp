@@ -39,8 +39,8 @@ namespace boost
                 }
 
                 //!constructs object from boost::geometry::model::point object
-                template <std::size_t DimensionCount, typename Type>
-                cartesian_representation(boost::geometry::model::point<double, DimensionCount, Type> const& pointObject)
+                template <std::size_t DimensionCount, typename System>
+                cartesian_representation(boost::geometry::model::point<double, DimensionCount, System> const& pointObject)
                 {
                     boost::geometry::transform(pointObject, this->point);
 

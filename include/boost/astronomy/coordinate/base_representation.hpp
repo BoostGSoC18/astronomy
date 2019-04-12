@@ -23,7 +23,7 @@ namespace boost
             typedef boost::geometry::radian radian;
 
             // structure which is the base for all the representation 
-            template <std::size_t DimensionCount, typename Type>
+            template <std::size_t DimensionCount, typename System>
             struct base_representation
             {
                 ///@cond INTERNAL
@@ -31,7 +31,7 @@ namespace boost
                     "DimensionCount is expected to be 2 or 3");
                 ///@endcond
             protected:
-                boost::geometry::model::point<double, DimensionCount, Type> point;
+                boost::geometry::model::point<double, DimensionCount, System> point;
 
             public:
                 
@@ -185,7 +185,7 @@ namespace boost
                 }
 
                 //! returns the point/vector of calling object
-                boost::geometry::model::point<double, DimensionCount, Type> get_point() const
+                boost::geometry::model::point<double, DimensionCount, System> get_point() const
                 {
                     return this->point;
                 }

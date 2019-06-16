@@ -11,10 +11,10 @@ using namespace boost::astronomy::coordinate;
 int main()
 {
         //first we create a point we want to represent in the sky
-    sherical_representation star(30.455, 85.56);
+    spherical_representation star(30.455, 85.56);
 
     //we define motion it has (if it has)
-    sherical_coslat_differential motion(0.01,0.03);
+    spherical_coslat_differential motion(0.01,0.03);
 
     //creating  sky point object
     sky_point<icrs> object1(star, motion);
@@ -45,4 +45,4 @@ int main()
 }
 ```
 
-[Privious](astronomical_coordinate.md) | [Next]()
+[Previous](astronomical_coordinate.md) | [Next]()

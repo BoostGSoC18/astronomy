@@ -1,11 +1,11 @@
 # Coordinate Conversions
 
-Following image can explain relation between cartesian and spherical representation.
+The following image can explain the relation between cartesian and spherical representation.
 ![coordinate relation](coordinate_relation.svg)
 
 Converting one coordinate to another coordinate is really easy. The system is developed in such a way that all the conversions are done implicitly.
 
-Example:
+## Example:
 ```c++
 #include <iostream>
 #include <boost/astronomy/coordinate/spherical_representation.hpp>

@@ -1,10 +1,11 @@
 # Creation of a point in Euclidean space
 
-Representation classes are structured as such that they can be used as a vector or point at the same time as per the requirement.
+Representation classes are structured such that they can be used as a vector or point at the same time as per the requirement.
 
-All representations are accomodated in namespace `boost::astronomy::coordinate` 
+All representations are accommodated in namespace `boost::astronomy::coordinate`.
 
-All the representation classes have similar accessor only change is in the name of their corresponding component. The corresponding component of each representation can be found from the table below.
+## Methods to access components
+All the representation classes have similar an accessor. However, the name of their corresponding component changes. The corresponding component of each representation can be found from the table below.
 
 | *Representation*                      | *Component 1* | *Component 2* | *Component 3*
 |---------------------------------------|---------------|---------------|---
@@ -15,13 +16,14 @@ All the representation classes have similar accessor only change is in the name 
 To access any of the component in any representation methods as below can be used:<br>
 `get_<component>()`<br>
 `set_<component>()`<br>
-`get_<component1>_<component2>_<component3>()`<br>
-`set_<component1>_<component2>_<component3>()`<br>
+`get_<component1><component2><component3>()`<br>
+`set_<component1><component2><component3>()`<br>
 Here `<component>` is supposed to be replaced by the corrosponding component of the representation.<br>
-E.g:- for cartesian_representatino its `get_x()` which will change for spherical_representation to `get_lat()`
+>E.g:- cartesian_representatino: `get_x()`, `set_xyz()`<br>
+spherical_representation: `get_lat()`, `get_lat_lon_dist()`
 
 ## Cartesian Point
-This representation uses (x, y, z) components to represent any point in the 3D space. This is the most widely used for regular geometry in maths.
+This representation uses three components(x, y, z) to represent any point in the 3D space. This is most widely used for regular geometry in maths.
 
 Required header:
 ```c++
@@ -35,7 +37,7 @@ or
 ```c++
 #include <boost/astronomy/coordinate/coordinate.hpp>
 ```
-Example of how to create a cartesian point and access its component:
+## Example of how to create a cartesian point and access its component:
 ```c++
 #include <iostream>
 #include <boost/astronomy/coordinate/cartesian_representation.hpp>
@@ -103,7 +105,7 @@ or
 ```c++
 #include <boost/astronomy/coordinate/coordinate.hpp>
 ```
-Example of how to create a cartesian point and access its component:
+## Example of how to create a spherical point and access its component:
 ```c++
 #include <iostream>
 #include <boost/astronomy/coordinate/spherical_representation.hpp>
@@ -158,7 +160,7 @@ int main()
 ```
 
 ## Spherical equatorial Point
-This representation uses (latitude, longitude) components to represent any point in the 3D space using only two components. It is similar to the spherical representation except it takes only two component and points are on the unit sphere.
+This representation uses only two components(latitude, longitude) to represent any point in the 3D space. It is similar to the spherical representation except it takes only two component and points are on the unit sphere.
 
 Required header:
 ```c++
@@ -175,4 +177,4 @@ or
 
 All the APIs are the same as `spherical_representation`.
 
-[Privious](euclidean_coordinate.md) | [Next](coordinate_conversion.md)
+[Previous](euclidean_coordinate.md) | [Next](coordinate_conversion.md)

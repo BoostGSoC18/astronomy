@@ -1,28 +1,26 @@
 # Astronomy library
 
-## **introduction**
+## **Introduction**
 
 Development of Astronomy library started as a part Google Summer of Code 2018 under mentor organization **Boost C++ Library** and mentor/guide **Vinícius dos Santos Oliveira**. 
 
-This library provides basic functionalities which are required daily in the field of astronomy. Right now the scope of this library is limited to coordinate system and FITS file handling but will be expanded in future.
+This library provides basic functionalities which are required daily in the field of astronomy.
 
-This library was developed using boost version *1.67.0*
+**Scope of this library:**
+ 1. Coordinate system
+ 2. FITS file handling 
 
-## **Intended Audiance**
-
-This library is designed for the programmers who are new to C++. It provides easy APIs which are easy to learn for the new C++ developer. While developing this we have kept scientist in mind because not all the scientists are programmers so instead of investing much time in learning library or C++ they can invest time in their real work.
-
-The following tutorial will show how to use this library. This tutorial is created assuming the user has only a little experience with C++ and no experience with boost C++ libraries.
+ We are planning to expand this in the future to support more features.
 
 ## Prerequisites
 * Minimum C++11 is required
-* Familiarity with boost.geometry (recommended but not necessary)
-* Knowledge of coordinate system
+* Familiarity with the boost.geometry (recommended but not necessary)
+* Knowledge of the coordinate system
 * Knowledge of File handling with C++
 * Knowledge of C++ templates
 
 ## Limitations
-* In this version units are not supported with the coordinate system but will be added soon
+* In this version, units are not supported with the coordinate system but will be added soon
 * Limited functionality for FITS file
 
 ## **Index**

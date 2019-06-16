@@ -1,8 +1,8 @@
-# Motion of a point
+# The Motion of a point
 
 Astronomy library provides a way to integrate motions with the coordinate. For every representation class, there is one corresponding differential class for it which will denote the motion of the point. 
 
-At this time as units are not integrated with coordinate system so it is assumed that representation and differentials are in same corresponding unit.(E.g: if representation is in k.m then differential will be taken with respect to time so in this case units will be k.m/time here time can be any unit of time).
+Currently as units are not integrated with the coordinate system, it is assumed that representation and differentials are in same corresponding unit.(E.g: if representation is in k.m then differential will be taken with respect to time so in this case units will be k.m/time and here time can be any unit of time).
 
 Creation of differential is exactly as representation classes.
 
@@ -15,12 +15,12 @@ There are 4 available differential classes:
 >**NOTE:** spherical_coslat_differential is the differential longitude with cos(lat) included, latitude and distance. This differential is used in all the astronomical coordinate system.
 
 This classes also provide multiplication and addition operator overload.
-* If you want to add motion stored in differential to a representation class for one instance of time then addition operator can be used
-* If you want to add motion stored in differential to a representation class for n instance of time then first multiply the differential by n and then add it to the representation.
+* To add a differential to representation: `representation + differential`
+* To add differential to representation for N instance: `representation + (differential*N)`
 
->**Note:** Only corresponding types of representation and differential can be added (in any spherical representation and differential should be in same degree or radian). But spherical_coslat_differential can be added to any spherical representation.
+>**Note:** Only corresponding types of representation and differential can be added (in any spherical representation and differential should be in the same degree or radian). But spherical_coslat_differential can be added to any spherical representation.
 
-required heade files to inclue all the differential classes:
+required header files to inclue all the differential classes:
 
 ```c++
 #include <boost/astronomy/coordinate/coordinate.hpp>
@@ -30,7 +30,7 @@ or
 #include <boost/astronomy/coordinate/differential.hpp>
 ```
 
-Example:
+## Example:
 ```c++
 #include <iostream>
 #include <boost/astronomy/coordinate/cartesian_representation.hpp>
@@ -62,4 +62,4 @@ int main()
 }
 ```
 
-[Privious](vector_operation.md) | [Next](astronomical_coordinate.md)
+[Previous](vector_operation.md) | [Next](astronomical_coordinate.md)

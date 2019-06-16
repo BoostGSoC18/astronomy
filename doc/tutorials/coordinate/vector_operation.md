@@ -1,14 +1,12 @@
 # Operations on vector
 
-Representation classes have provided few of the most used vector operations which are as follows:
+Representation classes have provided a few of the most used vector operations which are as follows:
 * Cross product of two vectors
 * Dot product of two vectors
 * Unit Vector
-* Magnitude of vector
+* Magnitude of a vector
 * Addition of two vectors
 * Mean of two vectors
-
-For the convenience of the users, these functions are developed in such a way that the operation results can directly be returned in any of the representation.
 
 >**NOTE:** All these functions first convert vectors into cartesian_representation, performs the operation on it and then returns the result in requested representation
 
@@ -48,4 +46,4 @@ int main()
 }
 ```
 
-[Privious](coordinate_conversion.md) | [Next](motion.md)
+[Previous](coordinate_conversion.md) | [Next](motion.md)
